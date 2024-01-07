@@ -28,6 +28,7 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         leading: IconButton(
           icon: Image.asset(
@@ -59,17 +60,7 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
         actions: const <Widget>[
           Padding(
             padding: EdgeInsets.only(right: 27),
-            child: Text(
-              'Done',
-              textAlign: TextAlign.right,
-              style: TextStyle(
-                fontSize: 17.0,
-                letterSpacing: -0.02,
-                color: Color(0xFF6E6E6E),
-                height:
-                    1.41, // Approximation for android:lineSpacingExtra="4sp" with 17sp text size
-              ),
-            ),
+            child: NakedTextButton(),
           )
         ],
       ),
@@ -82,12 +73,14 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
           decoration: InputDecoration.collapsed(
             hintText: 'I am thankful for',
             hintStyle: TextStyle(
+              color: Color(0xFFC8C8C8),
               fontSize: 17.0,
               height: 1.4,
               letterSpacing: -0.41,
             ),
           ),
           style: TextStyle(
+            color: Color(0xFF404040),
             fontSize: 17.0,
             height: 1.4,
             letterSpacing: -0.41,
@@ -97,15 +90,46 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
       floatingActionButton: Row(
         children: [
           const SizedBox(width: 28),
-          Image.asset("assets/images/icon_share.png", width: 28, height: 28),
-          const SizedBox(width: 12),
-          Image.asset("assets/images/icon_delete.png", width: 28, height: 28),
+          IconButton(
+              onPressed: () {},
+              icon: Image.asset("assets/images/icon_share.png",
+                  width: 28, height: 28)),
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: Image.asset("assets/images/icon_delete.png",
+                  width: 28, height: 28)),
           const Spacer(),
-          Image.asset("assets/images/icon_ask_hint.png", width: 28, height: 28),
+          IconButton(
+              onPressed: () {},
+              icon: Image.asset("assets/images/icon_ask_hint.png",
+                  width: 28, height: 28)),
           const SizedBox(width: 28),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    );
+  }
+}
+
+class NakedTextButton extends StatelessWidget {
+  const NakedTextButton({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {},
+      child: const Text('Done',
+          textAlign: TextAlign.right,
+          style: TextStyle(
+            fontSize: 17.0,
+            letterSpacing: -0.02,
+            color: Color(0xFFC8C8C8),
+            height: 1.4,
+          )),
     );
   }
 }

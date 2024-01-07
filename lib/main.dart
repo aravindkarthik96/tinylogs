@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tnylogs/screens/TinyLogsOnboardingPage.dart';
 
-import 'TinyLogsOnboardingPage.dart';
 
 void main() {
   runApp(const TinyLogsApp());

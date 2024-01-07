@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tnylogs/TinyLogsAddLogPage.dart';
+import 'package:tnylogs/screens/TinyLogsAddLogPage.dart';
 
 class TinyLogsOnboardingPage extends StatefulWidget {
   const TinyLogsOnboardingPage({super.key});
