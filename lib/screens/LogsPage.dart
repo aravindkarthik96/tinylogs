@@ -32,7 +32,7 @@ class _LogsPageState extends State<LogsPage> {
         slivers: <Widget>[
           const SliverAppBar(
             automaticallyImplyLeading: false,
-            pinned: false,
+            pinned: true,
             snap: true,
             floating: true,
             centerTitle: false,
@@ -74,31 +74,27 @@ class LogItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String formattedDate =
-        DateFormat('EEE, MMM d').format(log.creationDate).toUpperCase();
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      child: Column(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (formattedDate.isNotEmpty && showDate)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 4.0),
-              child: Text(
-                formattedDate,
-                style: const TextStyle(
-                  color: Colors.black54,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+          Text(
+            DateFormat('EEE\nMMM d').format(log.creationDate).toUpperCase(),
+            style: TextStyle(
+              color: showDate ? Colors.black54 : const Color(0x00000000),
+              fontWeight: FontWeight.bold,
+              fontSize: 12.0,
             ),
-          Container(
-            width: double.infinity,
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(width: 16.0),
+          Expanded(
+              child: Container(
             padding: const EdgeInsets.all(16.0),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(8.0),
+              borderRadius: BorderRadius.circular(12.0),
               boxShadow: const [
                 BoxShadow(
                   color: Colors.black12,
@@ -113,7 +109,7 @@ class LogItem extends StatelessWidget {
                 fontSize: 16.0,
               ),
             ),
-          ),
+          )),
         ],
       ),
     );
