@@ -1,6 +1,6 @@
 {
-    "name": "tnylogs",
-    "short_name": "tnylogs",
+    "name": "tinylogs",
+    "short_name": "tinylogs",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

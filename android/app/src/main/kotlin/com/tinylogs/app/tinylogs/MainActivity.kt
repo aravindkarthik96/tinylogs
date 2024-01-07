@@ -1,4 +1,4 @@
-package com.tinylogs.app.tnylogs
+package com.tinylogs.app.tinylogs
 
 import io.flutter.embedding.android.FlutterActivity
 

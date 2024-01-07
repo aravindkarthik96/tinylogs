@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tnylogs/screens/TinyLogsOnboardingPage.dart';
+import 'package:tinylogs/screens/TinyLogsOnboardingPage.dart';
 
 
 void main() {

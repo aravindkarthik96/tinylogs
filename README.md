@@ -1,4 +1,4 @@
-# tnylogs
+# tinylogs
 
 A new Flutter project.
 

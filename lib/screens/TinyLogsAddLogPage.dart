@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:tnylogs/screens/TinyLogsHomePage.dart';
+import 'package:tinylogs/screens/TinyLogsHomePage.dart' show TinyLogsHomePage;
 
 class TinyLogsAddLogPage extends StatefulWidget {
   const TinyLogsAddLogPage({super.key});
@@ -53,38 +53,44 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
                     color: Color(0xFF662619),
                     height: 1.41,
                   )),
-              Image.asset('assets/images/arrow_drop_down.png',
-                  width: 16, height: 16),
+              Image.asset(
+                'assets/images/arrow_drop_down.png',
+                width: 16,
+                height: 16,
+              ),
             ],
           ),
         ),
         actions: const <Widget>[
           Padding(
-            padding: EdgeInsets.only(right: 27),
+            padding: EdgeInsets.only(right: 28),
             child: NakedTextButton(),
           )
         ],
       ),
       body: const Padding(
         padding: EdgeInsets.all(16.0),
-        child: TextField(
-          keyboardType: TextInputType.multiline,
-          maxLines: null,
-          autofocus: true,
-          decoration: InputDecoration.collapsed(
-            hintText: 'I am thankful for',
-            hintStyle: TextStyle(
-              color: Color(0xFFC8C8C8),
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(4, 0, 4, 0),
+          child: TextField(
+            keyboardType: TextInputType.multiline,
+            maxLines: null,
+            autofocus: true,
+            decoration: InputDecoration.collapsed(
+              hintText: 'I am thankful for',
+              hintStyle: TextStyle(
+                color: Color(0xFFC8C8C8),
+                fontSize: 17.0,
+                height: 1.4,
+                letterSpacing: -0.41,
+              ),
+            ),
+            style: TextStyle(
+              color: Color(0xFF404040),
               fontSize: 17.0,
               height: 1.4,
               letterSpacing: -0.41,
             ),
-          ),
-          style: TextStyle(
-            color: Color(0xFF404040),
-            fontSize: 17.0,
-            height: 1.4,
-            letterSpacing: -0.41,
           ),
         ),
       ),

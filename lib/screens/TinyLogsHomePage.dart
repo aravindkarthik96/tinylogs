@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import 'TinyLogsAddLogPage.dart';
 
@@ -14,7 +13,7 @@ class _TinyLogsHomePageState extends State<TinyLogsHomePage> {
   int _currentIndex = 0;
 
   final List<Widget> _children = [
-    const PlaceholderWidget(Colors.white),
+    const PlaceholderWidget(Color(0xFFFFF0E5)),
     const PlaceholderWidget(Colors.green),
     const PlaceholderWidget(Colors.blue),
   ];
