@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tinylogs/data/DatabaseHelper.dart';
 import 'package:tinylogs/data/LogEntry.dart';
+import 'package:tinylogs/screens/TinyLogsAddLogPage.dart';
 
 class LogsPage extends StatefulWidget {
   const LogsPage({super.key});
@@ -52,7 +53,9 @@ class _LogsPageState extends State<LogsPage> {
               final log = logs[index];
               var currentDate = log.creationDate;
 
-              var previousDate = index == 0 ? null : logs.elementAtOrNull(index - 1)?.creationDate;
+              var previousDate = index == 0
+                  ? null
+                  : logs.elementAtOrNull(index - 1)?.creationDate;
               bool showDate = !(previousDate?.day == currentDate.day &&
                   previousDate?.month == currentDate.month &&
                   previousDate?.year == currentDate.year);
@@ -62,7 +65,10 @@ class _LogsPageState extends State<LogsPage> {
               previousDate = currentDate;
 
               return LogItem(
-                  log: log, showDate: showDate, showMonth: showMonth);
+                log: log,
+                showDate: showDate,
+                showMonth: showMonth,
+              );
             },
           )
         ],
@@ -88,46 +94,62 @@ class LogItem extends StatelessWidget {
     return Column(
       children: [
         getMonthWidget(showMonth),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                DateFormat('EEE\nMMM d').format(log.creationDate).toUpperCase(),
-                style: TextStyle(
-                  color: showDate ? Colors.black54 : const Color(0x00000000),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12.0,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(width: 16.0),
-              Expanded(
-                  child: Container(
-                padding: const EdgeInsets.all(16.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12.0),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 4.0,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Text(
-                  log.content,
-                  style: const TextStyle(
-                    fontSize: 16.0,
-                  ),
-                ),
-              )),
-            ],
-          ),
-        ),
+        getMessageItem(context, log),
       ],
+    );
+  }
+
+  Padding getMessageItem(BuildContext context, LogEntry log) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TinyLogsAddLogPage(
+                logEntry: log,
+              ),
+            ),
+          );
+        },
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              DateFormat('EEE\nMMM d').format(log.creationDate).toUpperCase(),
+              style: TextStyle(
+                color: showDate ? Colors.black54 : const Color(0x00000000),
+                fontWeight: FontWeight.bold,
+                fontSize: 12.0,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(width: 16.0),
+            Expanded(
+                child: Container(
+              padding: const EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12.0),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 4.0,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Text(
+                log.content,
+                style: const TextStyle(
+                  fontSize: 16.0,
+                ),
+              ),
+            )),
+          ],
+        ),
+      ),
     );
   }
 
@@ -163,6 +185,6 @@ class LogItem extends StatelessWidget {
         ),
       );
     }
-    return SizedBox();
+    return const SizedBox();
   }
 }

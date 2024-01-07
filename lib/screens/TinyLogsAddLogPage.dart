@@ -8,9 +8,9 @@ import 'package:tinylogs/screens/TinyLogsHomePage.dart' show TinyLogsHomePage;
 import '../data/DatabaseHelper.dart';
 
 class TinyLogsAddLogPage extends StatefulWidget {
-  final bool isOnboardingFlow;
+  final LogEntry? logEntry;
 
-  const TinyLogsAddLogPage({super.key, this.isOnboardingFlow = false});
+  const TinyLogsAddLogPage({super.key, this.logEntry});
 
   @override
   State<TinyLogsAddLogPage> createState() => _TinyLogsAddLogPageState();
@@ -20,6 +20,26 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
   DateTime selectedDate = DateTime.now();
   bool submitButtonEnabled = false;
   String logText = "";
+  late TextEditingController _textController;
+
+  @override
+  void initState() {
+    super.initState();
+    _textController =
+        TextEditingController(text: widget.logEntry?.content ?? '');
+    logText = _textController.text;
+    submitButtonEnabled = _textController.text.length >= 10;
+
+    if (widget.logEntry != null) {
+      selectedDate = widget.logEntry!.creationDate;
+    }
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -113,6 +133,7 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
             maxLines: null,
             autofocus: true,
             onChanged: _handleTextChanged,
+            controller: _textController,
             decoration: const InputDecoration.collapsed(
               hintText: 'I am thankful for',
               hintStyle: TextStyle(
@@ -147,6 +168,7 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
           ),
           IconButton(
               onPressed: () {
+                deleteLogEntry();
                 Navigator.of(context).pop();
               },
               icon: Image.asset(
@@ -179,13 +201,24 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
   }
 
   Future<void> storeLog() async {
-    int id = await DatabaseHelper.instance.insertLog(LogEntry(
-        creationDate: selectedDate,
-        content: logText,
-        lastUpdated: DateTime.now()));
+    String logMessage = "record not stored";
+    if (widget.logEntry != null) {
+      var logEntry = widget.logEntry!;
+      int id = await DatabaseHelper.instance.updateLog(LogEntry(
+          creationDate: logEntry.creationDate,
+          content: logEntry.content,
+          lastUpdated: DateTime.now()));
+      logMessage = "record at $id has been updated";
+    } else {
+      int id = await DatabaseHelper.instance.insertLog(LogEntry(
+          creationDate: selectedDate,
+          content: logText,
+          lastUpdated: DateTime.now()));
+      logMessage = "Log stored with ID $id";
+    }
 
     Fluttertoast.showToast(
-        msg: "Log stored with ID $id",
+        msg: logMessage,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
@@ -196,5 +229,21 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
 
   void markOnboardingComplete() {
     UserPreferences.setOnboardingComplete();
+  }
+
+  Future<void> deleteLogEntry() async {
+    int id = 0;
+    var logIDTemp = widget.logEntry?.logID;
+    if(logIDTemp != null) {
+       id = await DatabaseHelper.instance.deleteLog(widget.logEntry!.logID!);
+    }
+    Fluttertoast.showToast(
+        msg: "Log deleted with ID $id, $logIDTemp",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.grey[800],
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 }

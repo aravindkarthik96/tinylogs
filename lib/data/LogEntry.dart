@@ -1,5 +1,7 @@
+import 'dart:ffi';
+
 class LogEntry {
-  String? logID;
+  int?  logID;
   DateTime creationDate;
   String content;
   DateTime lastUpdated;
@@ -17,6 +19,7 @@ class LogEntry {
 
   factory LogEntry.fromMap(Map<String, dynamic> map) {
     return LogEntry(
+      logID: map['id'],
       creationDate: DateTime.parse(map['creationDate']),
       content: map['content'],
       lastUpdated: DateTime.parse(map['lastUpdated']),
