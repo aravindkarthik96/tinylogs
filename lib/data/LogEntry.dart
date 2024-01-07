@@ -8,7 +8,7 @@ class LogEntry {
 
   Map<String, dynamic> toMap() {
     return {
-      'logID': logID,
+      'id': logID,
       'creationDate': creationDate.toIso8601String(),
       'content': content,
       'lastUpdated': lastUpdated.toIso8601String(),

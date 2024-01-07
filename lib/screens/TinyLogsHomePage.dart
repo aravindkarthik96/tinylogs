@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'LogsPage.dart';
 import 'TinyLogsAddLogPage.dart';
 
 class TinyLogsHomePage extends StatefulWidget {
@@ -14,7 +15,7 @@ class _TinyLogsHomePageState extends State<TinyLogsHomePage> {
 
   final List<Widget> _children = [
     const PlaceholderWidget(Color(0xFFFFF0E5)),
-    const PlaceholderWidget(Colors.green),
+    const LogsPage(),
     const PlaceholderWidget(Colors.blue),
   ];
 
@@ -52,7 +53,8 @@ class _TinyLogsHomePageState extends State<TinyLogsHomePage> {
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
         currentIndex: _currentIndex,
-        selectedItemColor: const Color(0xFF662619),  // Color for the selected item
+        selectedItemColor: const Color(0xFF662619),
+        // Color for the selected item
         unselectedItemColor: const Color(0xFF6E6E6E),
         selectedLabelStyle: const TextStyle(
           fontFamily: 'SF Pro Text',

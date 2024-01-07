@@ -1,8 +1,18 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:tinylogs/screens/TinyLogsOnboardingPage.dart';
 
 
 void main() {
+  // Initialize sqflite for non-mobile platforms
+  if (!Platform.isAndroid && !Platform.isIOS) {
+    // This line is crucial
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+  }
+
   runApp(const TinyLogsApp());
 }
 
