@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:tnylogs/screens/TinyLogsHomePage.dart';
 
 class TinyLogsAddLogPage extends StatefulWidget {
   const TinyLogsAddLogPage({super.key});
@@ -121,7 +122,12 @@ class NakedTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {},
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const TinyLogsHomePage()),
+        );
+      },
       child: const Text('Done',
           textAlign: TextAlign.right,
           style: TextStyle(
