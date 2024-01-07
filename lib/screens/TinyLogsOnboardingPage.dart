@@ -54,7 +54,7 @@ class _TinyLogsOnboardingPageState extends State<TinyLogsOnboardingPage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const TinyLogsAddLogPage()),
+                    MaterialPageRoute(builder: (context) => const TinyLogsAddLogPage(isOnboardingFlow: true,)),
                   );
                 },
                 style: ElevatedButton.styleFrom(

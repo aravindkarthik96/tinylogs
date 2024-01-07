@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:tinylogs/screens/TinyLogsOnboardingPage.dart';
+import 'package:tinylogs/screens/TinyLogsSplashScreen.dart';
 
 
 void main() {
@@ -28,7 +29,7 @@ class TinyLogsApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      home: const TinyLogsOnboardingPage(),
+      home: const TinyLogsSplashScreen(),
     );
   }
 }

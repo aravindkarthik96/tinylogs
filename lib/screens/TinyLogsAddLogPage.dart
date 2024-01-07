@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:tinylogs/data/LogEntry.dart';
+import 'package:tinylogs/data/UserPreferences.dart';
 import 'package:tinylogs/screens/TinyLogsHomePage.dart' show TinyLogsHomePage;
 
 import '../data/DatabaseHelper.dart';
 
 class TinyLogsAddLogPage extends StatefulWidget {
-  const TinyLogsAddLogPage({super.key});
+  final bool isOnboardingFlow;
+
+  const TinyLogsAddLogPage({super.key, this.isOnboardingFlow = false});
 
   @override
   State<TinyLogsAddLogPage> createState() => _TinyLogsAddLogPageState();
@@ -81,6 +84,7 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
               onPressed: submitButtonEnabled
                   ? () {
                       storeLog();
+                      markOnboardingComplete();
                       navigateToNextPage(context);
                     }
                   : null,
@@ -188,5 +192,9 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
         backgroundColor: Colors.grey[800],
         textColor: Colors.white,
         fontSize: 16.0);
+  }
+
+  void markOnboardingComplete() {
+    UserPreferences.setOnboardingComplete();
   }
 }
