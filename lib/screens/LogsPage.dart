@@ -7,11 +7,12 @@ class LogsPage extends StatefulWidget {
   const LogsPage({super.key});
 
   @override
-  _LogsPageState createState() => _LogsPageState();
+  _LogsPageState createState() => _LogsPageState(); // Renamed to be public
 }
 
 class _LogsPageState extends State<LogsPage> {
   List<LogEntry> logs = [];
+  DateTime? previousDate;
 
   @override
   void initState() {
@@ -20,7 +21,6 @@ class _LogsPageState extends State<LogsPage> {
   }
 
   Future<void> loadLogs() async {
-    // Retrieve logs from the database and setState
     logs = await DatabaseHelper.instance.queryAllLogs();
     setState(() {});
   }
@@ -31,10 +31,10 @@ class _LogsPageState extends State<LogsPage> {
       body: CustomScrollView(
         slivers: <Widget>[
           const SliverAppBar(
-            automaticallyImplyLeading: false, // No back button
-            pinned: false, // Set to true if you want the AppBar to remain visible when scrolling
-            snap: false, // Snap effects
-            floating: false,
+            automaticallyImplyLeading: false,
+            pinned: false,
+            snap: true,
+            floating: true,
             centerTitle: false,
             title: Text(
               "Logs",
@@ -43,43 +43,23 @@ class _LogsPageState extends State<LogsPage> {
                 fontWeight: FontWeight.w700,
                 fontSize: 34,
                 color: Color(0xFFFF6040),
-                // Note: The 'height' in TextStyle is a multiplier, not a pixel value.
               ),
             ),
-            backgroundColor: Colors.white, // Set your desired background color
+            backgroundColor: Colors.white,
           ),
           SliverList.builder(
             itemCount: logs.length,
             itemBuilder: (context, index) {
               final log = logs[index];
-              return LogItem(log: log);
+              var currentDate = log.creationDate;
+              bool showDate = !(previousDate?.day == currentDate.day &&
+                  previousDate?.month == currentDate.month &&
+                  previousDate?.year == currentDate.year);
+              previousDate = currentDate;
+              return LogItem(log: log, showDate: showDate);
             },
           )
         ],
-      ),
-    );
-
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false, // No back button
-        title: const Text(
-          "Logs",
-          style: TextStyle(
-            fontFamily: "SF Pro Display",
-            fontWeight: FontWeight.w700,
-            fontSize: 34,
-            color: Color(0xFFFF6040),
-          ),
-        ),
-        backgroundColor: Colors.white,
-        centerTitle: false,
-      ),
-      body: ListView.builder(
-        itemCount: logs.length,
-        itemBuilder: (context, index) {
-          final log = logs[index];
-          return LogItem(log: log);
-        },
       ),
     );
   }
@@ -87,12 +67,13 @@ class _LogsPageState extends State<LogsPage> {
 
 class LogItem extends StatelessWidget {
   final LogEntry log;
+  final bool showDate;
 
-  const LogItem({Key? key, required this.log}) : super(key: key);
+  const LogItem({Key? key, required this.log, this.showDate = true})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // Format the date to match the design
     String formattedDate =
         DateFormat('EEE, MMM d').format(log.creationDate).toUpperCase();
 
@@ -101,7 +82,7 @@ class LogItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (formattedDate.isNotEmpty)
+          if (formattedDate.isNotEmpty && showDate)
             Padding(
               padding: const EdgeInsets.only(bottom: 4.0),
               child: Text(
@@ -113,10 +94,11 @@ class LogItem extends StatelessWidget {
               ),
             ),
           Container(
-            padding: EdgeInsets.all(16.0),
+            width: double.infinity,
+            padding: const EdgeInsets.all(16.0),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(12.0),
+              borderRadius: BorderRadius.circular(8.0),
               boxShadow: const [
                 BoxShadow(
                   color: Colors.black12,

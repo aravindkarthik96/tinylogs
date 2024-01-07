@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tinylogs/screens/TinyLogsAddLogPage.dart';
 import 'package:tinylogs/screens/TinyLogsHomePage.dart';
 import 'package:tinylogs/screens/TinyLogsOnboardingPage.dart';
 
@@ -18,6 +17,7 @@ class _TinyLogsSplashScreenState extends State<TinyLogsSplashScreen> {
     super.initState();
     _navigateToNextScreen();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +38,9 @@ class _TinyLogsSplashScreenState extends State<TinyLogsSplashScreen> {
     // Wait for 2 seconds to simulate a splash screen delay
     await Future.delayed(const Duration(seconds: 2));
 
-    var page =  mounted && onboardingComplete ? const TinyLogsHomePage() : const TinyLogsOnboardingPage();
+    var page = mounted && onboardingComplete
+        ? const TinyLogsHomePage()
+        : const TinyLogsOnboardingPage();
 
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
       return page;

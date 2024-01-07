@@ -44,7 +44,7 @@ class DatabaseHelper {
 
   Future<List<LogEntry>> queryAllLogs() async {
     Database db = await database;
-    List<Map> maps = await db.query(table);
+    List<Map> maps = await db.query(table, orderBy: "creationDate desc");
     return List.generate(maps.length, (i) {
       return LogEntry.fromMap(maps[i] as Map<String, dynamic>);
     });
