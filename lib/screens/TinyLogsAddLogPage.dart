@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:tinylogs/data/LogEntry.dart';
 import 'package:tinylogs/screens/TinyLogsHomePage.dart' show TinyLogsHomePage;
+
+import '../data/DatabaseHelper.dart';
 
 class TinyLogsAddLogPage extends StatefulWidget {
   const TinyLogsAddLogPage({super.key});
@@ -12,6 +16,7 @@ class TinyLogsAddLogPage extends StatefulWidget {
 class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
   DateTime selectedDate = DateTime.now();
   bool submitButtonEnabled = false;
+  String logText = "";
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -30,6 +35,7 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
   void _handleTextChanged(String newText) {
     setState(() {
       submitButtonEnabled = newText.length >= 10;
+      logText = newText;
     });
   }
 
@@ -74,11 +80,8 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
             child: TextButton(
               onPressed: submitButtonEnabled
                   ? () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const TinyLogsHomePage()),
-                      );
+                      storeLog();
+                      navigateToNextPage(context);
                     }
                   : null,
               child: Text(
@@ -151,14 +154,39 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
                     : const Color(0xFFC8C8C8),
               )),
           const Spacer(),
-          !submitButtonEnabled ? IconButton(
-              onPressed: () {},
-              icon: Image.asset("assets/images/icon_ask_hint.png",
-                  width: 28, height: 28)) : const SizedBox(),
+          !submitButtonEnabled
+              ? IconButton(
+                  onPressed: () {},
+                  icon: Image.asset("assets/images/icon_ask_hint.png",
+                      width: 28, height: 28))
+              : const SizedBox(),
           const SizedBox(width: 28),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+  }
+
+  void navigateToNextPage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const TinyLogsHomePage()),
+    );
+  }
+
+  Future<void> storeLog() async {
+    int id = await DatabaseHelper.instance.insertLog(LogEntry(
+        creationDate: selectedDate,
+        content: logText,
+        lastUpdated: DateTime.now()));
+
+    Fluttertoast.showToast(
+        msg: "Log stored with ID $id",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.grey[800],
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 }
