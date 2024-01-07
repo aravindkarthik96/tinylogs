@@ -11,6 +11,7 @@ class TinyLogsAddLogPage extends StatefulWidget {
 
 class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
   DateTime selectedDate = DateTime.now();
+  bool submitButtonEnabled = false;
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -24,6 +25,12 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
         selectedDate = picked;
       });
     }
+  }
+
+  void _handleTextChanged(String newText) {
+    setState(() {
+      submitButtonEnabled = newText.length >= 10;
+    });
   }
 
   @override
@@ -61,22 +68,45 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
             ],
           ),
         ),
-        actions: const <Widget>[
+        actions: <Widget>[
           Padding(
-            padding: EdgeInsets.only(right: 28),
-            child: NakedTextButton(),
+            padding: const EdgeInsets.only(right: 28),
+            child: TextButton(
+              onPressed: submitButtonEnabled
+                  ? () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const TinyLogsHomePage()),
+                      );
+                    }
+                  : null,
+              child: Text(
+                'Done',
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                  fontSize: 17.0,
+                  letterSpacing: -0.02,
+                  color: submitButtonEnabled
+                      ? const Color(0xFF6E6E6E)
+                      : const Color(0xFFC8C8C8),
+                  height: 1.4,
+                ),
+              ),
+            ),
           )
         ],
       ),
-      body: const Padding(
-        padding: EdgeInsets.all(16.0),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Padding(
-          padding: EdgeInsets.fromLTRB(4, 0, 4, 0),
+          padding: const EdgeInsets.fromLTRB(4, 0, 4, 0),
           child: TextField(
             keyboardType: TextInputType.multiline,
             maxLines: null,
             autofocus: true,
-            decoration: InputDecoration.collapsed(
+            onChanged: _handleTextChanged,
+            decoration: const InputDecoration.collapsed(
               hintText: 'I am thankful for',
               hintStyle: TextStyle(
                 color: Color(0xFFC8C8C8),
@@ -85,7 +115,7 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
                 letterSpacing: -0.41,
               ),
             ),
-            style: TextStyle(
+            style: const TextStyle(
               color: Color(0xFF404040),
               fontSize: 17.0,
               height: 1.4,
@@ -98,50 +128,37 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
         children: [
           const SizedBox(width: 28),
           IconButton(
-              onPressed: () {},
-              icon: Image.asset("assets/images/icon_share.png",
-                  width: 28, height: 28)),
+            onPressed: () {},
+            icon: Image.asset(
+              "assets/images/icon_share.png",
+              width: 28,
+              height: 28,
+              color: submitButtonEnabled
+                  ? const Color(0xFF919191)
+                  : const Color(0xFFC8C8C8),
+            ),
+          ),
           IconButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              icon: Image.asset("assets/images/icon_delete.png",
-                  width: 28, height: 28)),
+              icon: Image.asset(
+                "assets/images/icon_delete.png",
+                width: 28,
+                height: 28,
+                color: submitButtonEnabled
+                    ? const Color(0xFF919191)
+                    : const Color(0xFFC8C8C8),
+              )),
           const Spacer(),
-          IconButton(
+          !submitButtonEnabled ? IconButton(
               onPressed: () {},
               icon: Image.asset("assets/images/icon_ask_hint.png",
-                  width: 28, height: 28)),
+                  width: 28, height: 28)) : const SizedBox(),
           const SizedBox(width: 28),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-    );
-  }
-}
-
-class NakedTextButton extends StatelessWidget {
-  const NakedTextButton({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const TinyLogsHomePage()),
-        );
-      },
-      child: const Text('Done',
-          textAlign: TextAlign.right,
-          style: TextStyle(
-            fontSize: 17.0,
-            letterSpacing: -0.02,
-            color: Color(0xFFC8C8C8),
-            height: 1.4,
-          )),
     );
   }
 }
