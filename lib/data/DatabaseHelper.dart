@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -77,4 +78,25 @@ class DatabaseHelper {
     }
     return count;
   }
+
+  Future<List<LogEntry>> queryTodayLog() async {
+    Database db = await database;
+
+    // Get the current date and format it to 'yyyy-MM-dd' which is the format SQLite understands
+    String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+
+    // Use the formatted date in the where clause to match dates with the same year, month, and day
+    List<Map> maps = await db.query(
+        table,
+        where: "date(creationDate) = ?",
+        whereArgs: [currentDate],
+        orderBy: "creationDate DESC"
+    );
+
+    // Convert the List<Map> to a List<LogEntry>
+    return List.generate(maps.length, (i) {
+      return LogEntry.fromMap(maps[i] as Map<String, dynamic>);
+    });
+  }
+
 }

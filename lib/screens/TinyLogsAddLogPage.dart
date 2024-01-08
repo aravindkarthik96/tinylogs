@@ -3,7 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:tinylogs/data/LogEntry.dart';
 import 'package:tinylogs/data/UserPreferences.dart';
-import 'package:tinylogs/screens/TinyLogsHomePage.dart' show TinyLogsHomePage;
+import 'package:tinylogs/screens/home/TinyLogsHomePage.dart' show TinyLogsHomePage;
 
 import '../data/DatabaseHelper.dart';
 

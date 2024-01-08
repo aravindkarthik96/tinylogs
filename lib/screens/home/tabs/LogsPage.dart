@@ -195,10 +195,10 @@ class LogItem extends StatelessWidget {
           decoration: const BoxDecoration(
             color: Color(0xFFFFF0E5),
             image: DecorationImage(
-              image: AssetImage('assets/images/background_logs_month_separator.png'),
-              fit: BoxFit.fitHeight,
-              alignment: Alignment.topRight
-            ),
+                image: AssetImage(
+                    'assets/images/background_logs_month_separator.png'),
+                fit: BoxFit.fitHeight,
+                alignment: Alignment.topRight),
           ),
           child: Row(
             children: [

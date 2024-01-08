@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tinylogs/screens/home/tabs/TodayPage.dart';
 
-import 'LogsPage.dart';
-import 'TinyLogsAddLogPage.dart';
+import 'tabs/LogsPage.dart';
+import '../TinyLogsAddLogPage.dart';
 
 class TinyLogsHomePage extends StatefulWidget {
   const TinyLogsHomePage({super.key});
@@ -14,8 +15,8 @@ class _TinyLogsHomePageState extends State<TinyLogsHomePage> {
   int _currentIndex = 0;
 
   final List<Widget> _children = [
+    const TodayPage(),
     const LogsPage(),
-    const PlaceholderWidget(Color(0xFFFFF0E5)),
     const PlaceholderWidget(Colors.blue),
   ];
 
@@ -73,22 +74,22 @@ class _TinyLogsHomePageState extends State<TinyLogsHomePage> {
           BottomNavigationBarItem(
             icon: Image.asset(
               _currentIndex == 0
-                  ? "assets/images/icon_notes_selected.png"
-                  : "assets/images/icon_notes_normal.png",
-              width: 24,
-              height: 24,
-            ),
-            label: 'Logs',
-          ),
-          BottomNavigationBarItem(
-            icon: Image.asset(
-              _currentIndex == 1
                   ? "assets/images/icon_today_selected.png"
                   : "assets/images/icon_today_normal.png",
               width: 24,
               height: 24,
             ),
             label: 'Today',
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              _currentIndex == 1
+                  ? "assets/images/icon_notes_selected.png"
+                  : "assets/images/icon_notes_normal.png",
+              width: 24,
+              height: 24,
+            ),
+            label: 'Logs',
           ),
           BottomNavigationBarItem(
             icon: Image.asset(
