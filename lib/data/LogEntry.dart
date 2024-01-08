@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class LogEntry {
   int?  logID;
   DateTime creationDate;

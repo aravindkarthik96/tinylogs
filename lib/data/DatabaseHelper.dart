@@ -9,9 +9,11 @@ class DatabaseHelper {
   static const table = 'logs';
 
   DatabaseHelper._privateConstructor();
+
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
 
   static Database? _database;
+
   Future<Database> get database async {
     if (_database != null) return _database!;
     _database = await _initDatabase();
@@ -21,8 +23,7 @@ class DatabaseHelper {
   _initDatabase() async {
     String path = join(await getDatabasesPath(), _databaseName);
     return await openDatabase(path,
-        version: _databaseVersion,
-        onCreate: _onCreate);
+        version: _databaseVersion, onCreate: _onCreate);
   }
 
   Future _onCreate(Database db, int version) async {
@@ -52,8 +53,8 @@ class DatabaseHelper {
 
   Future<int> updateLog(LogEntry log) async {
     Database db = await database;
-    return await db.update(table, log.toMap(),
-        where: 'id = ?', whereArgs: [log.logID]);
+    return await db
+        .update(table, log.toMap(), where: 'id = ?', whereArgs: [log.logID]);
   }
 
   Future<int> deleteLog(int id) async {
@@ -61,4 +62,19 @@ class DatabaseHelper {
     return await db.delete(table, where: 'id = ?', whereArgs: [id]);
   }
 
+  Future<int> getMonthlyCount(int month, int year) async {
+    Database db = await database;
+    String monthStr = month.toString().padLeft(2, '0');
+    String yearStr = year.toString(); // For four-digit year
+
+    var result = await db.rawQuery(
+      "SELECT COUNT(*) as count FROM $table WHERE strftime('%m', creationDate) == '$monthStr' AND strftime('%Y', creationDate) == '$yearStr'",
+    );
+
+    int count = 0;
+    if (result.isNotEmpty) {
+      count = Sqflite.firstIntValue(result) ?? 0; // Extract the first integer value or 0 if null
+    }
+    return count;
+  }
 }

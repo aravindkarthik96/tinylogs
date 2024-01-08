@@ -8,7 +8,7 @@ class LogsPage extends StatefulWidget {
   const LogsPage({super.key});
 
   @override
-  _LogsPageState createState() => _LogsPageState(); // Renamed to be public
+  _LogsPageState createState() => _LogsPageState();
 }
 
 class _LogsPageState extends State<LogsPage> {
@@ -21,8 +21,10 @@ class _LogsPageState extends State<LogsPage> {
   }
 
   Future<void> loadLogs() async {
-    logs = await DatabaseHelper.instance.queryAllLogs();
-    setState(() {});
+    List<LogEntry> updatedLogs = await DatabaseHelper.instance.queryAllLogs();
+    setState(() {
+      logs = updatedLogs;
+    });
   }
 
   @override
@@ -77,13 +79,11 @@ class _LogsPageState extends State<LogsPage> {
                       ),
                     ),
                   );
-                  setState(() {
-                    loadLogs();
-                  });
+                  await loadLogs();
                 },
               );
             },
-          )
+          ),
         ],
       ),
     );
@@ -125,14 +125,35 @@ class LogItem extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              DateFormat('EEE\nMMM d').format(log.creationDate).toUpperCase(),
-              style: TextStyle(
-                color: showDate ? Colors.black54 : const Color(0x00000000),
-                fontWeight: FontWeight.bold,
-                fontSize: 12.0,
-              ),
+            RichText(
               textAlign: TextAlign.center,
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text:
+                        '${DateFormat('EEE').format(log.creationDate).toUpperCase()}\n',
+                    style: TextStyle(
+                      fontFamily: "SF Pro Text",
+                      color: showDate
+                          ? const Color(0xFF6E6E6E)
+                          : Colors.transparent,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 10.0,
+                      height: 1.2,
+                    ),
+                  ),
+                  TextSpan(
+                    text: DateFormat('d').format(log.creationDate),
+                    style: TextStyle(
+                      fontFamily: "SF Pro Text",
+                      color: showDate ? Colors.black : Colors.transparent,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 17.0,
+                      height: 1.3,
+                    ),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(width: 16.0),
             Expanded(
@@ -168,32 +189,71 @@ class LogItem extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
         child: Container(
           width: double.infinity,
-          height: showMonth ? 120 : 0,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: const Color(0xFFFFF0E5),
-            borderRadius: BorderRadius.circular(12.0),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 4.0,
-                offset: Offset(0, 2),
-              ),
-            ],
+          height: 120,
+          alignment: Alignment.centerLeft,
+          decoration: const BoxDecoration(
+            color: Color(0xFFFFF0E5),
           ),
-          child: Text(
-            DateFormat("MMM").format(log.creationDate).toString(),
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-                fontFamily: "SF Pro Display",
-                fontSize: 26,
-                fontWeight: FontWeight.w400,
-                height: 1.2,
-                color: Color(0xFF662619)),
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(28, 0, 16, 0),
+                child: Text(
+                  DateFormat("MMMM").format(log.creationDate).toString(),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontFamily: "SF Pro Display",
+                      fontSize: 26,
+                      fontWeight: FontWeight.w400,
+                      height: 1.2,
+                      color: Color(0xFF662619)),
+                ),
+              ),
+              Expanded(
+                child: FutureBuilder<String>(
+                  future: getMonthPrompt(log.creationDate),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text("Error: ${snapshot.error}");
+                    } else if (snapshot.hasData) {
+                      return Text(
+                        snapshot.data!,
+                        style: const TextStyle(
+                          fontFamily: "SF Pro Text",
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15,
+                          height: 1.3,
+                        ),
+                      );
+                    } else {
+                      return const Text("No data available");
+                    }
+                  },
+                ),
+              )
+            ],
           ),
         ),
       );
     }
     return const SizedBox();
+  }
+
+  Future<String> getMonthPrompt(DateTime creationDate) async {
+    int count = await DatabaseHelper.instance
+        .getMonthlyCount(creationDate.month, creationDate.year);
+    var currentDate = DateTime.now();
+
+    // Determine the plural form of "log"
+    String logPlural = count == 1 ? "log" : "logs";
+
+    if (currentDate.month == creationDate.month &&
+        currentDate.year == creationDate.year) {
+      return "$count $logPlural and counting!";
+    }
+
+    return "$count $logPlural!";
   }
 }
