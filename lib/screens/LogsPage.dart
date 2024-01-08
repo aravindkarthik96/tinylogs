@@ -69,18 +69,17 @@ class _LogsPageState extends State<LogsPage> {
                 showDate: showDate,
                 showMonth: showMonth,
                 onTap: (logEntry) async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TinyLogsAddLogPage(
-                          logEntry: log,
-                        ),
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TinyLogsAddLogPage(
+                        logEntry: log,
                       ),
-                    );
-
-                    setState(() {
-
-                    });
+                    ),
+                  );
+                  setState(() {
+                    loadLogs();
+                  });
                 },
               );
             },
