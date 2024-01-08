@@ -44,6 +44,7 @@ flutter:
     - assets/images/icon_insights_selected.png
     - assets/images/icon_notes_normal.png
     - assets/images/icon_notes_selected.png
+    - assets/images/background_logs_month_separator.png
 
 fonts:
   - family: SF Pro Text

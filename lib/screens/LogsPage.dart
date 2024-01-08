@@ -194,6 +194,11 @@ class LogItem extends StatelessWidget {
           alignment: Alignment.centerLeft,
           decoration: const BoxDecoration(
             color: Color(0xFFFFF0E5),
+            image: DecorationImage(
+              image: AssetImage('assets/images/background_logs_month_separator.png'),
+              fit: BoxFit.fitHeight,
+              alignment: Alignment.topRight
+            ),
           ),
           child: Row(
             children: [
@@ -247,7 +252,6 @@ class LogItem extends StatelessWidget {
         .getMonthlyCount(creationDate.month, creationDate.year);
     var currentDate = DateTime.now();
 
-    // Determine the plural form of "log"
     String logPlural = count == 1 ? "log" : "logs";
 
     if (currentDate.month == creationDate.month &&
