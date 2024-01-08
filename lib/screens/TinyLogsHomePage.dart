@@ -14,8 +14,8 @@ class _TinyLogsHomePageState extends State<TinyLogsHomePage> {
   int _currentIndex = 0;
 
   final List<Widget> _children = [
-    const PlaceholderWidget(Color(0xFFFFF0E5)),
     const LogsPage(),
+    const PlaceholderWidget(Color(0xFFFFF0E5)),
     const PlaceholderWidget(Colors.blue),
   ];
 
@@ -33,12 +33,13 @@ class _TinyLogsHomePageState extends State<TinyLogsHomePage> {
         width: 64.0,
         height: 64.0,
         child: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
+          onPressed: () async {
+            final result = await Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => const TinyLogsAddLogPage()),
             );
+            setState(() {});
           },
           backgroundColor: Colors.red,
           shape: const CircleBorder(),
@@ -72,22 +73,22 @@ class _TinyLogsHomePageState extends State<TinyLogsHomePage> {
           BottomNavigationBarItem(
             icon: Image.asset(
               _currentIndex == 0
-                  ? "assets/images/icon_today_selected.png"
-                  : "assets/images/icon_today_normal.png",
-              width: 24,
-              height: 24,
-            ),
-            label: 'Today',
-          ),
-          BottomNavigationBarItem(
-            icon: Image.asset(
-              _currentIndex == 1
                   ? "assets/images/icon_notes_selected.png"
                   : "assets/images/icon_notes_normal.png",
               width: 24,
               height: 24,
             ),
             label: 'Logs',
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              _currentIndex == 1
+                  ? "assets/images/icon_today_selected.png"
+                  : "assets/images/icon_today_normal.png",
+              width: 24,
+              height: 24,
+            ),
+            label: 'Today',
           ),
           BottomNavigationBarItem(
             icon: Image.asset(

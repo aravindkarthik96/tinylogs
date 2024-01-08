@@ -68,6 +68,20 @@ class _LogsPageState extends State<LogsPage> {
                 log: log,
                 showDate: showDate,
                 showMonth: showMonth,
+                onTap: (logEntry) async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TinyLogsAddLogPage(
+                          logEntry: log,
+                        ),
+                      ),
+                    );
+
+                    setState(() {
+
+                    });
+                },
               );
             },
           )
@@ -81,12 +95,14 @@ class LogItem extends StatelessWidget {
   final LogEntry log;
   final bool showDate;
   final bool showMonth;
+  final Function(LogEntry logEntry) onTap;
 
   const LogItem(
       {Key? key,
       required this.log,
       this.showDate = false,
-      this.showMonth = false})
+      this.showMonth = false,
+      required this.onTap})
       : super(key: key);
 
   @override
@@ -94,24 +110,18 @@ class LogItem extends StatelessWidget {
     return Column(
       children: [
         getMonthWidget(showMonth),
-        getMessageItem(context, log),
+        getMessageItem(context, log, onTap),
       ],
     );
   }
 
-  Padding getMessageItem(BuildContext context, LogEntry log) {
+  Padding getMessageItem(BuildContext context, LogEntry log,
+      void Function(LogEntry logEntry) onTap) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: InkWell(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => TinyLogsAddLogPage(
-                logEntry: log,
-              ),
-            ),
-          );
+          onTap.call(log);
         },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,

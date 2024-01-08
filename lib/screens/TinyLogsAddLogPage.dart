@@ -36,6 +36,14 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
   }
 
   @override
+  void reassemble() {
+    setState(() {
+
+    });
+    super.reassemble();
+  }
+
+  @override
   void dispose() {
     _textController.dispose();
     super.dispose();
@@ -205,8 +213,9 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
     if (widget.logEntry != null) {
       var logEntry = widget.logEntry!;
       int id = await DatabaseHelper.instance.updateLog(LogEntry(
-          creationDate: logEntry.creationDate,
-          content: logEntry.content,
+          logID: logEntry.logID,
+          creationDate: selectedDate,
+          content: logText,
           lastUpdated: DateTime.now()));
       logMessage = "record at $id has been updated";
     } else {
@@ -234,8 +243,8 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
   Future<void> deleteLogEntry() async {
     int id = 0;
     var logIDTemp = widget.logEntry?.logID;
-    if(logIDTemp != null) {
-       id = await DatabaseHelper.instance.deleteLog(widget.logEntry!.logID!);
+    if (logIDTemp != null) {
+      id = await DatabaseHelper.instance.deleteLog(widget.logEntry!.logID!);
     }
     Fluttertoast.showToast(
         msg: "Log deleted with ID $id, $logIDTemp",
