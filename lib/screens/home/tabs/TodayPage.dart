@@ -67,45 +67,105 @@ class _TodayPageState extends State<TodayPage> {
             backgroundColor: const Color(0xFFFFF0E5),
           ),
           const SliverPadding(padding: EdgeInsets.only(top: 32)),
-          SliverList.builder(
-            itemCount: logs.length,
-            itemBuilder: (context, index) {
-              final log = logs[index];
-              var currentDate = log.creationDate;
-
-              var previousDate = index == 0
-                  ? null
-                  : logs.elementAtOrNull(index - 1)?.creationDate;
-              bool showDate = !(previousDate?.day == currentDate.day &&
-                  previousDate?.month == currentDate.month &&
-                  previousDate?.year == currentDate.year);
-
-              bool showMonth = !(previousDate?.month == currentDate.month &&
-                  previousDate?.year == currentDate.year);
-              previousDate = currentDate;
-
-              return LogItem(
-                log: log,
-                showDate: showDate,
-                showMonth: showMonth,
-                onTap: (logEntry) async {
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => TinyLogsAddLogPage(
-                        logEntry: log,
-                      ),
-                    ),
-                  );
-                  await loadLogs();
-                },
-              );
-            },
-          ),
+          getContentView(),
           const SliverPadding(padding: EdgeInsets.only(bottom: 100))
         ],
       ),
       backgroundColor: const Color(0xFFFFF0E5),
+    );
+  }
+
+  SliverList createLogList() {
+    return SliverList.builder(
+      itemCount: logs.length,
+      itemBuilder: (context, index) {
+        final log = logs[index];
+        var currentDate = log.creationDate;
+
+        var previousDate =
+            index == 0 ? null : logs.elementAtOrNull(index - 1)?.creationDate;
+        bool showDate = !(previousDate?.day == currentDate.day &&
+            previousDate?.month == currentDate.month &&
+            previousDate?.year == currentDate.year);
+
+        bool showMonth = !(previousDate?.month == currentDate.month &&
+            previousDate?.year == currentDate.year);
+        previousDate = currentDate;
+
+        return LogItem(
+          log: log,
+          showDate: showDate,
+          showMonth: showMonth,
+          onTap: (logEntry) async {
+            await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TinyLogsAddLogPage(
+                  logEntry: log,
+                ),
+              ),
+            );
+            await loadLogs();
+          },
+        );
+      },
+    );
+  }
+
+  Widget getContentView() {
+    if (logs.isNotEmpty) {
+      return createLogList();
+    } else {
+      return createEmptyPage();
+    }
+  }
+
+  Widget createEmptyPage() {
+    return SliverFillRemaining(
+      hasScrollBody: false,  // Ensures it doesn't scroll if not needed
+      child: Center(  // This will center the Padding widget in the SliverFillRemaining
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(46, 0, 46, 0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,  // Use min to wrap content size
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset(
+                "assets/images/icon_today_empty_state.png",
+                width: 98.99,
+                height: 48.42,
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              const Text(
+                "Hola Joao!",
+                style: TextStyle(
+                  fontFamily: "SF Pro Display",
+                  fontWeight: FontWeight.w700,
+                  fontSize: 34,
+                  color: Color(0xFFFF6040),
+                ),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              const Text(
+                "Research says that being grateful every day unlocks happiness. Record your first thanks for the day",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: "SF Pro Display",
+                  fontSize: 17,
+                  fontWeight: FontWeight.w400,
+                  height: 1.4,
+                  color: Color(0xFF662619),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
