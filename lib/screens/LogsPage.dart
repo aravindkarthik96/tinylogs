@@ -84,6 +84,7 @@ class _LogsPageState extends State<LogsPage> {
               );
             },
           ),
+          const SliverPadding(padding: EdgeInsets.only(bottom: 100))
         ],
       ),
     );
