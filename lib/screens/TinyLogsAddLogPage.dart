@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:tinylogs/data/LogEntry.dart';
 import 'package:tinylogs/data/UserPreferences.dart';
-import 'package:tinylogs/screens/home/TinyLogsHomePage.dart' show TinyLogsHomePage;
+import 'package:tinylogs/screens/home/TinyLogsHomePage.dart'
+    show TinyLogsHomePage;
 
 import '../data/DatabaseHelper.dart';
 
@@ -33,14 +33,6 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
     if (widget.logEntry != null) {
       selectedDate = widget.logEntry!.creationDate;
     }
-  }
-
-  @override
-  void reassemble() {
-    setState(() {
-
-    });
-    super.reassemble();
   }
 
   @override
@@ -209,31 +201,19 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
   }
 
   Future<void> storeLog() async {
-    String logMessage = "record not stored";
     if (widget.logEntry != null) {
       var logEntry = widget.logEntry!;
-      int id = await DatabaseHelper.instance.updateLog(LogEntry(
+      await DatabaseHelper.instance.updateLog(LogEntry(
           logID: logEntry.logID,
           creationDate: selectedDate,
           content: logText,
           lastUpdated: DateTime.now()));
-      logMessage = "record at $id has been updated";
     } else {
-      int id = await DatabaseHelper.instance.insertLog(LogEntry(
+      await DatabaseHelper.instance.insertLog(LogEntry(
           creationDate: selectedDate,
           content: logText,
           lastUpdated: DateTime.now()));
-      logMessage = "Log stored with ID $id";
     }
-
-    Fluttertoast.showToast(
-        msg: logMessage,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.grey[800],
-        textColor: Colors.white,
-        fontSize: 16.0);
   }
 
   void markOnboardingComplete() {
@@ -241,18 +221,9 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
   }
 
   Future<void> deleteLogEntry() async {
-    int id = 0;
     var logIDTemp = widget.logEntry?.logID;
     if (logIDTemp != null) {
-      id = await DatabaseHelper.instance.deleteLog(widget.logEntry!.logID!);
+      await DatabaseHelper.instance.deleteLog(widget.logEntry!.logID!);
     }
-    Fluttertoast.showToast(
-        msg: "Log deleted with ID $id, $logIDTemp",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.grey[800],
-        textColor: Colors.white,
-        fontSize: 16.0);
   }
 }

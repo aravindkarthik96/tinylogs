@@ -30,28 +30,6 @@ class _TinyLogsHomePageState extends State<TinyLogsHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _children[_currentIndex],
-      floatingActionButton: SizedBox(
-        width: 64.0,
-        height: 64.0,
-        child: FloatingActionButton(
-          onPressed: () async {
-            final result = await Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const TinyLogsAddLogPage()),
-            );
-            setState(() {});
-          },
-          backgroundColor: Colors.red,
-          shape: const CircleBorder(),
-          child: Image.asset(
-            "assets/images/icon_edit_fab.png",
-            width: 24,
-            height: 24,
-          ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
         currentIndex: _currentIndex,

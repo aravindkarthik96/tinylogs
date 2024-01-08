@@ -30,6 +30,28 @@ class _TodayPageState extends State<TodayPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: SizedBox(
+        width: 64.0,
+        height: 64.0,
+        child: FloatingActionButton(
+          onPressed: () async {
+            final result = await Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const TinyLogsAddLogPage()),
+            );
+            setState(() {});
+          },
+          backgroundColor: Colors.red,
+          shape: const CircleBorder(),
+          child: Image.asset(
+            "assets/images/icon_edit_fab.png",
+            width: 24,
+            height: 24,
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
@@ -121,13 +143,11 @@ class _TodayPageState extends State<TodayPage> {
   }
 
   Widget createEmptyPage() {
-    return SliverFillRemaining(
-      hasScrollBody: false,  // Ensures it doesn't scroll if not needed
-      child: Center(  // This will center the Padding widget in the SliverFillRemaining
+    return SliverToBoxAdapter(
+      child: Center(
         child: Padding(
-          padding: EdgeInsets.fromLTRB(46, 0, 46, 0),
+          padding: const EdgeInsets.fromLTRB(46,168,46,0),
           child: Column(
-            mainAxisSize: MainAxisSize.min,  // Use min to wrap content size
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -152,7 +172,7 @@ class _TodayPageState extends State<TodayPage> {
                 height: 16,
               ),
               const Text(
-                "Research says that being grateful every day unlocks happiness. Record your first thanks for the day",
+                "Research says that being grateful everyday unlocks happiness. Record your first thanks for the day ",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: "SF Pro Display",
