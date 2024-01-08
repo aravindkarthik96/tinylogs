@@ -35,12 +35,14 @@ class _TodayPageState extends State<TodayPage> {
         height: 64.0,
         child: FloatingActionButton(
           onPressed: () async {
-            final result = await Navigator.push(
+            await Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => const TinyLogsAddLogPage()),
             );
-            setState(() {});
+            setState(() {
+              loadLogs();
+            });
           },
           backgroundColor: Colors.red,
           shape: const CircleBorder(),
@@ -60,31 +62,34 @@ class _TodayPageState extends State<TodayPage> {
             snap: true,
             floating: true,
             centerTitle: false,
-            title: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  DateFormat('EEE, DD MMM').format(DateTime.now()),
-                  textAlign: TextAlign.left,
-                  style: const TextStyle(
-                    fontFamily: "SF Pro Display",
-                    fontSize: 13,
-                    fontWeight: FontWeight.w400,
-                    height: 1.4,
-                    color: Color(0xFF662619),
+            title: Padding(
+              padding: const EdgeInsets.only(left: 16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    DateFormat('EEE, DD MMM').format(DateTime.now()),
+                    textAlign: TextAlign.left,
+                    style: const TextStyle(
+                      fontFamily: "SF Pro Display",
+                      fontSize: 13,
+                      fontWeight: FontWeight.w400,
+                      height: 1.4,
+                      color: Color(0xFF662619),
+                    ),
                   ),
-                ),
-                const Text(
-                  "Today",
-                  style: TextStyle(
-                    fontFamily: "SF Pro Display",
-                    fontWeight: FontWeight.w700,
-                    fontSize: 34,
-                    color: Color(0xFFFF6040),
-                  ),
-                )
-              ],
+                  const Text(
+                    "Today",
+                    style: TextStyle(
+                      fontFamily: "SF Pro Display",
+                      fontWeight: FontWeight.w700,
+                      fontSize: 34,
+                      color: Color(0xFFFF6040),
+                    ),
+                  )
+                ],
+              ),
             ),
             backgroundColor: const Color(0xFFFFF0E5),
           ),
@@ -146,7 +151,7 @@ class _TodayPageState extends State<TodayPage> {
     return SliverToBoxAdapter(
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(46,168,46,0),
+          padding: const EdgeInsets.fromLTRB(46, 168, 46, 0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
