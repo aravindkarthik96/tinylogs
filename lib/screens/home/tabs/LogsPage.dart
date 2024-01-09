@@ -38,13 +38,16 @@ class _LogsPageState extends State<LogsPage> {
             snap: true,
             floating: true,
             centerTitle: false,
-            title: Text(
-              "Logs",
-              style: TextStyle(
-                fontFamily: "SF Pro Display",
-                fontWeight: FontWeight.w700,
-                fontSize: 34,
-                color: Color(0xFFFF6040),
+            title: Padding(
+              padding: EdgeInsets.only(left: 16.0),
+              child: Text(
+                "Logs",
+                style: TextStyle(
+                  fontFamily: "SF Pro Display",
+                  fontWeight: FontWeight.w700,
+                  fontSize: 34,
+                  color: Color(0xFFFF6040),
+                ),
               ),
             ),
             backgroundColor: Colors.white,

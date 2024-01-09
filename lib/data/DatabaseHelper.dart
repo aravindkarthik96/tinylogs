@@ -79,6 +79,20 @@ class DatabaseHelper {
     return count;
   }
 
+  Future<int> getLogCount() async {
+    Database db = await database;
+
+    var result = await db.rawQuery(
+      "SELECT COUNT(*) as count FROM $table",
+    );
+
+    int count = 0;
+    if (result.isNotEmpty) {
+      count = Sqflite.firstIntValue(result) ?? 0; // Extract the first integer value or 0 if null
+    }
+    return count;
+  }
+
   Future<List<LogEntry>> queryTodayLog() async {
     Database db = await database;
 
@@ -97,6 +111,21 @@ class DatabaseHelper {
     return List.generate(maps.length, (i) {
       return LogEntry.fromMap(maps[i] as Map<String, dynamic>);
     });
+  }
+
+  Future<List<DateTime>> fetchUniqueLogDates() async {
+    Database db = await database;
+
+    // SQL query to select distinct creation dates, ordered by recency
+    List<Map> result = await db.rawQuery(
+        "SELECT DISTINCT date(creationDate) as uniqueDate FROM $table ORDER BY date(creationDate) DESC"
+    );
+
+    // Convert the result to a List of DateTime objects
+    return result.map((item) {
+      String dateString = item['uniqueDate'].toString();
+      return DateTime.parse(dateString);
+    }).toList();
   }
 
 }

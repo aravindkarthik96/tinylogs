@@ -46,6 +46,10 @@ flutter:
     - assets/images/icon_notes_selected.png
     - assets/images/background_logs_month_separator.png
     - assets/images/icon_today_empty_state.png
+    - assets/images/icon_cloud_with_sun_and_rain.png
+    - assets/images/icon_medal.png
+    - assets/images/icon_medal_dark.png
+    - assets/images/icon_thumbs_up.png
 
 fonts:
   - family: SF Pro Text

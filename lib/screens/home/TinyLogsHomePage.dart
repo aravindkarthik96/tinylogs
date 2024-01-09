@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tinylogs/screens/home/tabs/InsightsPage.dart';
 import 'package:tinylogs/screens/home/tabs/TodayPage.dart';
 
 import 'tabs/LogsPage.dart';
-import '../TinyLogsAddLogPage.dart';
 
 class TinyLogsHomePage extends StatefulWidget {
   const TinyLogsHomePage({super.key});
@@ -17,7 +17,7 @@ class _TinyLogsHomePageState extends State<TinyLogsHomePage> {
   final List<Widget> _children = [
     const TodayPage(),
     const LogsPage(),
-    const PlaceholderWidget(Colors.blue),
+    const InsightsPage(),
   ];
 
   void onTabTapped(int index) {
@@ -80,22 +80,6 @@ class _TinyLogsHomePageState extends State<TinyLogsHomePage> {
             label: 'Insights',
           ),
         ],
-      ),
-    );
-  }
-}
-
-class PlaceholderWidget extends StatelessWidget {
-  final Color color;
-
-  const PlaceholderWidget(this.color, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: color,
-      child: const Center(
-        child: Text('Tab Content', style: TextStyle(fontSize: 35)),
       ),
     );
   }
