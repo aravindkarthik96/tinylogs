@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:share/share.dart';
 import 'package:tinylogs/data/LogEntry.dart';
 import 'package:tinylogs/data/UserPreferences.dart';
 import 'package:tinylogs/screens/home/TinyLogsHomePage.dart'
@@ -156,7 +157,10 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
         children: [
           const SizedBox(width: 28),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              String contentToShare = "$logText\n-via tinylogs";
+              Share.share(contentToShare,subject: "Checkout tinylogs today!");
+            },
             icon: Image.asset(
               "assets/images/icon_share.png",
               width: 28,
