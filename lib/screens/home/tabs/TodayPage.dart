@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tinylogs/data/logs_data/DatabaseHelper.dart';
+import 'package:tinylogs/data/user_preferences/NotificationsPreferences.dart';
 import 'package:tinylogs/screens/TinyLogsAddLogPage.dart';
 
 import '../../../commons/Shadows.dart';
@@ -16,10 +17,13 @@ class TodayPage extends StatefulWidget {
 class _TodayPageState extends State<TodayPage> {
   List<LogEntry> logs = [];
 
+  bool _shouldShowNotificationPrompt = false;
+
   @override
   void initState() {
     super.initState();
     loadLogs();
+    _loadNotificationStatus();
   }
 
   Future<void> loadLogs() async {
@@ -57,51 +61,71 @@ class _TodayPageState extends State<TodayPage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            automaticallyImplyLeading: false,
-            pinned: true,
-            snap: true,
-            floating: true,
-            centerTitle: false,
-            title: Padding(
-              padding: const EdgeInsets.only(left: 16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    DateFormat('EEE, DD MMM').format(DateTime.now()),
-                    textAlign: TextAlign.left,
-                    style: const TextStyle(
-                      fontFamily: "SF Pro Display",
-                      fontSize: 13,
-                      fontWeight: FontWeight.w400,
-                      height: 1.4,
-                      color: Color(0xFF662619),
-                    ),
-                  ),
-                  const Text(
-                    "Today",
-                    style: TextStyle(
-                      fontFamily: "SF Pro Display",
-                      fontWeight: FontWeight.w700,
-                      fontSize: 34,
-                      color: Color(0xFFFF6040),
-                    ),
-                  )
-                ],
+        slivers: getSliversList(),
+      ),
+      backgroundColor: const Color(0xFFFFF0E5),
+    );
+  }
+
+  List<Widget> getSliversList() {
+    return <Widget>[
+      getSliverAppBar(),
+      const SliverPadding(padding: EdgeInsets.only(top: 32)),
+      _shouldShowNotificationPrompt
+          ? SliverToBoxAdapter(child: buildNotificationBox())
+          : const SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.only(top: 0),
               ),
             ),
-            backgroundColor: const Color(0xFFFFF0E5),
-          ),
-          const SliverPadding(padding: EdgeInsets.only(top: 32)),
-          SliverToBoxAdapter(
-            child: buildNotificationBox(),
-          ),
-          getContentView(),
-          const SliverPadding(padding: EdgeInsets.only(bottom: 100))
-        ],
+      getContentView(),
+      const SliverPadding(padding: EdgeInsets.only(bottom: 100))
+    ];
+  }
+
+  Widget getContentView() {
+    if (logs.isNotEmpty) {
+      return createLogList();
+    } else {
+      return createEmptyPage();
+    }
+  }
+
+  SliverAppBar getSliverAppBar() {
+    return SliverAppBar(
+      automaticallyImplyLeading: false,
+      pinned: true,
+      snap: true,
+      floating: true,
+      centerTitle: false,
+      title: Padding(
+        padding: const EdgeInsets.only(left: 16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              DateFormat('EEE, DD MMM').format(DateTime.now()),
+              textAlign: TextAlign.left,
+              style: const TextStyle(
+                fontFamily: "SF Pro Display",
+                fontSize: 13,
+                fontWeight: FontWeight.w400,
+                height: 1.4,
+                color: Color(0xFF662619),
+              ),
+            ),
+            const Text(
+              "Today",
+              style: TextStyle(
+                fontFamily: "SF Pro Display",
+                fontWeight: FontWeight.w700,
+                fontSize: 34,
+                color: Color(0xFFFF6040),
+              ),
+            )
+          ],
+        ),
       ),
       backgroundColor: const Color(0xFFFFF0E5),
     );
@@ -144,19 +168,13 @@ class _TodayPageState extends State<TodayPage> {
     );
   }
 
-  Widget getContentView() {
-    if (logs.isNotEmpty) {
-      return createLogList();
-    } else {
-      return createEmptyPage();
-    }
-  }
-
   Widget createEmptyPage() {
     return SliverToBoxAdapter(
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(46, 168, 46, 0),
+          padding: _shouldShowNotificationPrompt
+              ? const EdgeInsets.fromLTRB(46, 16, 46, 0)
+              : const EdgeInsets.fromLTRB(46, 168, 46, 0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -179,7 +197,7 @@ class _TodayPageState extends State<TodayPage> {
                 ),
               ),
               const SizedBox(
-                height: 16,
+                height: 8,
               ),
               const Text(
                 "Research says that being grateful everyday unlocks happiness. Record your first thanks for the day ",
@@ -286,6 +304,17 @@ class _TodayPageState extends State<TodayPage> {
         ),
       ),
     );
+  }
+
+  Future _loadNotificationStatus() async {
+    var notificationDialogueDismissed =
+        await NotificationsPreferences.getNotificationDialogueDismissed();
+    var notificationConfigured =
+        await NotificationsPreferences.getNotificationConfigured();
+    setState(() {
+      _shouldShowNotificationPrompt =
+          !notificationDialogueDismissed || notificationConfigured;
+    });
   }
 }
 
