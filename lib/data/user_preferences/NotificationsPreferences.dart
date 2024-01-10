@@ -21,28 +21,32 @@ class NotificationsPreferences {
   static Future<void> setNotificationDialogueDismissed() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_notificationDialogueDismissed, true);
+    int timestamp = DateTime.now().millisecondsSinceEpoch;
+    await prefs.setInt(_notificationDialogueDismissedDate, timestamp);
   }
 
   static Future<bool> getNotificationDialogueDismissed() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(_notificationDialogueDismissed) ?? false;
-  }
 
-  static Future<void> setNotificationDialogueDismissedDate(
-      DateTime time) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_notificationDialogueDismissedDate, time as String);
+    var state = prefs.getBool(_notificationDialogueDismissed) ?? false;
+    if (state) {
+      DateTime? dismissDate =
+          await getNotificationDialogueDismissedDate();
+      if (dismissDate != null) {
+        var currentDate = DateTime.now();
+        var difference = currentDate.difference(dismissDate).inMinutes;
+        return difference < 2;
+      }
+    }
+    return state;
   }
 
   static Future<DateTime?> getNotificationDialogueDismissedDate() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    var dateTimeString = prefs.getString(_notificationDialogueDismissedDate);
-
-    if (dateTimeString != null) {
-      return DateTime.tryParse(dateTimeString);
-    } else {
-      return null;
-    }
+    int? timestamp = prefs.getInt(_notificationDialogueDismissedDate);
+    return timestamp != null
+        ? DateTime.fromMillisecondsSinceEpoch(timestamp)
+        : null;
   }
 
   static Future<void> setDailyNotificationTime(DateTime time) async {

@@ -294,7 +294,12 @@ class _TodayPageState extends State<TodayPage> {
               ),
             ),
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  NotificationsPreferences.setNotificationDialogueDismissed();
+                  setState(() {
+                    _shouldShowNotificationPrompt = false;
+                  });
+                },
                 icon: Image.asset(
                   "assets/images/icon_cross.png",
                   width: 12.5,
@@ -313,7 +318,7 @@ class _TodayPageState extends State<TodayPage> {
         await NotificationsPreferences.getNotificationConfigured();
     setState(() {
       _shouldShowNotificationPrompt =
-          !notificationDialogueDismissed || notificationConfigured;
+          (!notificationDialogueDismissed) || notificationConfigured;
     });
   }
 }
