@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tinylogs/data/logs_data/DatabaseHelper.dart';
-import 'package:tinylogs/data/user_preferences/NotificationsPreferences.dart';
 import 'package:tinylogs/screens/TinyLogsAddLogPage.dart';
 
 import '../../../commons/Shadows.dart';
+import '../../../commons/notifications/NotificationPopup.dart';
 import '../../../data/logs_data/LogEntry.dart';
+import '../../../data/notifications/NotificationsPreferences.dart';
 
 class TodayPage extends StatefulWidget {
   const TodayPage({super.key});
@@ -21,8 +22,8 @@ class _TodayPageState extends State<TodayPage> {
 
   @override
   void initState() {
-    super.initState();
     loadLogs();
+    super.initState();
     _loadNotificationStatus();
   }
 
@@ -267,7 +268,9 @@ class _TodayPageState extends State<TodayPage> {
                       height: 12,
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        showNotificationPopup(context);
+                      },
                       style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all(Colors.transparent),

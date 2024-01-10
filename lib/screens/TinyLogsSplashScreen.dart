@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tinylogs/screens/home/TinyLogsHomePage.dart';
 import 'package:tinylogs/screens/TinyLogsOnboardingPage.dart';
 
-import '../data/user_preferences/OnboardingPreferences.dart';
+import '../data/onboarding/OnboardingPreferences.dart';
 
 class TinyLogsSplashScreen extends StatefulWidget {
   const TinyLogsSplashScreen({super.key});

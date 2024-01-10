@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:share/share.dart';
-import 'package:tinylogs/data/user_preferences/OnboardingPreferences.dart';
 import 'package:tinylogs/screens/home/TinyLogsHomePage.dart'
     show TinyLogsHomePage;
 
 import '../data/logs_data/DatabaseHelper.dart';
 import '../data/logs_data/LogEntry.dart';
+import '../data/onboarding/OnboardingPreferences.dart';
 
 class TinyLogsAddLogPage extends StatefulWidget {
   final LogEntry? logEntry;
