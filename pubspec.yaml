@@ -50,6 +50,7 @@ flutter:
     - assets/images/icon_medal.png
     - assets/images/icon_medal_dark.png
     - assets/images/icon_thumbs_up.png
+    - assets/images/icon_cross.png
 
 fonts:
   - family: SF Pro Text

@@ -4,6 +4,8 @@ import 'package:tinylogs/data/DatabaseHelper.dart';
 import 'package:tinylogs/data/LogEntry.dart';
 import 'package:tinylogs/screens/TinyLogsAddLogPage.dart';
 
+import '../../../commons/Shadows.dart';
+
 class TodayPage extends StatefulWidget {
   const TodayPage({super.key});
 
@@ -94,6 +96,9 @@ class _TodayPageState extends State<TodayPage> {
             backgroundColor: const Color(0xFFFFF0E5),
           ),
           const SliverPadding(padding: EdgeInsets.only(top: 32)),
+          SliverToBoxAdapter(
+            child: buildNotificationBox(),
+          ),
           getContentView(),
           const SliverPadding(padding: EdgeInsets.only(bottom: 100))
         ],
@@ -193,6 +198,89 @@ class _TodayPageState extends State<TodayPage> {
       ),
     );
   }
+
+  Widget buildNotificationBox() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(28, 0, 28, 16),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+          border: Border.all(color: const Color(0xFFFFB5A6), width: 1),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    RichText(
+                      textAlign: TextAlign.left,
+                      text: const TextSpan(
+                        children: [
+                          TextSpan(
+                            text: "Set Notification",
+                            style: TextStyle(
+                              fontFamily: "SF Pro Display",
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFF662619),
+                            ),
+                          ),
+                          TextSpan(
+                            text:
+                                "\nResearch suggests consistency is key to reap the most benefits. ",
+                            style: TextStyle(
+                              fontFamily: "SF Pro Display",
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xFF662619),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.transparent),
+                        padding: MaterialStateProperty.all(
+                            const EdgeInsets.fromLTRB(8, 0, 8, 0)),
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          side: const BorderSide(
+                              color: Color(0xFF662619), width: 1),
+                        )),
+                      ),
+                      child: const Text(
+                        'Set notification',
+                        style: TextStyle(
+                          fontFamily: "SF Pro Display",
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xFF662619),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            IconButton(onPressed: () {}, icon: Image.asset("assets/images/icon_cross.png", width: 12.5, height: 12.5,))
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class LogItem extends StatelessWidget {
@@ -202,12 +290,11 @@ class LogItem extends StatelessWidget {
   final Function(LogEntry logEntry) onTap;
 
   const LogItem(
-      {Key? key,
+      {super.key,
       required this.log,
       this.showDate = false,
       this.showMonth = false,
-      required this.onTap})
-      : super(key: key);
+      required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -226,14 +313,8 @@ class LogItem extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(12.0),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 4.0,
-                offset: Offset(0, 2),
-              ),
-            ],
+            borderRadius: BorderRadius.circular(8),
+            boxShadow: Shadows.getCardShadow(),
           ),
           child: Text(
             log.content,

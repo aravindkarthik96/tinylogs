@@ -4,6 +4,8 @@ import 'package:tinylogs/data/DatabaseHelper.dart';
 import 'package:tinylogs/data/LogEntry.dart';
 import 'package:tinylogs/screens/TinyLogsAddLogPage.dart';
 
+import '../../../commons/Shadows.dart';
+
 class LogsPage extends StatefulWidget {
   const LogsPage({super.key});
 
@@ -165,14 +167,8 @@ class LogItem extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(12.0),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 4.0,
-                    offset: Offset(0, 2),
-                  ),
-                ],
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: Shadows.getCardShadow(),
               ),
               child: Text(
                 log.content,

@@ -159,7 +159,7 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
           IconButton(
             onPressed: () {
               String contentToShare = "$logText\n-via tinylogs";
-              Share.share(contentToShare,subject: "Checkout tinylogs today!");
+              Share.share(contentToShare, subject: "Checkout tinylogs today!");
             },
             icon: Image.asset(
               "assets/images/icon_share.png",
