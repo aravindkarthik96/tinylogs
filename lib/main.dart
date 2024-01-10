@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:tinylogs/screens/TinyLogsSplashScreen.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -19,8 +19,9 @@ void main() {
 Future<void> _configureLocalTimeZone() async {
   WidgetsFlutterBinding.ensureInitialized();
   tz.initializeTimeZones();
-  final String timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
-  tz.setLocalLocation(tz.getLocation(timeZoneName)); // Set to your local timezone
+  final String timeZoneName = await FlutterTimezone.getLocalTimezone();
+  tz.setLocalLocation(
+      tz.getLocation(timeZoneName)); // Set to your local timezone
 }
 
 class TinyLogsApp extends StatelessWidget {

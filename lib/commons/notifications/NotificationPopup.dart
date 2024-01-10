@@ -25,6 +25,7 @@ void showNotificationPopup(BuildContext context) {
                     style: TextStyle(
                       fontFamily: "SF Pro Display",
                       fontSize: 28,
+                      letterSpacing: 0,
                       fontWeight: FontWeight.w700,
                       color: Color(0xFFFF6040),
                     ),

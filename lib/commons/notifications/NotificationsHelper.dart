@@ -46,7 +46,13 @@ class NotificationsHelper {
       priority: Priority.high,
     );
 
-    const iOSDetails = DarwinNotificationDetails();
+    const iOSDetails = DarwinNotificationDetails(
+      presentSound: true,
+      presentBadge: true,
+      presentBanner: true,
+      presentAlert: true,
+      interruptionLevel: InterruptionLevel.timeSensitive
+    );
     const platformDetails =
         NotificationDetails(android: androidDetails, iOS: iOSDetails);
 
@@ -59,11 +65,12 @@ class NotificationsHelper {
       matchDateTimeComponents: DateTimeComponents.time,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.wallClockTime,
-      androidAllowWhileIdle: true,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+
     );
 
     var notificationMessage = "Notification scheduled at ${time.hour}:${time.minute} every day";
-    print(notificationMessage);
+
     await _testNotifications(
         notificationMessage);
   }
@@ -90,11 +97,11 @@ class NotificationsHelper {
           priority: Priority.high,
         ),
         iOS: DarwinNotificationDetails(
-          presentAlert: true,
-          presentBadge: true,
-          presentSound: true,
-          subtitle: "test",
-
+            presentSound: true,
+            presentBadge: true,
+            presentBanner: true,
+            presentAlert: true,
+            interruptionLevel: InterruptionLevel.critical
         ),
       ),
     );
