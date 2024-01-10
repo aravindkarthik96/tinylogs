@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-class UserPreferences {
+class OnboardingPreferences {
   static const _onboardingCompleteKey = 'onboardingComplete';
 
   // Call this method when the onboarding is completed

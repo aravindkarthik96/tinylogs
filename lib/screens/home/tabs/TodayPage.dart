@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:tinylogs/data/DatabaseHelper.dart';
-import 'package:tinylogs/data/LogEntry.dart';
+import 'package:tinylogs/data/logs_data/DatabaseHelper.dart';
 import 'package:tinylogs/screens/TinyLogsAddLogPage.dart';
 
 import '../../../commons/Shadows.dart';
+import '../../../data/logs_data/LogEntry.dart';
 
 class TodayPage extends StatefulWidget {
   const TodayPage({super.key});
@@ -275,7 +275,13 @@ class _TodayPageState extends State<TodayPage> {
                 ),
               ),
             ),
-            IconButton(onPressed: () {}, icon: Image.asset("assets/images/icon_cross.png", width: 12.5, height: 12.5,))
+            IconButton(
+                onPressed: () {},
+                icon: Image.asset(
+                  "assets/images/icon_cross.png",
+                  width: 12.5,
+                  height: 12.5,
+                ))
           ],
         ),
       ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tinylogs/screens/home/TinyLogsHomePage.dart';
 import 'package:tinylogs/screens/TinyLogsOnboardingPage.dart';
 
-import '../data/UserPreferences.dart';
+import '../data/user_preferences/OnboardingPreferences.dart';
 
 class TinyLogsSplashScreen extends StatefulWidget {
   const TinyLogsSplashScreen({super.key});
@@ -33,7 +33,7 @@ class _TinyLogsSplashScreenState extends State<TinyLogsSplashScreen> {
 
   _navigateToNextScreen() async {
     // Assuming you have the UserPreferences class as previously described
-    bool onboardingComplete = await UserPreferences.isOnboardingComplete();
+    bool onboardingComplete = await OnboardingPreferences.isOnboardingComplete();
 
     // Wait for 2 seconds to simulate a splash screen delay
     await Future.delayed(const Duration(seconds: 2));

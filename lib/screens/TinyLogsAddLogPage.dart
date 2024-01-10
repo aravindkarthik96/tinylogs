@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:share/share.dart';
-import 'package:tinylogs/data/LogEntry.dart';
-import 'package:tinylogs/data/UserPreferences.dart';
+import 'package:tinylogs/data/user_preferences/OnboardingPreferences.dart';
 import 'package:tinylogs/screens/home/TinyLogsHomePage.dart'
     show TinyLogsHomePage;
 
-import '../data/DatabaseHelper.dart';
+import '../data/logs_data/DatabaseHelper.dart';
+import '../data/logs_data/LogEntry.dart';
 
 class TinyLogsAddLogPage extends StatefulWidget {
   final LogEntry? logEntry;
@@ -221,7 +221,7 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
   }
 
   void markOnboardingComplete() {
-    UserPreferences.setOnboardingComplete();
+    OnboardingPreferences.setOnboardingComplete();
   }
 
   Future<void> deleteLogEntry() async {
