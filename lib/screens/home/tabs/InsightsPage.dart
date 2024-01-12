@@ -7,7 +7,7 @@ import 'package:tinylogs/data/logs_data/DatabaseHelper.dart';
 import '../../../commons/utils/TextUtils.dart';
 import '../../../data/logs_data/LogEntry.dart';
 import '../../../generated/assets.dart';
-import 'Spacers.dart';
+import '../../../commons/widgets/Spacers.dart';
 
 class InsightsPage extends StatefulWidget {
   const InsightsPage({super.key});
@@ -100,8 +100,8 @@ class _InsightsPageState extends State<InsightsPage> {
         automaticallyImplyLeading: false,
         title: Padding(
           padding: const EdgeInsets.only(left: 16.0),
-          child: TextWidgetsUtil.getPageTitleText(
-            InsightsPageStrings.insights_page_title,
+          child: TextWidgets.getPageTitleText(
+            InsightsPageStrings.insightsPageTitle,
           ),
         ),
         backgroundColor: Colors.white,
@@ -114,13 +114,13 @@ class _InsightsPageState extends State<InsightsPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TextWidgetsUtil.getSectionTitle(
-                  InsightsPageStrings.insights_section_title,
+                TextWidgets.getSectionTitle(
+                  InsightsPageStrings.insightsSectionTitle,
                 ),
                 Spacers.sixteenPx,
                 addInsight(
                   Assets.imagesIconThumbsUp,
-                  InsightsPageStrings.insights_total_logs_title,
+                  InsightsPageStrings.insightsTotalLogsTitle,
                   "$logCount logs and $wordCount words",
                   "",
                 ),
@@ -129,7 +129,7 @@ class _InsightsPageState extends State<InsightsPage> {
                 ),
                 addInsight(
                   Assets.imagesIconCloudWithSunAndRain,
-                  InsightsPageStrings.insights_total_usage_days_title,
+                  InsightsPageStrings.insightsTotalUsageDaysTitle,
                   "$timeSinceFirstLog days",
                   "",
                 ),
@@ -183,8 +183,8 @@ class _InsightsPageState extends State<InsightsPage> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextWidgetsUtil.getInsightItemTitle(title),
-            TextWidgetsUtil.getInsightItemDescription(subtitle, description)
+            TextWidgets.getInsightItemTitle(title),
+            TextWidgets.getInsightItemDescription(subtitle, description)
           ],
         ),
       ],
