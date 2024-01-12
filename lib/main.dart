@@ -27,7 +27,7 @@ Future<void> _configureLocalTimeZone() async {
   tz.initializeTimeZones();
   final String timeZoneName = await FlutterTimezone.getLocalTimezone();
   tz.setLocalLocation(
-      tz.getLocation(timeZoneName)); // Set to your local timezone
+      tz.getLocation(timeZoneName));
 }
 
 class TinyLogsApp extends StatelessWidget {
@@ -43,8 +43,7 @@ class TinyLogsApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      // home: _onboardingStatus
-      home: false
+      home: _onboardingStatus
           ? const TinyLogsHomePage()
           : const TinyLogsOnboardingPage(),
     );

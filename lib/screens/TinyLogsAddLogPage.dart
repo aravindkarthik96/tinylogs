@@ -187,12 +187,6 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
                     : TinyLogsColors.buttonDisabled,
               )),
           const Spacer(),
-          !submitButtonEnabled
-              ? IconButton(
-                  onPressed: () {},
-                  icon: Image.asset(Assets.imagesIconAskHint,
-                      width: 28, height: 28))
-              : const SizedBox(),
           const SizedBox(width: 28),
         ],
       ),
