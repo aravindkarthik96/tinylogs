@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:tinylogs/commons/resources/TinyLogsStyles.dart';
+
+import '../resources/TinyLogsColors.dart';
 
 class TextWidgets {
   static Text getPageTitleText(String text) {
@@ -26,8 +26,8 @@ class TextWidgets {
     );
   }
 
-  static RichText getInsightItemDescription(String subtitle,
-      String description) {
+  static RichText getInsightItemDescription(
+      String subtitle, String description) {
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
@@ -111,13 +111,10 @@ class TextWidgets {
       text: TextSpan(
         children: [
           TextSpan(
-            text:
-            dayOfWeek,
+            text: dayOfWeek,
             style: TextStyle(
               fontFamily: "SF Pro Text",
-              color: visibility
-                  ? const Color(0xFF6E6E6E)
-                  : Colors.transparent,
+              color: visibility ? const Color(0xFF6E6E6E) : Colors.transparent,
               fontWeight: FontWeight.w500,
               fontSize: 10.0,
               height: 1.2,
@@ -135,6 +132,63 @@ class TextWidgets {
           ),
         ],
       ),
+    );
+  }
+
+  static Text getSeparatorDescriptionText(String prompt) {
+    return Text(
+      prompt,
+      style: TinyLogsStyles.separatorDescriptionTextStyle,
+    );
+  }
+
+  static Text getSeparatorTitleText(String title) {
+    return Text(
+      title,
+      textAlign: TextAlign.center,
+      style: TinyLogsStyles.separatorTitleTextStyle,
+    );
+  }
+
+  static RichText getMultiLinePurpleText(String lightText, String darkText) {
+    return RichText(
+      textAlign: TextAlign.center,
+      text: TextSpan(
+        style: TinyLogsStyles.purpleTitleStyle,
+        children: <TextSpan>[
+          TextSpan(
+            text: lightText,
+            style: TinyLogsStyles.weight400,
+          ),
+          TextSpan(
+            text: "\n$darkText",
+            style: TinyLogsStyles.weight700,
+          ),
+        ],
+      ),
+    );
+  }
+
+  static Text getDialogueTitleText(String notificationDialogueTitle) {
+    return Text(
+      notificationDialogueTitle,
+      style: TinyLogsStyles.dialogueTitleTextStyle,
+      textAlign: TextAlign.center,
+    );
+  }
+
+  static getNotificationsDescriptionText(String notificationDescriptionText) {
+    return Text(
+      notificationDescriptionText,
+      style: TinyLogsStyles.orangeDescriptionText,
+      textAlign: TextAlign.center,
+    );
+  }
+
+  static getNakedButtonText(String buttonText) {
+    return Text(
+      buttonText,
+      style: TinyLogsStyles.nakedButtonTextStyle,
     );
   }
 }

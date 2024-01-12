@@ -3,6 +3,7 @@ import 'package:tinylogs/commons/widgets/TextWidgets.dart';
 
 import '../../generated/assets.dart';
 import '../resources/TinyLogsColors.dart';
+import '../resources/TinyLogsStrings.dart';
 
 class ButtonWidgets {
   static TextButton getSmallNakedButton(
@@ -47,6 +48,45 @@ class ButtonWidgets {
           height: 24,
         ),
       ),
+    );
+  }
+
+  static getPrimaryButton(String buttonText, void Function() onPress) {
+    return ElevatedButton(
+      onPressed: onPress,
+      style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.white,
+        backgroundColor: TinyLogsColors.orangeRegular,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        minimumSize: const Size(double.infinity, 56),
+        textStyle: const TextStyle(
+          fontSize: 17,
+          fontWeight: FontWeight.bold,
+          letterSpacing: -0.408,
+        ),
+      ),
+      child: Text(buttonText),
+    );
+  }
+
+  static getLargeNakedButton(String buttonText, void Function() onPressed) {
+    TextButton(
+      onPressed: onPressed,
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(Colors.transparent),
+        padding:
+            MaterialStateProperty.all(const EdgeInsets.fromLTRB(8, 0, 8, 0)),
+        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+          side: const BorderSide(color: Color(0xFF662619), width: 1),
+        )),
+        minimumSize: MaterialStateProperty.all(
+          const Size(double.infinity, 56),
+        ),
+      ),
+      child: TextWidgets.getNakedButtonText(buttonText),
     );
   }
 }

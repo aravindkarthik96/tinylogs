@@ -43,7 +43,8 @@ class TinyLogsApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      home: _onboardingStatus
+      // home: _onboardingStatus
+      home: false
           ? const TinyLogsHomePage()
           : const TinyLogsOnboardingPage(),
     );

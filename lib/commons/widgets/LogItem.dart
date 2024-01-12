@@ -8,11 +8,13 @@ class LogItem extends StatelessWidget {
   final LogEntry log;
   final bool showDate;
   final bool showMonth;
-  final Function(LogEntry logEntry) onTap;
-
   final bool monthEnabled;
   final bool dateEnabled;
+
+  final Function(LogEntry logEntry) onTap;
+
   final EdgeInsets padding;
+
   final String monthPrompt;
 
   const LogItem({

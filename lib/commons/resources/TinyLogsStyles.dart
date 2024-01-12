@@ -60,6 +60,58 @@ class TinyLogsStyles {
     fontFamily: "SF Pro Display",
     fontSize: 13,
     fontWeight: FontWeight.w500,
-    color: Color(0xFF662619),
+    color: TinyLogsColors.orangeDark,
+  );
+
+  static TextStyle purpleTitleStyle = const TextStyle(
+    fontFamily: "SF Pro Text",
+    fontSize: 17,
+    color: TinyLogsColors.purpleDark,
+    height: 24 / 17,
+  );
+
+  static TextStyle weight400 = const TextStyle(
+    fontWeight: FontWeight.w400,
+  );
+
+  static TextStyle weight700 = const TextStyle(
+    fontWeight: FontWeight.w700,
+  );
+
+  static TextStyle orangeDescriptionText = const TextStyle(
+    fontFamily: "SF Pro Text",
+    color: TinyLogsColors.orangeDark,
+    fontWeight: FontWeight.w400,
+    fontSize: 17.0,
+    height: 1.4,
+  );
+
+  static TextStyle nakedButtonTextStyle = const TextStyle(
+    fontFamily: "SF Pro Display",
+    fontSize: 13,
+    fontWeight: FontWeight.w500,
+    color: TinyLogsColors.orangeDark,
+  );
+
+  static TextStyle dialogueTitleTextStyle = const TextStyle(
+    fontFamily: "SF Pro Display",
+    fontSize: 28,
+    letterSpacing: 0,
+    fontWeight: FontWeight.w700,
+    color: TinyLogsColors.orangeRegular,
+  );
+
+  static TextStyle separatorTitleTextStyle = const TextStyle(
+      fontFamily: "SF Pro Display",
+      fontSize: 26,
+      fontWeight: FontWeight.w400,
+      height: 1.2,
+      color: TinyLogsColors.orangeDark);
+
+  static var separatorDescriptionTextStyle = const TextStyle(
+    fontFamily: "SF Pro Text",
+    fontWeight: FontWeight.w500,
+    fontSize: 15,
+    height: 1.3,
   );
 }
