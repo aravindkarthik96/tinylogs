@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:tinylogs/data/logs_data/DatabaseHelper.dart';
 import 'package:tinylogs/screens/TinyLogsAddLogPage.dart';
 
-import '../../../commons/Shadows.dart';
+import '../../../commons/resources/Shadows.dart';
 import '../../../commons/notifications/NotificationPopup.dart';
 import '../../../data/logs_data/LogEntry.dart';
 import '../../../data/notifications/NotificationsPreferences.dart';

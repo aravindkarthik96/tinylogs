@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:tinylogs/data/logs_data/DatabaseHelper.dart';
 import 'package:tinylogs/screens/TinyLogsAddLogPage.dart';
 
-import '../../../commons/Shadows.dart';
+import '../../../commons/resources/Shadows.dart';
 import '../../../data/logs_data/LogEntry.dart';
 
 class LogsPage extends StatefulWidget {

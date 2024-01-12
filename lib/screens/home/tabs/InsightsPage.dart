@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:tinylogs/commons/resources/TinyLogsStrings.dart';
+import 'package:tinylogs/commons/widgets/TextWidgets.dart';
 import 'package:tinylogs/data/logs_data/DatabaseHelper.dart';
 
+import '../../../commons/utils/TextUtils.dart';
 import '../../../data/logs_data/LogEntry.dart';
+import '../../../generated/assets.dart';
+import 'Spacers.dart';
 
 class InsightsPage extends StatefulWidget {
   const InsightsPage({super.key});
@@ -19,8 +24,6 @@ class _InsightsPageState extends State<InsightsPage> {
   int wordCount = 0;
   List<DateTime> longestStreak = [];
   List<DateTime> currentStreak = [];
-  String longestStreakDescription = "";
-  String currentStreakDescription = "";
 
   @override
   void initState() {
@@ -35,27 +38,13 @@ class _InsightsPageState extends State<InsightsPage> {
     setState(
       () {
         logCount = updatedLogs.length;
-        wordCount = getTotalWordCount(updatedLogs);
+        wordCount = TextUtils.getTotalWordCount(updatedLogs);
         timeSinceFirstLog =
             DateTime.now().difference(updatedLogs.first.creationDate).inDays;
         longestStreak = getLongestStreak(uniqueLogDates);
         currentStreak = getCurrentStreak(uniqueLogDates);
       },
     );
-  }
-
-  int getTotalWordCount(List<LogEntry> logs) {
-    int totalWords = 0;
-
-    for (var log in logs) {
-      List<String> words = log.content.split(RegExp(r'\s+'));
-
-      words = words.where((word) => word.isNotEmpty).toList();
-
-      totalWords += words.length;
-    }
-
-    return totalWords;
   }
 
   List<DateTime> getLongestStreak(List<DateTime> uniqueLogDates) {
@@ -95,13 +84,13 @@ class _InsightsPageState extends State<InsightsPage> {
           (currentStreak.isNotEmpty &&
               date.difference(currentStreak.last).inDays == -1)) {
         currentStreak.add(date);
-        currentDate = currentDate.subtract(Duration(days: 1));
+        currentDate = currentDate.subtract(const Duration(days: 1));
       } else {
         break;
       }
     }
 
-    return currentStreak;
+    return currentStreak.reversed.toList();
   }
 
   @override
@@ -109,16 +98,10 @@ class _InsightsPageState extends State<InsightsPage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Padding(
-          padding: EdgeInsets.only(left: 16.0),
-          child: Text(
-            "Insights",
-            style: TextStyle(
-              fontFamily: "SF Pro Display",
-              fontWeight: FontWeight.w700,
-              fontSize: 34,
-              color: Color(0xFFFF6040),
-            ),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 16.0),
+          child: TextWidgetsUtil.getPageTitleText(
+            InsightsPageStrings.insights_page_title,
           ),
         ),
         backgroundColor: Colors.white,
@@ -131,22 +114,13 @@ class _InsightsPageState extends State<InsightsPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "Tiny wins",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                      fontFamily: "SF Pro Display",
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600,
-                      height: 1.3,
-                      color: Color(0xFF662619)),
+                TextWidgetsUtil.getSectionTitle(
+                  InsightsPageStrings.insights_section_title,
                 ),
-                const SizedBox(
-                  height: 16,
-                ),
+                Spacers.sixteenPx,
                 addInsight(
-                  "assets/images/icon_thumbs_up.png",
-                  "You have written a total of",
+                  Assets.imagesIconThumbsUp,
+                  InsightsPageStrings.insights_total_logs_title,
                   "$logCount logs and $wordCount words",
                   "",
                 ),
@@ -154,8 +128,8 @@ class _InsightsPageState extends State<InsightsPage> {
                   height: 16,
                 ),
                 addInsight(
-                  "assets/images/icon_cloud_with_sun_and_rain.png",
-                  "You have been using the app for",
+                  Assets.imagesIconCloudWithSunAndRain,
+                  InsightsPageStrings.insights_total_usage_days_title,
                   "$timeSinceFirstLog days",
                   "",
                 ),
@@ -163,8 +137,8 @@ class _InsightsPageState extends State<InsightsPage> {
                   height: 16,
                 ),
                 addInsight(
-                  "assets/images/icon_medal.png",
-                  "Your current streak is",
+                  Assets.imagesIconMedal,
+                  InsightsPageStrings.currentStreakTitle,
                   "${currentStreak.length} days",
                   " ${getStreakDescription(currentStreak)}",
                 ),
@@ -172,8 +146,8 @@ class _InsightsPageState extends State<InsightsPage> {
                   height: 16,
                 ),
                 addInsight(
-                  "assets/images/icon_medal_dark.png",
-                  "Your longest streak is",
+                  Assets.imagesIconMedalDark,
+                  InsightsPageStrings.longestStreakTitle,
                   "${longestStreak.length} days",
                   " ${getStreakDescription(longestStreak)}",
                 ),
@@ -209,39 +183,8 @@ class _InsightsPageState extends State<InsightsPage> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title,
-                style: const TextStyle(
-                    fontFamily: "SF Pro Display",
-                    fontSize: 15,
-                    fontWeight: FontWeight.w400,
-                    height: 1.3,
-                    color: Color(0xFF292929))),
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: subtitle,
-                    style: const TextStyle(
-                        fontFamily: "SF Pro Display",
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600,
-                        height: 1.3,
-                        color: Color(0xFFFF6040)),
-                  ),
-                  TextSpan(
-                    text: description,
-                    style: const TextStyle(
-                      fontFamily: "SF Pro Text",
-                      color: Colors.black,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 15.0,
-                      height: 1.3,
-                    ),
-                  ),
-                ],
-              ),
-            )
+            TextWidgetsUtil.getInsightItemTitle(title),
+            TextWidgetsUtil.getInsightItemDescription(subtitle, description)
           ],
         ),
       ],
