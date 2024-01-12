@@ -66,4 +66,50 @@ class Containers {
       ),
     );
   }
+
+  static getLogSeparator(String title, String prompt) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+      child: Container(
+        width: double.infinity,
+        height: 120,
+        alignment: Alignment.centerLeft,
+        decoration: const BoxDecoration(
+          color: Color(0xFFFFF0E5),
+          image: DecorationImage(
+              image: AssetImage(Assets.imagesBackgroundLogsMonthSeparator),
+              fit: BoxFit.fitHeight,
+              alignment: Alignment.topRight),
+        ),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(28, 0, 16, 0),
+              child: Text(
+                title,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                    fontFamily: "SF Pro Display",
+                    fontSize: 26,
+                    fontWeight: FontWeight.w400,
+                    height: 1.2,
+                    color: Color(0xFF662619)),
+              ),
+            ),
+            Expanded(
+              child: Text(
+                prompt,
+                style: const TextStyle(
+                  fontFamily: "SF Pro Text",
+                  fontWeight: FontWeight.w500,
+                  fontSize: 15,
+                  height: 1.3,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
 }

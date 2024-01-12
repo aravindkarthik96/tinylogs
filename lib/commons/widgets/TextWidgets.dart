@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:tinylogs/commons/resources/TinyLogsStyles.dart';
 
 class TextWidgets {
@@ -99,6 +101,39 @@ class TextWidgets {
       content,
       style: const TextStyle(
         fontSize: 16.0,
+      ),
+    );
+  }
+
+  static RichText getDateText({dayOfWeek, dayOfMonth, visibility = true}) {
+    return RichText(
+      textAlign: TextAlign.center,
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text:
+            dayOfWeek,
+            style: TextStyle(
+              fontFamily: "SF Pro Text",
+              color: visibility
+                  ? const Color(0xFF6E6E6E)
+                  : Colors.transparent,
+              fontWeight: FontWeight.w500,
+              fontSize: 10.0,
+              height: 1.2,
+            ),
+          ),
+          TextSpan(
+            text: dayOfMonth,
+            style: TextStyle(
+              fontFamily: "SF Pro Text",
+              color: visibility ? Colors.black : Colors.transparent,
+              fontWeight: FontWeight.w600,
+              fontSize: 17.0,
+              height: 1.3,
+            ),
+          ),
+        ],
       ),
     );
   }
