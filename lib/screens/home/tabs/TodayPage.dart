@@ -33,9 +33,8 @@ class _TodayPageState extends State<TodayPage> {
   }
 
   Future<void> loadLogs() async {
-    List<LogEntry> updatedLogs = await DatabaseHelper.instance.queryTodayLog();
-    setState(() {
-      logs = updatedLogs;
+    setState(() async {
+      logs = await DatabaseHelper.instance.queryTodayLog();;
     });
   }
 
@@ -65,7 +64,22 @@ class _TodayPageState extends State<TodayPage> {
       getSliverAppBar(),
       const SliverPadding(padding: EdgeInsets.only(top: 32)),
       _shouldShowNotificationPrompt
-          ? SliverToBoxAdapter(child: buildNotificationBox())
+          ? SliverToBoxAdapter(
+              child: Containers.getPromptBox(
+                TodayPageStrings.notificationTitle,
+                TodayPageStrings.notificationDescription,
+                TodayPageStrings.notificationButtonText,
+                () {
+                  NotificationsPreferences.setNotificationDialogueDismissed();
+                  setState(() {
+                    _shouldShowNotificationPrompt = false;
+                  });
+                },
+                () {
+                  showNotificationPopup(context);
+                },
+              ),
+            )
           : const SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.only(top: 0),
@@ -168,51 +182,6 @@ class _TodayPageState extends State<TodayPage> {
                   TodayPageStrings.emptyPageDescription)
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildNotificationBox() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(28, 0, 28, 16),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.transparent,
-          border: Border.all(color: TinyLogsColors.orangeLight, width: 1),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextWidgets.getSmallTitleDescription(
-                      TodayPageStrings.notificationTitle,
-                      TodayPageStrings.notificationDescription,
-                    ),
-                    Spacers.twelvePx,
-                    ButtonWidgets.getSmallNakedButton(
-                        TodayPageStrings.notificationButtonText, () {
-                      showNotificationPopup(context);
-                    })
-                  ],
-                ),
-              ),
-            ),
-            ButtonWidgets.getIconButton(Assets.imagesIconCross, () {
-              NotificationsPreferences.setNotificationDialogueDismissed();
-              setState(() {
-                _shouldShowNotificationPrompt = false;
-              });
-            })
-          ],
         ),
       ),
     );
