@@ -9,6 +9,7 @@ import 'package:tinylogs/generated/assets.dart';
 import 'package:tinylogs/screens/TinyLogsAddLogPage.dart';
 import '../../../commons/notifications/NotificationPopup.dart';
 import '../../../commons/widgets/Containers.dart';
+import '../../../commons/widgets/LogItem.dart';
 import '../../../commons/widgets/Spacers.dart';
 import '../../../data/logs_data/LogEntry.dart';
 import '../../../data/notifications/NotificationsPreferences.dart';
@@ -34,7 +35,8 @@ class _TodayPageState extends State<TodayPage> {
 
   Future<void> loadLogs() async {
     setState(() async {
-      logs = await DatabaseHelper.instance.queryTodayLog();;
+      logs = await DatabaseHelper.instance.queryTodayLog();
+      ;
     });
   }
 
@@ -143,6 +145,8 @@ class _TodayPageState extends State<TodayPage> {
           log: log,
           showDate: showDate,
           showMonth: showMonth,
+          monthEnabled: false,
+          dateEnabled: false,
           onTap: (logEntry) async {
             await Navigator.push(
               context,
@@ -154,6 +158,7 @@ class _TodayPageState extends State<TodayPage> {
             );
             await loadLogs();
           },
+          padding: const EdgeInsets.symmetric(horizontal: 28.0, vertical: 8.0),
         );
       },
     );
@@ -196,34 +201,5 @@ class _TodayPageState extends State<TodayPage> {
       _shouldShowNotificationPrompt =
           (!notificationDialogueDismissed) || notificationConfigured;
     });
-  }
-}
-
-class LogItem extends StatelessWidget {
-  final LogEntry log;
-  final bool showDate;
-  final bool showMonth;
-  final Function(LogEntry logEntry) onTap;
-
-  const LogItem(
-      {super.key,
-      required this.log,
-      this.showDate = false,
-      this.showMonth = false,
-      required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return getMessageItem(context, log, onTap);
-  }
-
-  Padding getMessageItem(BuildContext context, LogEntry log,
-      void Function(LogEntry logEntry) onTap) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 28.0, vertical: 8.0),
-      child: Containers.getTappableLog(log.content, () {
-        onTap.call(log);
-      }),
-    );
   }
 }

@@ -17,3 +17,8 @@ class TodayPageStrings {
       "\nResearch suggests consistency is key to reap the most benefits. ";
   static const String notificationButtonText = "Set notifications";
 }
+
+class LogsPageStrings {
+  static const String pageTitle = "Logs";
+
+}
