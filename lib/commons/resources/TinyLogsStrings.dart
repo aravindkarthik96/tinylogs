@@ -34,3 +34,14 @@ class NotificationsDialogueStrings {
   static String dismissButtonText = 'Later';
   static String confirmButtonText = "Confirm";
 }
+
+class AddLogsPageStrings {
+  static String addLogButtonText = 'Done';
+
+  static var addLogsHintText = 'I am thankful for';
+
+  static var shareContentAppSignature = "-via tinylogs";
+
+  static var shareContentSubject = "Checkout tinylogs today!";
+
+}

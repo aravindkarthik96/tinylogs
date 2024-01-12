@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:share/share.dart';
+import 'package:tinylogs/commons/resources/TinyLogsColors.dart';
+import 'package:tinylogs/commons/resources/TinyLogsStrings.dart';
+import 'package:tinylogs/generated/assets.dart';
 import 'package:tinylogs/screens/home/TinyLogsHomePage.dart'
     show TinyLogsHomePage;
-
 import '../data/logs_data/DatabaseHelper.dart';
 import '../data/logs_data/LogEntry.dart';
 import '../data/onboarding/OnboardingPreferences.dart';
@@ -70,7 +72,7 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
       appBar: AppBar(
         leading: IconButton(
           icon: Image.asset(
-            'assets/images/arrow_left.png',
+            Assets.imagesArrowLeft,
             width: 24,
             height: 24,
           ),
@@ -86,12 +88,11 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
               Text(DateFormat('dd MMM yyyy').format(selectedDate),
                   style: const TextStyle(
                     fontSize: 17.0,
-                    letterSpacing: -0.02,
-                    color: Color(0xFF662619),
+                    color: TinyLogsColors.orangeDark,
                     height: 1.41,
                   )),
               Image.asset(
-                'assets/images/arrow_drop_down.png',
+                Assets.imagesArrowDropDown,
                 width: 16,
                 height: 16,
               ),
@@ -110,14 +111,14 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
                     }
                   : null,
               child: Text(
-                'Done',
+                AddLogsPageStrings.addLogButtonText,
                 textAlign: TextAlign.right,
                 style: TextStyle(
                   fontSize: 17.0,
                   letterSpacing: -0.02,
                   color: submitButtonEnabled
-                      ? const Color(0xFF6E6E6E)
-                      : const Color(0xFFC8C8C8),
+                      ? TinyLogsColors.buttonEnabled
+                      : TinyLogsColors.buttonDisabled,
                   height: 1.4,
                 ),
               ),
@@ -135,17 +136,17 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
             autofocus: true,
             onChanged: _handleTextChanged,
             controller: _textController,
-            decoration: const InputDecoration.collapsed(
-              hintText: 'I am thankful for',
+            decoration: InputDecoration.collapsed(
+              hintText: AddLogsPageStrings.addLogsHintText,
               hintStyle: TextStyle(
-                color: Color(0xFFC8C8C8),
+                color: TinyLogsColors.textFieldHintColor,
                 fontSize: 17.0,
                 height: 1.4,
                 letterSpacing: -0.41,
               ),
             ),
-            style: const TextStyle(
-              color: Color(0xFF404040),
+            style: TextStyle(
+              color: TinyLogsColors.textFieldTextColor,
               fontSize: 17.0,
               height: 1.4,
               letterSpacing: -0.41,
@@ -158,16 +159,18 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
           const SizedBox(width: 28),
           IconButton(
             onPressed: () {
-              String contentToShare = "$logText\n-via tinylogs";
-              Share.share(contentToShare, subject: "Checkout tinylogs today!");
+              String contentToShare =
+                  "$logText\n${AddLogsPageStrings.shareContentAppSignature}";
+              Share.share(contentToShare,
+                  subject: AddLogsPageStrings.shareContentSubject);
             },
             icon: Image.asset(
-              "assets/images/icon_share.png",
+              Assets.imagesIconShare,
               width: 28,
               height: 28,
               color: submitButtonEnabled
-                  ? const Color(0xFF919191)
-                  : const Color(0xFFC8C8C8),
+                  ? TinyLogsColors.buttonEnabled
+                  : TinyLogsColors.buttonDisabled,
             ),
           ),
           IconButton(
@@ -176,18 +179,18 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
                 Navigator.of(context).pop();
               },
               icon: Image.asset(
-                "assets/images/icon_delete.png",
+                Assets.imagesIconDelete,
                 width: 28,
                 height: 28,
                 color: submitButtonEnabled
-                    ? const Color(0xFF919191)
-                    : const Color(0xFFC8C8C8),
+                    ? TinyLogsColors.buttonEnabled
+                    : TinyLogsColors.buttonDisabled,
               )),
           const Spacer(),
           !submitButtonEnabled
               ? IconButton(
                   onPressed: () {},
-                  icon: Image.asset("assets/images/icon_ask_hint.png",
+                  icon: Image.asset(Assets.imagesIconAskHint,
                       width: 28, height: 28))
               : const SizedBox(),
           const SizedBox(width: 28),
