@@ -5,6 +5,7 @@ import 'package:tinylogs/commons/resources/TinyLogsStrings.dart';
 import 'package:tinylogs/commons/widgets/ButtonWidgets.dart';
 import 'package:tinylogs/commons/widgets/Spacers.dart';
 import 'package:tinylogs/commons/widgets/TextWidgets.dart';
+import 'package:tinylogs/data/onboarding/OnboardingPreferences.dart';
 import 'dart:math';
 
 import '../commons/resources/TinyLogsStyles.dart';
@@ -29,6 +30,7 @@ class StarLogsPageState extends State<StarLogsPage> {
   void initState() {
     super.initState();
     fetchLogs();
+    updateStarLogOnboardingStatus();
   }
 
   Future<void> fetchLogs() async {
@@ -167,6 +169,10 @@ class StarLogsPageState extends State<StarLogsPage> {
         );
       },
     );
+  }
+
+  void updateStarLogOnboardingStatus() {
+    OnboardingPreferences.setStarLogOnboardingComplete();
   }
 }
 

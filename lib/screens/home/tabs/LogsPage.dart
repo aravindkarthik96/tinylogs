@@ -4,10 +4,12 @@ import 'package:tinylogs/commons/resources/TinyLogsColors.dart';
 import 'package:tinylogs/commons/resources/TinyLogsStrings.dart';
 import 'package:tinylogs/commons/widgets/TextWidgets.dart';
 import 'package:tinylogs/data/logs_data/DatabaseHelper.dart';
+import 'package:tinylogs/data/onboarding/OnboardingPreferences.dart';
 import 'package:tinylogs/generated/assets.dart';
 import 'package:tinylogs/screens/AddLogPage.dart';
-import 'package:tinylogs/screens/StarScreen.dart';
+import 'package:tinylogs/screens/StarLogPage.dart';
 
+import '../../../commons/widgets/ButtonWidgets.dart';
 import '../../../commons/widgets/LogItem.dart';
 import '../../../data/logs_data/LogEntry.dart';
 
@@ -20,11 +22,13 @@ class LogsPage extends StatefulWidget {
 
 class _LogsPageState extends State<LogsPage> {
   List<LogEntryViewModel> logsViewModels = [];
+  bool isStarLogOnboardingComplete = true;
 
   @override
   void initState() {
     super.initState();
     loadLogs();
+    updateStarLogOnboardingStatus();
   }
 
   Future<void> loadLogs() async {
@@ -79,8 +83,24 @@ class _LogsPageState extends State<LogsPage> {
               child: TextWidgets.getPageTitleText(LogsPageStrings.pageTitle),
             ),
             backgroundColor: Colors.white,
+            actions: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(right: 28),
+                child: ButtonWidgets.getMediumIconButton(Assets.imagesIconStar,
+                    () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const StarLogsPage(),
+                    ),
+                  );
+                }, tintColor: TinyLogsColors.skyGradientStart),
+              )
+            ],
           ),
-          getStarLogPrompt(context),
+          !isStarLogOnboardingComplete
+              ? getStarLogPrompt(context)
+              : const SliverToBoxAdapter(),
           SliverList.builder(
             itemCount: logsViewModels.length,
             itemBuilder: (context, index) {
@@ -124,26 +144,30 @@ class _LogsPageState extends State<LogsPage> {
           decoration:
               const BoxDecoration(color: TinyLogsColors.orangePageBackground),
           child: Padding(
-            padding: const EdgeInsets.all(4),
+            padding: const EdgeInsets.fromLTRB(4, 4, 16, 4),
             child: ListTile(
-              onTap: () {
-                Navigator.push(
+              onTap: () async {
+                await Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => const StarLogsPage(),
                   ),
                 );
+                updateStarLogOnboardingStatus();
               },
-              title: TextWidgets.getPromptTitle(
-                  LogsPageStrings.starLogPromptTitle),
+              title: const SizedBox.shrink(),
               subtitle: TextWidgets.getNotificationsDescriptionText(
                   LogsPageStrings.starLogPromptDescription,
                   textAlign: TextAlign.start),
-              trailing: Image.asset(
-                Assets.imagesIconChevronRight,
-                width: 24,
-                height: 24,
+              trailing: const Column(
+                children: [
+                  Icon(
+                    Icons.arrow_upward_outlined,
+                    color: TinyLogsColors.orangeDark,
+                  )
+                ],
               ),
+              isThreeLine: false,
             ),
           ),
         ),
@@ -175,5 +199,13 @@ class _LogsPageState extends State<LogsPage> {
     return !(previousDate?.day == currentDate.day &&
         previousDate?.month == currentDate.month &&
         previousDate?.year == currentDate.year);
+  }
+
+  Future<void> updateStarLogOnboardingStatus() async {
+    var status = await OnboardingPreferences.isStarLogOnboardingComplete();
+    setState(() {
+      isStarLogOnboardingComplete = status;
+    });
+    return;
   }
 }

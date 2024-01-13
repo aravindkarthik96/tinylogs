@@ -33,13 +33,14 @@ class ButtonWidgets {
   }
 
   static IconButton getMediumIconButton(
-      String icon, void Function() onPressed) {
+      String icon, void Function() onPressed,{Color? tintColor}) {
     return IconButton(
       onPressed: onPressed,
       icon: Image.asset(
         icon,
         width: 28,
         height: 28,
+        color: tintColor,
       ),
     );
   }
@@ -113,7 +114,8 @@ class ButtonWidgets {
     );
   }
 
-  static Widget getMiniFloatingActionButton(String icon, void Function() onPressed,
+  static Widget getMiniFloatingActionButton(
+      String icon, void Function() onPressed,
       {buttonColor = TinyLogsColors.orangeRegular}) {
     return SizedBox(
       width: 48.0,
