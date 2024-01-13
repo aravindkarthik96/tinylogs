@@ -4,8 +4,7 @@ import 'package:share/share.dart';
 import 'package:tinylogs/commons/resources/TinyLogsColors.dart';
 import 'package:tinylogs/commons/resources/TinyLogsStrings.dart';
 import 'package:tinylogs/generated/assets.dart';
-import 'package:tinylogs/screens/home/HomePage.dart'
-    show HomePage;
+import 'package:tinylogs/screens/home/HomePage.dart' show HomePage;
 import '../data/logs_data/DatabaseHelper.dart';
 import '../data/logs_data/LogEntry.dart';
 import '../data/onboarding/OnboardingPreferences.dart';
@@ -106,7 +105,7 @@ class _AddLogPageState extends State<AddLogPage> {
               onPressed: submitButtonEnabled
                   ? () async {
                       await storeLog();
-                      markOnboardingComplete();
+                      await markOnboardingComplete();
                       navigateToNextPage();
                     }
                   : null,
@@ -195,7 +194,7 @@ class _AddLogPageState extends State<AddLogPage> {
   }
 
   void navigateToNextPage() {
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => const HomePage()),
     );
@@ -217,8 +216,8 @@ class _AddLogPageState extends State<AddLogPage> {
     }
   }
 
-  void markOnboardingComplete() {
-    OnboardingPreferences.setOnboardingComplete();
+  Future<void> markOnboardingComplete() async {
+    await OnboardingPreferences.setOnboardingComplete();
   }
 
   Future<void> deleteLogEntry() async {
