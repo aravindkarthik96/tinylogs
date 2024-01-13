@@ -99,9 +99,7 @@ class _TodayPageState extends State<TodayPage> {
 
   Widget getContentView() {
     if (_loading) {
-      return const SliverToBoxAdapter(
-        child: CircularProgressIndicator(),
-      );
+      return const SliverToBoxAdapter();
     }
     if (logs.isNotEmpty) {
       return createLogList();
