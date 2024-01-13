@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:tinylogs/commons/ViewModels/LogEntryViewModel.dart';
 import 'package:tinylogs/commons/resources/TinyLogsStrings.dart';
+import 'package:tinylogs/commons/widgets/ButtonWidgets.dart';
 import 'package:tinylogs/commons/widgets/TextWidgets.dart';
 import 'package:tinylogs/data/logs_data/DatabaseHelper.dart';
 import 'package:tinylogs/screens/AddLogPage.dart';
+import 'package:tinylogs/screens/StarScreen.dart';
 
 import '../../../commons/widgets/LogItem.dart';
 import '../../../data/logs_data/LogEntry.dart';
@@ -77,6 +79,15 @@ class _LogsPageState extends State<LogsPage> {
             ),
             backgroundColor: Colors.white,
           ),
+          SliverToBoxAdapter(child:
+            ButtonWidgets.getLargeNakedButton("open stars screen", () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => StarLogsPage(),
+                ),
+              );
+            }),),
           SliverList.builder(
             itemCount: logsViewModels.length,
             itemBuilder: (context, index) {
