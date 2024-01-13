@@ -183,11 +183,12 @@ class TextWidgets {
     );
   }
 
-  static getNotificationsDescriptionText(String notificationDescriptionText) {
+  static getNotificationsDescriptionText(String notificationDescriptionText,
+      {TextAlign textAlign = TextAlign.center}) {
     return Text(
       notificationDescriptionText,
       style: TinyLogsStyles.orangeDescriptionText,
-      textAlign: TextAlign.center,
+      textAlign: textAlign,
     );
   }
 

@@ -118,43 +118,37 @@ class _LogsPageState extends State<LogsPage> {
 
   SliverToBoxAdapter getStarLogPrompt(BuildContext context) {
     return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+        child: Container(
+          decoration:
+              const BoxDecoration(color: TinyLogsColors.orangePageBackground),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-            child: Container(
-              decoration: BoxDecoration(
-                  color: TinyLogsColors.orangePageBackground,
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0x15000026),
-                      blurRadius: 2,
-                      offset: Offset(1, 1),
-                    )
-                  ]),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
-                child: ListTile(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const StarLogsPage(),
-                      ),
-                    );
-                  },
-                  title: TextWidgets.getPromptTitle(LogsPageStrings.starLogPromptTitle),
-                  subtitle: TextWidgets.getMiniTitleText(
-                      LogsPageStrings.starLogPromptDescription),
-                  trailing: Image.asset(
-                    Assets.imagesIconChevronRight,
-                    width: 24,
-                    height: 24,
+            padding: const EdgeInsets.all(4),
+            child: ListTile(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const StarLogsPage(),
                   ),
-                ),
+                );
+              },
+              title: TextWidgets.getPromptTitle(
+                  LogsPageStrings.starLogPromptTitle),
+              subtitle: TextWidgets.getNotificationsDescriptionText(
+                  LogsPageStrings.starLogPromptDescription,
+                  textAlign: TextAlign.start),
+              trailing: Image.asset(
+                Assets.imagesIconChevronRight,
+                width: 24,
+                height: 24,
               ),
             ),
           ),
-        );
+        ),
+      ),
+    );
   }
 
   Future<String> getMonthPrompt(DateTime creationDate) async {

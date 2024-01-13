@@ -23,7 +23,7 @@ class LogsPageStrings {
   static const String pageTitle = "Logs";
 
   static const String starLogPromptDescription =
-      "Your every lag is stored as a star in this tiny sky.";
+      "Your every log is stored as a star in this tiny sky.";
 
   static const String starLogPromptTitle = "Discover";
 }
