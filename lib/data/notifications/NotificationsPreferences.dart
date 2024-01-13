@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tinylogs/commons/notifications/NotificationsHelper.dart';
 
 class NotificationsPreferences {
   static const _notificationSetKey = 'isNotificationsConfigured';
@@ -9,6 +11,9 @@ class NotificationsPreferences {
   static const _dailyNotificationTime = 'dailyNotificationTime';
 
   static Future<void> setNotificationConfigured(bool state) async {
+    if (!state) {
+      NotificationsHelper().cancelAllNotifications();
+    }
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_notificationSetKey, state);
   }
@@ -50,7 +55,7 @@ class NotificationsPreferences {
 
   static Future<void> setDailyNotificationTime(DateTime time) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_dailyNotificationTime, time as String);
+    await prefs.setString(_dailyNotificationTime, time.toString());
   }
 
   static Future<DateTime?> getDailyNotificationTime() async {
@@ -58,9 +63,8 @@ class NotificationsPreferences {
     var dateTimeString = prefs.getString(_dailyNotificationTime);
 
     if (dateTimeString != null) {
-      return DateTime.tryParse(dateTimeString);
-    } else {
-      return null;
+      return DateTime.parse(dateTimeString);
     }
+    return null;
   }
 }

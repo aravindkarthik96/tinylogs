@@ -24,14 +24,13 @@ class TodayPage extends StatefulWidget {
 class _TodayPageState extends State<TodayPage> {
   List<LogEntry> logs = [];
   bool _loading = false;
-
   bool _shouldShowNotificationPrompt = false;
 
   @override
   void initState() {
-    super.initState();
     loadLogs();
     _loadNotificationStatus();
+    super.initState();
   }
 
   Future<void> loadLogs() async {

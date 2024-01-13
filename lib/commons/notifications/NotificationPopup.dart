@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tinylogs/commons/notifications/NotificationsHelper.dart';
@@ -47,7 +45,7 @@ Future<void> showNotificationPopup(BuildContext context) async {
                     NotificationsDialogueStrings.confirmButtonText,
                     () async {
                       await NotificationsHelper().scheduleDailyNotification(
-                        TimeOfDay.fromDateTime(selectedTime),
+                        selectedTime,
                         NotificationsDialogueStrings.notificationMessageTitle,
                         NotificationsDialogueStrings.notificationMessageDescription,
                       );

@@ -31,7 +31,12 @@ class NotificationsHelper {
   }
 
   Future<void> scheduleDailyNotification(
-      TimeOfDay time, String title, String body) async {
+    DateTime time,
+    String title,
+    String body,
+  ) async {
+    cancelAllNotifications();
+
     final scheduledTime = tz.TZDateTime.now(tz.local).add(
       Duration(
         hours: time.hour - tz.TZDateTime.now(tz.local).hour,
@@ -65,7 +70,7 @@ class NotificationsHelper {
       matchDateTimeComponents: DateTimeComponents.time,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.wallClockTime,
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      androidScheduleMode: AndroidScheduleMode.inexact,
     );
 
     var notificationMessage =
@@ -73,6 +78,8 @@ class NotificationsHelper {
 
     await _testNotifications(notificationMessage);
     await NotificationsPreferences.setNotificationConfigured(true);
+    await NotificationsPreferences.setDailyNotificationTime(time);
+    return;
   }
 
   Future<void> cancelNotification(int id) async {
