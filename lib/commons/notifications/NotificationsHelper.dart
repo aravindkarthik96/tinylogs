@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import "package:timezone/timezone.dart" as tz;
+import 'package:tinylogs/data/notifications/NotificationsPreferences.dart';
 
 class NotificationsHelper {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
@@ -47,12 +48,11 @@ class NotificationsHelper {
     );
 
     const iOSDetails = DarwinNotificationDetails(
-      presentSound: true,
-      presentBadge: true,
-      presentBanner: true,
-      presentAlert: true,
-      interruptionLevel: InterruptionLevel.timeSensitive
-    );
+        presentSound: true,
+        presentBadge: true,
+        presentBanner: true,
+        presentAlert: true,
+        interruptionLevel: InterruptionLevel.timeSensitive);
     const platformDetails =
         NotificationDetails(android: androidDetails, iOS: iOSDetails);
 
@@ -66,13 +66,13 @@ class NotificationsHelper {
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.wallClockTime,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-
     );
 
-    var notificationMessage = "Notification scheduled at ${time.hour}:${time.minute} every day";
+    var notificationMessage =
+        "Notification scheduled at ${time.hour}:${time.minute} every day";
 
-    await _testNotifications(
-        notificationMessage);
+    await _testNotifications(notificationMessage);
+    await NotificationsPreferences.setNotificationConfigured();
   }
 
   Future<void> cancelNotification(int id) async {
@@ -101,8 +101,7 @@ class NotificationsHelper {
             presentBadge: true,
             presentBanner: true,
             presentAlert: true,
-            interruptionLevel: InterruptionLevel.critical
-        ),
+            interruptionLevel: InterruptionLevel.critical),
       ),
     );
   }

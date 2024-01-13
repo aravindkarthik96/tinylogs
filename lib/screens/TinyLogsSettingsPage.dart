@@ -7,14 +7,14 @@ import 'package:tinylogs/screens/TinyLogsAddLogPage.dart';
 
 import '../commons/widgets/Spacers.dart';
 
-class TinyLogsOnboardingPage extends StatefulWidget {
-  const TinyLogsOnboardingPage({super.key});
+class TinyLogsSettingsPage extends StatefulWidget {
+  const TinyLogsSettingsPage({super.key});
 
   @override
-  State<TinyLogsOnboardingPage> createState() => _TinyLogsOnboardingPageState();
+  State<TinyLogsSettingsPage> createState() => _TinyLogsSettingsPageState();
 }
 
-class _TinyLogsOnboardingPageState extends State<TinyLogsOnboardingPage> {
+class _TinyLogsSettingsPageState extends State<TinyLogsSettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

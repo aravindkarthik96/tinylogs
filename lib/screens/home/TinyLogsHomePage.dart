@@ -34,7 +34,6 @@ class _TinyLogsHomePageState extends State<TinyLogsHomePage> {
         onTap: onTabTapped,
         currentIndex: _currentIndex,
         selectedItemColor: const Color(0xFF662619),
-        // Color for the selected item
         unselectedItemColor: const Color(0xFF6E6E6E),
         selectedLabelStyle: const TextStyle(
           fontFamily: 'SF Pro Text',

@@ -30,12 +30,11 @@ class NotificationsPreferences {
 
     var state = prefs.getBool(_notificationDialogueDismissed) ?? false;
     if (state) {
-      DateTime? dismissDate =
-          await getNotificationDialogueDismissedDate();
+      DateTime? dismissDate = await getNotificationDialogueDismissedDate();
       if (dismissDate != null) {
         var currentDate = DateTime.now();
-        var difference = currentDate.difference(dismissDate).inMinutes;
-        return difference < 2;
+        var difference = currentDate.difference(dismissDate).inHours;
+        return difference < 24;
       }
     }
     return state;

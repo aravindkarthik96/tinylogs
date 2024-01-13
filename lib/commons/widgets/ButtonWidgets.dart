@@ -23,7 +23,7 @@ class ButtonWidgets {
     );
   }
 
-  static IconButton getIconButton(String icon, void Function() onPressed) {
+  static IconButton getMiniIconButton(String icon, void Function() onPressed) {
     return IconButton(
       onPressed: onPressed,
       icon: Image.asset(
@@ -33,6 +33,18 @@ class ButtonWidgets {
       ),
     );
   }
+
+  static IconButton getSmallIconButton(String icon, void Function() onPressed) {
+    return IconButton(
+      onPressed: onPressed,
+      icon: Image.asset(
+        icon,
+        width: 28,
+        height: 28,
+      ),
+    );
+  }
+
 
   static getFloatingActionButton(String icon, void Function() onPressed) {
     return SizedBox(

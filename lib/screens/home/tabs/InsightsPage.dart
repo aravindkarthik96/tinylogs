@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tinylogs/commons/resources/TinyLogsStrings.dart';
+import 'package:tinylogs/commons/widgets/ButtonWidgets.dart';
 import 'package:tinylogs/commons/widgets/TextWidgets.dart';
 import 'package:tinylogs/data/logs_data/DatabaseHelper.dart';
 
 import '../../../commons/utils/TextUtils.dart';
+import '../../../commons/widgets/Containers.dart';
 import '../../../data/logs_data/LogEntry.dart';
 import '../../../generated/assets.dart';
 import '../../../commons/widgets/Spacers.dart';
@@ -45,6 +47,89 @@ class _InsightsPageState extends State<InsightsPage> {
         currentStreak = getCurrentStreak(uniqueLogDates);
       },
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Padding(
+          padding: const EdgeInsets.only(left: 16.0),
+          child: TextWidgets.getPageTitleText(
+            InsightsPageStrings.insightsPageTitle,
+          ),
+        ),
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(right: 28),
+            child: ButtonWidgets.getSmallIconButton(
+              Assets.imagesIconSettings,
+              () {},
+            ),
+          )
+        ],
+        backgroundColor: Colors.white,
+        centerTitle: false,
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(32, 12, 32, 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextWidgets.getSectionTitle(
+                  InsightsPageStrings.insightsSectionTitle,
+                ),
+                Spacers.sixteenPx,
+                Containers.getInsightRow(
+                  Assets.imagesIconThumbsUp,
+                  InsightsPageStrings.insightsTotalLogsTitle,
+                  "$logCount logs and $wordCount words",
+                  "",
+                ),
+                Spacers.sixteenPx,
+                Containers.getInsightRow(
+                  Assets.imagesIconCloudWithSunAndRain,
+                  InsightsPageStrings.insightsTotalUsageDaysTitle,
+                  "$timeSinceFirstLog days",
+                  "",
+                ),
+                Spacers.sixteenPx,
+                Containers.getInsightRow(
+                  Assets.imagesIconMedal,
+                  InsightsPageStrings.currentStreakTitle,
+                  "${currentStreak.length} days",
+                  " ${getStreakDescription(currentStreak)}",
+                ),
+                Spacers.sixteenPx,
+                Containers.getInsightRow(
+                  Assets.imagesIconMedalDark,
+                  InsightsPageStrings.longestStreakTitle,
+                  "${longestStreak.length} days",
+                  " ${getStreakDescription(longestStreak)}",
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Container(
+              color: const Color(0xFFF1F1F1),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  String getStreakDescription(List<DateTime> longestStreak) {
+    if (longestStreak.isEmpty) {
+      return "";
+    }
+
+    var dateFormat = DateFormat("d MMM");
+    return "from ${dateFormat.format(longestStreak.first)} - ${dateFormat.format(longestStreak.last)}";
   }
 
   List<DateTime> getLongestStreak(List<DateTime> uniqueLogDates) {
@@ -91,112 +176,5 @@ class _InsightsPageState extends State<InsightsPage> {
     }
 
     return currentStreak.reversed.toList();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Padding(
-          padding: const EdgeInsets.only(left: 16.0),
-          child: TextWidgets.getPageTitleText(
-            InsightsPageStrings.insightsPageTitle,
-          ),
-        ),
-        backgroundColor: Colors.white,
-        centerTitle: false,
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(32, 12, 32, 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextWidgets.getSectionTitle(
-                  InsightsPageStrings.insightsSectionTitle,
-                ),
-                Spacers.sixteenPx,
-                addInsight(
-                  Assets.imagesIconThumbsUp,
-                  InsightsPageStrings.insightsTotalLogsTitle,
-                  "$logCount logs and $wordCount words",
-                  "",
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                addInsight(
-                  Assets.imagesIconCloudWithSunAndRain,
-                  InsightsPageStrings.insightsTotalUsageDaysTitle,
-                  "$timeSinceFirstLog days",
-                  "",
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                addInsight(
-                  Assets.imagesIconMedal,
-                  InsightsPageStrings.currentStreakTitle,
-                  "${currentStreak.length} days",
-                  " ${getStreakDescription(currentStreak)}",
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                addInsight(
-                  Assets.imagesIconMedalDark,
-                  InsightsPageStrings.longestStreakTitle,
-                  "${longestStreak.length} days",
-                  " ${getStreakDescription(longestStreak)}",
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Container(
-              color: const Color(0xFFF1F1F1),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Row addInsight(
-    String icon,
-    String title,
-    String subtitle,
-    String description,
-  ) {
-    return Row(
-      children: [
-        Image.asset(
-          icon,
-          width: 36,
-          height: 36,
-        ),
-        const SizedBox(
-          width: 16,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextWidgets.getInsightItemTitle(title),
-            TextWidgets.getInsightItemDescription(subtitle, description)
-          ],
-        ),
-      ],
-    );
-  }
-
-  String getStreakDescription(List<DateTime> longestStreak) {
-    if (longestStreak.isEmpty) {
-      return "";
-    }
-
-    var dateFormat = DateFormat("d MMM");
-    return "from ${dateFormat.format(longestStreak.first)} - ${dateFormat.format(longestStreak.last)}";
   }
 }

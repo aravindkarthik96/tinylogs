@@ -60,14 +60,14 @@ class Containers {
                 ),
               ),
             ),
-            ButtonWidgets.getIconButton(Assets.imagesIconCross, onDismissed)
+            ButtonWidgets.getMiniIconButton(Assets.imagesIconCross, onDismissed)
           ],
         ),
       ),
     );
   }
 
-  static getLogSeparator(String title, String prompt) {
+  static Widget getLogSeparator(String title, String prompt) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
       child: Container(
@@ -93,6 +93,33 @@ class Containers {
           ],
         ),
       ),
+    );
+  }
+
+  static Row getInsightRow(
+    String icon,
+    String title,
+    String subtitle,
+    String description,
+  ) {
+    return Row(
+      children: [
+        Image.asset(
+          icon,
+          width: 36,
+          height: 36,
+        ),
+        const SizedBox(
+          width: 16,
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextWidgets.getInsightItemTitle(title),
+            TextWidgets.getInsightItemDescription(subtitle, description)
+          ],
+        ),
+      ],
     );
   }
 }

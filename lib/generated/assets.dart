@@ -16,6 +16,7 @@ class Assets {
   static const String imagesIconMedalDark = 'assets/images/icon_medal_dark.png';
   static const String imagesIconNotesNormal = 'assets/images/icon_notes_normal.png';
   static const String imagesIconNotesSelected = 'assets/images/icon_notes_selected.png';
+  static const String imagesIconSettings = 'assets/images/icon_settings.png';
   static const String imagesIconShare = 'assets/images/icon_share.png';
   static const String imagesIconThumbsUp = 'assets/images/icon_thumbs_up.png';
   static const String imagesIconTodayEmptyState = 'assets/images/icon_today_empty_state.png';

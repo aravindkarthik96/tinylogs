@@ -23,20 +23,25 @@ class TodayPage extends StatefulWidget {
 
 class _TodayPageState extends State<TodayPage> {
   List<LogEntry> logs = [];
+  bool _loading = false;
 
   bool _shouldShowNotificationPrompt = false;
 
   @override
   void initState() {
-    loadLogs();
     super.initState();
+    loadLogs();
     _loadNotificationStatus();
   }
 
   Future<void> loadLogs() async {
-    setState(() async {
-      logs = await DatabaseHelper.instance.queryTodayLog();
-      ;
+    setState(() {
+      _loading = true;
+    });
+    var newLogs = await DatabaseHelper.instance.queryTodayLog();
+    setState(() {
+      logs = newLogs;
+      _loading = false;
     });
   }
 
@@ -93,6 +98,11 @@ class _TodayPageState extends State<TodayPage> {
   }
 
   Widget getContentView() {
+    if (_loading) {
+      return const SliverToBoxAdapter(
+        child: CircularProgressIndicator(),
+      );
+    }
     if (logs.isNotEmpty) {
       return createLogList();
     } else {
