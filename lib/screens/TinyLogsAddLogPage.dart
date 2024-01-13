@@ -104,10 +104,10 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
             padding: const EdgeInsets.only(right: 28),
             child: TextButton(
               onPressed: submitButtonEnabled
-                  ? () {
-                      storeLog();
+                  ? () async {
+                      await storeLog();
                       markOnboardingComplete();
-                      navigateToNextPage(context);
+                      navigateToNextPage();
                     }
                   : null,
               child: Text(
@@ -194,7 +194,7 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
     );
   }
 
-  void navigateToNextPage(BuildContext context) {
+  void navigateToNextPage() {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const TinyLogsHomePage()),
