@@ -6,6 +6,7 @@ class Assets {
   static const String imagesArrowLeft = 'assets/images/arrow_left.png';
   static const String imagesBackgroundLogsMonthSeparator = 'assets/images/background_logs_month_separator.png';
   static const String imagesIconAskHint = 'assets/images/icon_ask_hint.png';
+  static const String imagesIconChevronRight = 'assets/images/icon_chevron_right.png';
   static const String imagesIconCloudWithSunAndRain = 'assets/images/icon_cloud_with_sun_and_rain.png';
   static const String imagesIconCross = 'assets/images/icon_cross.png';
   static const String imagesIconDelete = 'assets/images/icon_delete.png';

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:tinylogs/commons/ViewModels/LogEntryViewModel.dart';
+import 'package:tinylogs/commons/resources/TinyLogsColors.dart';
 import 'package:tinylogs/commons/resources/TinyLogsStrings.dart';
-import 'package:tinylogs/commons/widgets/ButtonWidgets.dart';
 import 'package:tinylogs/commons/widgets/TextWidgets.dart';
 import 'package:tinylogs/data/logs_data/DatabaseHelper.dart';
+import 'package:tinylogs/generated/assets.dart';
 import 'package:tinylogs/screens/AddLogPage.dart';
 import 'package:tinylogs/screens/StarScreen.dart';
 
@@ -79,15 +80,44 @@ class _LogsPageState extends State<LogsPage> {
             ),
             backgroundColor: Colors.white,
           ),
-          SliverToBoxAdapter(child:
-            ButtonWidgets.getLargeNakedButton("open stars screen", () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => StarLogsPage(),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: TinyLogsColors.orangePageBackground,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0x15000026),
+                        blurRadius: 2,
+                        offset: Offset(1, 1),
+                      )
+                    ]),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 16, 8, 16),
+                  child: ListTile(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const StarLogsPage(),
+                        ),
+                      );
+                    },
+                    title: TextWidgets.getPromptTitle("Discover"),
+                    subtitle: TextWidgets.getMiniTitleText(
+                        "Your every lag is stored as a star in this tiny sky."),
+                    trailing: Image.asset(
+                      Assets.imagesIconChevronRight,
+                      width: 24,
+                      height: 24,
+                    ),
+                  ),
                 ),
-              );
-            }),),
+              ),
+            ),
+          ),
           SliverList.builder(
             itemCount: logsViewModels.length,
             itemBuilder: (context, index) {

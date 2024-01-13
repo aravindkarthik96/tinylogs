@@ -17,6 +17,14 @@ class TextWidgets {
     );
   }
 
+  static Text getPromptTitle(String title) {
+    return Text(
+      title,
+      textAlign: TextAlign.left,
+      style: TinyLogsStyles.sectionTitleOrangeTextStyle,
+    );
+  }
+
   static Text getInsightItemTitle(String title) {
     return Text(
       title,

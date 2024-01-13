@@ -25,6 +25,13 @@ class TinyLogsStyles {
       height: 1.3,
       color: TinyLogsColors.orangeDark);
 
+  static TextStyle sectionTitleOrangeTextStyle = const TextStyle(
+      fontFamily: "SF Pro Display",
+      fontSize: 17,
+      fontWeight: FontWeight.w600,
+      height: 1.3,
+      color: TinyLogsColors.orangeRegular);
+
   static TextStyle insightItemSubtitleStyle = const TextStyle(
       fontFamily: "SF Pro Display",
       fontSize: 17,
