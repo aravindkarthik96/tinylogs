@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tinylogs/commons/widgets/TextWidgets.dart';
 
-import '../../generated/assets.dart';
 import '../resources/TinyLogsColors.dart';
-import '../resources/TinyLogsStrings.dart';
 
 class ButtonWidgets {
   static TextButton getSmallNakedButton(
@@ -46,7 +44,7 @@ class ButtonWidgets {
   }
 
 
-  static getFloatingActionButton(String icon, void Function() onPressed) {
+  static Widget getFloatingActionButton(String icon, void Function() onPressed) {
     return SizedBox(
       width: 64.0,
       height: 64.0,
@@ -63,7 +61,7 @@ class ButtonWidgets {
     );
   }
 
-  static getPrimaryButton(String buttonText, void Function() onPress) {
+  static Widget getPrimaryButton(String buttonText, void Function() onPress) {
     return ElevatedButton(
       onPressed: onPress,
       style: ElevatedButton.styleFrom(
@@ -83,8 +81,8 @@ class ButtonWidgets {
     );
   }
 
-  static getLargeNakedButton(String buttonText, void Function() onPressed) {
-    TextButton(
+  static Widget getLargeNakedButton(String buttonText, void Function() onPressed) {
+    return TextButton(
       onPressed: onPressed,
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(Colors.transparent),
