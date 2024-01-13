@@ -85,7 +85,6 @@ class NotificationsHelper {
   }
 
   Future<void> cancelAllNotifications() async {
-    NotificationsPreferences.setNotificationConfigured(false);
     await flutterLocalNotificationsPlugin.cancelAll();
   }
 
@@ -96,18 +95,18 @@ class NotificationsHelper {
       notificationMessage,
       const NotificationDetails(
         android: AndroidNotificationDetails(
-          'daily_notification_channel_id_registration_success',
-          'Daily Notifications',
-          channelDescription: 'Daily Notification Channel',
-          importance: Importance.max,
-          priority: Priority.high,
+          'daily_notification_test',
+          'Daily Notifications test',
+          channelDescription: 'Daily Notification Test Channel',
+          importance: Importance.defaultImportance,
+          priority: Priority.defaultPriority,
         ),
         iOS: DarwinNotificationDetails(
             presentSound: true,
             presentBadge: true,
             presentBanner: true,
             presentAlert: true,
-            interruptionLevel: InterruptionLevel.critical),
+            interruptionLevel: InterruptionLevel.active),
       ),
     );
   }

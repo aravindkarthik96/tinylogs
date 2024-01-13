@@ -5,6 +5,7 @@ import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import 'package:tinylogs/commons/notifications/NotificationsHelper.dart';
 import 'package:tinylogs/screens/OnboardingPage.dart';
 import 'package:tinylogs/screens/home/HomePage.dart';
 
@@ -18,6 +19,7 @@ Future<void> main() async {
     databaseFactory = databaseFactoryFfi;
   }
   _configureLocalTimeZone();
+  NotificationsHelper();
   bool onboardingStatus = await OnboardingPreferences.isOnboardingComplete();
   runApp(TinyLogsApp(onboardingStatus));
 }

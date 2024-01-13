@@ -57,7 +57,7 @@ class _SettingsPageState extends State<SettingsPage> {
               if (!remindersEnabled) {
                 await showNotificationPopup(context);
               } else {
-                NotificationsHelper().cancelAllNotifications();
+                NotificationsPreferences.setNotificationConfigured(false);
               }
               setState(() {
                 _refreshRemindersState();
