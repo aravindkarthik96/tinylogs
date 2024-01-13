@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:tinylogs/commons/resources/TinyLogsColors.dart';
+import 'package:tinylogs/commons/resources/TinyLogsStrings.dart';
 import 'package:tinylogs/commons/widgets/ButtonWidgets.dart';
 import 'package:tinylogs/commons/widgets/Spacers.dart';
+import 'package:tinylogs/commons/widgets/TextWidgets.dart';
 import 'dart:math';
 
+import '../commons/resources/TinyLogsStyles.dart';
 import '../data/logs_data/DatabaseHelper.dart';
 import '../data/logs_data/LogEntry.dart';
 import '../generated/assets.dart';
@@ -80,15 +84,10 @@ class StarLogsPageState extends State<StarLogsPage> {
               buttonColor: TinyLogsColors.white,
             ),
             Spacers.sixteenPx,
-            const Text(
-              "Tap on any star to view your logs",
+            Text(
+              StarLogPageStrings.clickStarPromptText,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                color: TinyLogsColors.white,
-                fontFamily: "SF Pro Text",
-                fontWeight: FontWeight.w400,
-                fontSize: 17,
-              ),
+              style: TinyLogsStyles.starLogPromptStyle,
             ),
           ],
         ),
@@ -111,8 +110,7 @@ class StarLogsPageState extends State<StarLogsPage> {
                     left: MediaQuery.of(context).size.width * log.positionX,
                     top: MediaQuery.of(context).size.height * log.positionY,
                     child: GestureDetector(
-                      onTap: () =>
-                          _showLogMessage(context, log.logEntry.content),
+                      onTap: () => _showLogMessage(context, log.logEntry),
                       child: Image.asset(
                         Assets.imagesIconStar,
                         width: MediaQuery.of(context).size.width / gridCols,
@@ -126,18 +124,48 @@ class StarLogsPageState extends State<StarLogsPage> {
     );
   }
 
-  void _showLogMessage(BuildContext context, String message) {
+  void _showLogMessage(BuildContext context, LogEntry logEntry) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        content: Text(message),
-        actions: [
-          TextButton(
-            child: const Text('Close'),
-            onPressed: () => Navigator.of(context).pop(),
+      builder: (BuildContext context) {
+        double width = MediaQuery.of(context).size.width;
+        return AlertDialog(
+          content: ConstrainedBox(
+            constraints: BoxConstraints(
+              minWidth: width,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                    child: TextWidgets.getMiniTitleText(
+                      DateFormat("dd MMM yyyy").format(logEntry.creationDate),
+                    )),
+                const SizedBox(
+                  height: 4,
+                ),
+                const Divider(
+                  thickness: 1,
+                  color: TinyLogsColors.buttonDisabled,
+                  height: 1,
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 24, 16, 24),
+                  child: TextWidgets.getLogText(logEntry.content),
+                )
+              ],
+            ),
           ),
-        ],
-      ),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+          ),
+          contentPadding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
+          surfaceTintColor: TinyLogsColors.white,
+        );
+      },
     );
   }
 }

@@ -115,10 +115,17 @@ class TinyLogsStyles {
       height: 1.2,
       color: TinyLogsColors.orangeDark);
 
-  static var separatorDescriptionTextStyle = const TextStyle(
+  static TextStyle separatorDescriptionTextStyle = const TextStyle(
     fontFamily: "SF Pro Text",
     fontWeight: FontWeight.w500,
     fontSize: 15,
     height: 1.3,
+  );
+
+  static TextStyle starLogPromptStyle = const TextStyle(
+    color: TinyLogsColors.white,
+    fontFamily: "SF Pro Text",
+    fontWeight: FontWeight.w400,
+    fontSize: 17,
   );
 }

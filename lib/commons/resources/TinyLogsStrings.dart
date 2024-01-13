@@ -37,11 +37,12 @@ class NotificationsDialogueStrings {
 
 class AddLogsPageStrings {
   static String addLogButtonText = 'Done';
-
   static var addLogsHintText = 'I am thankful for';
-
   static var shareContentAppSignature = "-via tinylogs";
-
   static var shareContentSubject = "Checkout tinylogs today!";
+}
+
+class StarLogPageStrings {
+  static String clickStarPromptText = "Tap on any star to view your logs";
 
 }
