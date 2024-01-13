@@ -8,9 +8,9 @@ class NotificationsPreferences {
       'notificationDialogueDismissedDate';
   static const _dailyNotificationTime = 'dailyNotificationTime';
 
-  static Future<void> setNotificationConfigured() async {
+  static Future<void> setNotificationConfigured(bool state) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_notificationSetKey, true);
+    await prefs.setBool(_notificationSetKey, state);
   }
 
   static Future<bool> getNotificationConfigured() async {

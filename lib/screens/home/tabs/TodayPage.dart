@@ -76,14 +76,17 @@ class _TodayPageState extends State<TodayPage> {
                 TodayPageStrings.notificationTitle,
                 TodayPageStrings.notificationDescription,
                 TodayPageStrings.notificationButtonText,
-                () {
-                  NotificationsPreferences.setNotificationDialogueDismissed();
+                () async {
+                  await NotificationsPreferences.setNotificationDialogueDismissed();
                   setState(() {
-                    _shouldShowNotificationPrompt = false;
+                    _loadNotificationStatus();
                   });
                 },
-                () {
-                  showNotificationPopup(context);
+                () async {
+                  await showNotificationPopup(context);
+                  setState(() {
+                    _loadNotificationStatus();
+                  });
                 },
               ),
             )
@@ -207,7 +210,7 @@ class _TodayPageState extends State<TodayPage> {
         await NotificationsPreferences.getNotificationConfigured();
     setState(() {
       _shouldShowNotificationPrompt =
-          (!notificationDialogueDismissed) || notificationConfigured;
+          !notificationConfigured && (!notificationDialogueDismissed);
     });
   }
 }

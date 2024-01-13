@@ -64,7 +64,7 @@ class _InsightsPageState extends State<InsightsPage> {
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.only(right: 28),
-            child: ButtonWidgets.getSmallIconButton(
+            child: ButtonWidgets.getMediumIconButton(
               Assets.imagesIconSettings,
               () {
                 Navigator.push(

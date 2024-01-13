@@ -72,7 +72,7 @@ class NotificationsHelper {
         "Notification scheduled at ${time.hour}:${time.minute} every day";
 
     await _testNotifications(notificationMessage);
-    await NotificationsPreferences.setNotificationConfigured();
+    await NotificationsPreferences.setNotificationConfigured(true);
   }
 
   Future<void> cancelNotification(int id) async {

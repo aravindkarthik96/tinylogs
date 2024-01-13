@@ -9,9 +9,9 @@ import 'package:tinylogs/commons/widgets/TextWidgets.dart';
 import '../resources/TinyLogsStrings.dart';
 import '../widgets/ButtonWidgets.dart';
 
-void showNotificationPopup(BuildContext context) {
+Future<void> showNotificationPopup(BuildContext context) async {
   DateTime selectedTime = DateTime.now();
-  showModalBottomSheet(
+  await showModalBottomSheet(
     context: context,
     backgroundColor: Colors.white,
     isScrollControlled: true,
@@ -45,8 +45,8 @@ void showNotificationPopup(BuildContext context) {
                   Spacers.sixteenPx,
                   ButtonWidgets.getPrimaryButton(
                     NotificationsDialogueStrings.confirmButtonText,
-                    () {
-                      NotificationsHelper().scheduleDailyNotification(
+                    () async {
+                      await NotificationsHelper().scheduleDailyNotification(
                         TimeOfDay.fromDateTime(selectedTime),
                         NotificationsDialogueStrings.notificationMessageTitle,
                         NotificationsDialogueStrings.notificationMessageDescription,
