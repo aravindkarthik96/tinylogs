@@ -5,8 +5,8 @@ import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
-import 'package:tinylogs/screens/TinyLogsOnboardingPage.dart';
-import 'package:tinylogs/screens/home/TinyLogsHomePage.dart';
+import 'package:tinylogs/screens/OnboardingPage.dart';
+import 'package:tinylogs/screens/home/HomePage.dart';
 
 import 'data/onboarding/OnboardingPreferences.dart';
 
@@ -44,8 +44,8 @@ class TinyLogsApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: _onboardingStatus
-          ? const TinyLogsHomePage()
-          : const TinyLogsOnboardingPage(),
+          ? const HomePage()
+          : const OnboardingPage(),
     );
   }
 }

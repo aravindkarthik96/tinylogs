@@ -3,7 +3,7 @@ import 'package:tinylogs/commons/ViewModels/LogEntryViewModel.dart';
 import 'package:tinylogs/commons/resources/TinyLogsStrings.dart';
 import 'package:tinylogs/commons/widgets/TextWidgets.dart';
 import 'package:tinylogs/data/logs_data/DatabaseHelper.dart';
-import 'package:tinylogs/screens/TinyLogsAddLogPage.dart';
+import 'package:tinylogs/screens/AddLogPage.dart';
 
 import '../../../commons/widgets/LogItem.dart';
 import '../../../data/logs_data/LogEntry.dart';
@@ -92,7 +92,7 @@ class _LogsPageState extends State<LogsPage> {
                   await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => TinyLogsAddLogPage(
+                      builder: (context) => AddLogPage(
                         logEntry: logsViewModel.logEntry,
                       ),
                     ),

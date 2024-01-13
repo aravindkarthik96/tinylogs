@@ -6,7 +6,7 @@ import 'package:tinylogs/commons/widgets/ButtonWidgets.dart';
 import 'package:tinylogs/commons/widgets/TextWidgets.dart';
 import 'package:tinylogs/data/logs_data/DatabaseHelper.dart';
 import 'package:tinylogs/generated/assets.dart';
-import 'package:tinylogs/screens/TinyLogsAddLogPage.dart';
+import 'package:tinylogs/screens/AddLogPage.dart';
 import '../../../commons/notifications/NotificationPopup.dart';
 import '../../../commons/widgets/Containers.dart';
 import '../../../commons/widgets/LogItem.dart';
@@ -52,7 +52,7 @@ class _TodayPageState extends State<TodayPage> {
           Assets.imagesIconEditFab, () async {
         await Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const TinyLogsAddLogPage()),
+          MaterialPageRoute(builder: (context) => const AddLogPage()),
         );
         setState(() {
           loadLogs();
@@ -159,7 +159,7 @@ class _TodayPageState extends State<TodayPage> {
             await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => TinyLogsAddLogPage(
+                builder: (context) => AddLogPage(
                   logEntry: log,
                 ),
               ),

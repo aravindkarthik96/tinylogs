@@ -3,18 +3,18 @@ import 'package:tinylogs/commons/resources/TinyLogsStrings.dart';
 import 'package:tinylogs/commons/widgets/ButtonWidgets.dart';
 import 'package:tinylogs/commons/widgets/TextWidgets.dart';
 import 'package:tinylogs/generated/assets.dart';
-import 'package:tinylogs/screens/TinyLogsAddLogPage.dart';
+import 'package:tinylogs/screens/AddLogPage.dart';
 
 import '../commons/widgets/Spacers.dart';
 
-class TinyLogsSettingsPage extends StatefulWidget {
-  const TinyLogsSettingsPage({super.key});
+class OnboardingPage extends StatefulWidget {
+  const OnboardingPage({super.key});
 
   @override
-  State<TinyLogsSettingsPage> createState() => _TinyLogsSettingsPageState();
+  State<OnboardingPage> createState() => _OnboardingPageState();
 }
 
-class _TinyLogsSettingsPageState extends State<TinyLogsSettingsPage> {
+class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +55,7 @@ class _TinyLogsSettingsPageState extends State<TinyLogsSettingsPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const TinyLogsAddLogPage()),
+                      builder: (context) => const AddLogPage()),
                 );
               }),
             )

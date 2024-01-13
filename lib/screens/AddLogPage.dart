@@ -4,22 +4,22 @@ import 'package:share/share.dart';
 import 'package:tinylogs/commons/resources/TinyLogsColors.dart';
 import 'package:tinylogs/commons/resources/TinyLogsStrings.dart';
 import 'package:tinylogs/generated/assets.dart';
-import 'package:tinylogs/screens/home/TinyLogsHomePage.dart'
-    show TinyLogsHomePage;
+import 'package:tinylogs/screens/home/HomePage.dart'
+    show HomePage;
 import '../data/logs_data/DatabaseHelper.dart';
 import '../data/logs_data/LogEntry.dart';
 import '../data/onboarding/OnboardingPreferences.dart';
 
-class TinyLogsAddLogPage extends StatefulWidget {
+class AddLogPage extends StatefulWidget {
   final LogEntry? logEntry;
 
-  const TinyLogsAddLogPage({super.key, this.logEntry});
+  const AddLogPage({super.key, this.logEntry});
 
   @override
-  State<TinyLogsAddLogPage> createState() => _TinyLogsAddLogPageState();
+  State<AddLogPage> createState() => _AddLogPageState();
 }
 
-class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
+class _AddLogPageState extends State<AddLogPage> {
   DateTime selectedDate = DateTime.now();
   bool submitButtonEnabled = false;
   String logText = "";
@@ -197,7 +197,7 @@ class _TinyLogsAddLogPageState extends State<TinyLogsAddLogPage> {
   void navigateToNextPage() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const TinyLogsHomePage()),
+      MaterialPageRoute(builder: (context) => const HomePage()),
     );
   }
 

@@ -4,6 +4,7 @@ import 'package:tinylogs/commons/resources/TinyLogsStrings.dart';
 import 'package:tinylogs/commons/widgets/ButtonWidgets.dart';
 import 'package:tinylogs/commons/widgets/TextWidgets.dart';
 import 'package:tinylogs/data/logs_data/DatabaseHelper.dart';
+import 'package:tinylogs/screens/SettingsPage.dart';
 
 import '../../../commons/utils/TextUtils.dart';
 import '../../../commons/widgets/Containers.dart';
@@ -65,7 +66,14 @@ class _InsightsPageState extends State<InsightsPage> {
             padding: const EdgeInsets.only(right: 28),
             child: ButtonWidgets.getSmallIconButton(
               Assets.imagesIconSettings,
-              () {},
+              () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SettingsPage(),
+                  ),
+                );
+              },
             ),
           )
         ],

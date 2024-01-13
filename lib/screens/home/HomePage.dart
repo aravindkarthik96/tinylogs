@@ -4,14 +4,14 @@ import 'package:tinylogs/screens/home/tabs/TodayPage.dart';
 
 import 'tabs/LogsPage.dart';
 
-class TinyLogsHomePage extends StatefulWidget {
-  const TinyLogsHomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<StatefulWidget> createState() => _TinyLogsHomePageState();
+  State<StatefulWidget> createState() => _HomePageState();
 }
 
-class _TinyLogsHomePageState extends State<TinyLogsHomePage> {
+class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
 
   final List<Widget> _children = [
