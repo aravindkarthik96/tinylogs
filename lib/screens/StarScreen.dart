@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:tinylogs/commons/resources/TinyLogsColors.dart';
+import 'package:tinylogs/commons/widgets/ButtonWidgets.dart';
+import 'package:tinylogs/commons/widgets/Spacers.dart';
 import 'dart:math';
 
 import '../data/logs_data/DatabaseHelper.dart';
 import '../data/logs_data/LogEntry.dart';
+import '../generated/assets.dart';
 
 class StarLogsPage extends StatefulWidget {
+  const StarLogsPage({super.key});
+
   @override
-  _StarLogsPageState createState() => _StarLogsPageState();
+  StarLogsPageState createState() => StarLogsPageState();
 }
 
-class _StarLogsPageState extends State<StarLogsPage> {
+class StarLogsPageState extends State<StarLogsPage> {
   final int maxStars = 15;
-  final int gridRows = 30;
-  final int gridCols = 30;
+  final int gridRows = 20;
+  final int gridCols = 20;
   List<StarLog> logs = [];
 
   @override
@@ -27,10 +33,11 @@ class _StarLogsPageState extends State<StarLogsPage> {
     var rng = Random();
     Set<Point> usedPoints = {};
 
-    if(!mounted) return;
+    if (!mounted) return;
 
     final safePaddingTop = MediaQuery.of(context).padding.top;
-    final usableScreenHeight = MediaQuery.of(context).size.height - safePaddingTop - 56;
+    final usableScreenHeight =
+        MediaQuery.of(context).size.height - safePaddingTop - 56;
 
     while (logs.length < min(updatedLogs.length, maxStars)) {
       var position = Point(
@@ -38,14 +45,16 @@ class _StarLogsPageState extends State<StarLogsPage> {
         rng.nextInt(gridRows - (56 / usableScreenHeight * gridRows).floor()),
       );
 
-      final adjustedY = position.y + (56 / usableScreenHeight * gridRows).floor();
+      final adjustedY =
+          position.y + (56 / usableScreenHeight * gridRows).floor();
 
       if (!usedPoints.contains(position)) {
         usedPoints.add(position);
         logs.add(StarLog(
           updatedLogs[logs.length],
           position.x / gridCols,
-          (adjustedY / gridRows) * (usableScreenHeight / MediaQuery.of(context).size.height),
+          (adjustedY / gridRows) *
+              (usableScreenHeight / MediaQuery.of(context).size.height),
         ));
       }
     }
@@ -56,12 +65,44 @@ class _StarLogsPageState extends State<StarLogsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Padding(
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ButtonWidgets.getMiniFloatingActionButton(
+              Assets.imagesIconMiniCross,
+              () {
+                Navigator.of(context).pop();
+              },
+              buttonColor: TinyLogsColors.white,
+            ),
+            Spacers.sixteenPx,
+            const Text(
+              "Tap on any star to view your logs",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: TinyLogsColors.white,
+                fontFamily: "SF Pro Text",
+                fontWeight: FontWeight.w400,
+                fontSize: 17,
+              ),
+            ),
+          ],
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Colors.purple[300]!, Colors.purple[700]!],
+            colors: [
+              TinyLogsColors.skyGradientStart,
+              TinyLogsColors.skyGradientEnd
+            ],
           ),
         ),
         child: Stack(
@@ -72,9 +113,11 @@ class _StarLogsPageState extends State<StarLogsPage> {
                     child: GestureDetector(
                       onTap: () =>
                           _showLogMessage(context, log.logEntry.content),
-                      child: Icon(Icons.star,
-                          color: Colors.white,
-                          size: MediaQuery.of(context).size.width / gridCols),
+                      child: Image.asset(
+                        Assets.imagesIconStar,
+                        width: MediaQuery.of(context).size.width / gridCols,
+                        height: MediaQuery.of(context).size.width / gridCols,
+                      ),
                     ),
                   ))
               .toList(),
@@ -90,7 +133,7 @@ class _StarLogsPageState extends State<StarLogsPage> {
         content: Text(message),
         actions: [
           TextButton(
-            child: Text('Close'),
+            child: const Text('Close'),
             onPressed: () => Navigator.of(context).pop(),
           ),
         ],

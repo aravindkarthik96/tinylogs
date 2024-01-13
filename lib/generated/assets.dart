@@ -14,10 +14,12 @@ class Assets {
   static const String imagesIconInsightsSelected = 'assets/images/icon_insights_selected.png';
   static const String imagesIconMedal = 'assets/images/icon_medal.png';
   static const String imagesIconMedalDark = 'assets/images/icon_medal_dark.png';
+  static const String imagesIconMiniCross = 'assets/images/icon_mini_cross.png';
   static const String imagesIconNotesNormal = 'assets/images/icon_notes_normal.png';
   static const String imagesIconNotesSelected = 'assets/images/icon_notes_selected.png';
   static const String imagesIconSettings = 'assets/images/icon_settings.png';
   static const String imagesIconShare = 'assets/images/icon_share.png';
+  static const String imagesIconStar = 'assets/images/icon_star.png';
   static const String imagesIconThumbsUp = 'assets/images/icon_thumbs_up.png';
   static const String imagesIconTodayEmptyState = 'assets/images/icon_today_empty_state.png';
   static const String imagesIconTodayNormal = 'assets/images/icon_today_normal.png';

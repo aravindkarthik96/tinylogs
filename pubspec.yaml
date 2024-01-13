@@ -61,6 +61,8 @@ flutter:
     - assets/images/icon_thumbs_up.png
     - assets/images/icon_cross.png
     - assets/images/icon_settings.png
+    - assets/images/icon_star.png
+    - assets/images/icon_mini_cross.png
 
 fonts:
   - family: SF Pro Text

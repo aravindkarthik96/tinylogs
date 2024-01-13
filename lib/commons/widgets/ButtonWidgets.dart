@@ -32,7 +32,8 @@ class ButtonWidgets {
     );
   }
 
-  static IconButton getMediumIconButton(String icon, void Function() onPressed) {
+  static IconButton getMediumIconButton(
+      String icon, void Function() onPressed) {
     return IconButton(
       onPressed: onPressed,
       icon: Image.asset(
@@ -54,13 +55,14 @@ class ButtonWidgets {
     );
   }
 
-  static Widget getFloatingActionButton(String icon, void Function() onPressed) {
+  static Widget getFloatingActionButton(String icon, void Function() onPressed,
+      {buttonColor = TinyLogsColors.orangeRegular}) {
     return SizedBox(
       width: 64.0,
       height: 64.0,
       child: FloatingActionButton(
         onPressed: onPressed,
-        backgroundColor: TinyLogsColors.orangeRegular,
+        backgroundColor: buttonColor,
         shape: const CircleBorder(),
         child: Image.asset(
           icon,
@@ -91,7 +93,8 @@ class ButtonWidgets {
     );
   }
 
-  static Widget getLargeNakedButton(String buttonText, void Function() onPressed) {
+  static Widget getLargeNakedButton(
+      String buttonText, void Function() onPressed) {
     return TextButton(
       onPressed: onPressed,
       style: ButtonStyle(
@@ -107,6 +110,24 @@ class ButtonWidgets {
         ),
       ),
       child: TextWidgets.getNakedButtonText(buttonText),
+    );
+  }
+
+  static Widget getMiniFloatingActionButton(String icon, void Function() onPressed,
+      {buttonColor = TinyLogsColors.orangeRegular}) {
+    return SizedBox(
+      width: 48.0,
+      height: 48.0,
+      child: FloatingActionButton(
+        onPressed: onPressed,
+        backgroundColor: buttonColor,
+        shape: const CircleBorder(),
+        child: Image.asset(
+          icon,
+          width: 28,
+          height: 28,
+        ),
+      ),
     );
   }
 }
