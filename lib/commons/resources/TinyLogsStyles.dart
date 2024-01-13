@@ -86,10 +86,17 @@ class TinyLogsStyles {
     height: 1.4,
   );
 
-  static TextStyle nakedButtonTextStyle = const TextStyle(
+  static TextStyle tinyNakedButtonTextStyle = const TextStyle(
     fontFamily: "SF Pro Display",
     fontSize: 13,
     fontWeight: FontWeight.w500,
+    color: TinyLogsColors.orangeDark,
+  );
+
+  static TextStyle nakedButtonTextStyle = const TextStyle(
+    fontFamily: "SF Pro Text",
+    fontSize: 17,
+    fontWeight: FontWeight.w700,
     color: TinyLogsColors.orangeDark,
   );
 

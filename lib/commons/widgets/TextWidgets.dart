@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tinylogs/commons/resources/TinyLogsStyles.dart';
 
-import '../resources/TinyLogsColors.dart';
-
 class TextWidgets {
   static Text getPageTitleText(String text) {
     return Text(
@@ -182,6 +180,13 @@ class TextWidgets {
       notificationDescriptionText,
       style: TinyLogsStyles.orangeDescriptionText,
       textAlign: TextAlign.center,
+    );
+  }
+
+  static getTinyNakedButtonText(String buttonText) {
+    return Text(
+      buttonText,
+      style: TinyLogsStyles.tinyNakedButtonTextStyle,
     );
   }
 

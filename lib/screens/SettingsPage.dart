@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tinylogs/commons/notifications/NotificationPopup.dart';
+import 'package:tinylogs/commons/notifications/NotificationsHelper.dart';
 import 'package:tinylogs/commons/resources/TinyLogsStyles.dart';
 import 'package:tinylogs/commons/widgets/ButtonWidgets.dart';
 import 'package:tinylogs/data/notifications/NotificationsPreferences.dart';
@@ -56,7 +57,7 @@ class _SettingsPageState extends State<SettingsPage> {
               if (!remindersEnabled) {
                 await showNotificationPopup(context);
               } else {
-                NotificationsPreferences.setNotificationConfigured(false);
+                NotificationsHelper().cancelAllNotifications();
               }
               setState(() {
                 _refreshRemindersState();
@@ -94,7 +95,9 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Widget getReminderTime() {
     return remindersEnabled && remindersTime != null
-        ? getSettingsItem('Reminders time', () {},
+        ? getSettingsItem('Reminder time', () async {
+            await showNotificationPopup(context);
+          },
             trailingWidget: TextWidgets.getSentenceRegularText(
                 "${remindersTime!.hour}:${remindersTime!.minute}"))
         : const SizedBox.shrink();

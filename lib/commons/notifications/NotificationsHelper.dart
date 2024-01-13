@@ -1,6 +1,4 @@
 import 'dart:math';
-
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import "package:timezone/timezone.dart" as tz;
 import 'package:tinylogs/data/notifications/NotificationsPreferences.dart';
@@ -70,7 +68,7 @@ class NotificationsHelper {
       matchDateTimeComponents: DateTimeComponents.time,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.wallClockTime,
-      androidScheduleMode: AndroidScheduleMode.inexact,
+      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
     );
 
     var notificationMessage =
@@ -87,6 +85,7 @@ class NotificationsHelper {
   }
 
   Future<void> cancelAllNotifications() async {
+    NotificationsPreferences.setNotificationConfigured(false);
     await flutterLocalNotificationsPlugin.cancelAll();
   }
 

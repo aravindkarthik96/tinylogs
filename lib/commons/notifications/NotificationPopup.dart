@@ -47,13 +47,17 @@ Future<void> showNotificationPopup(BuildContext context) async {
                       await NotificationsHelper().scheduleDailyNotification(
                         selectedTime,
                         NotificationsDialogueStrings.notificationMessageTitle,
-                        NotificationsDialogueStrings.notificationMessageDescription,
+                        NotificationsDialogueStrings
+                            .notificationMessageDescription,
                       );
-                      Navigator.pop(context);
+                      if (context.mounted) {
+                        Navigator.pop(context);
+                      }
                     },
                   ),
                   Spacers.twentyPx,
-                  ButtonWidgets.getLargeNakedButton(NotificationsDialogueStrings.dismissButtonText,() {
+                  ButtonWidgets.getLargeNakedButton(
+                      NotificationsDialogueStrings.dismissButtonText, () {
                     Navigator.pop(context);
                   }),
                   Spacers.thirtyTwoPx,

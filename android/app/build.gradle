@@ -48,12 +48,7 @@ android {
     }
 
     defaultConfig {
-        release {
-            applicationId "com.tinylogs.app"
-        }
-        debug {
-            applicationId "com.tinylogs.app.debug"
-        }
+        applicationId "com.tinylogs.app"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion flutter.minSdkVersion
@@ -74,6 +69,11 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
+        }
+
+        debug {
+            applicationIdSuffix ".debug" // Correct placement of applicationIdSuffix
+            signingConfig signingConfigs.debug
         }
     }
 }
