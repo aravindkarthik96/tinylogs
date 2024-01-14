@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:tinylogs/commons/notifications/NotificationPopup.dart';
 import 'package:tinylogs/commons/resources/TinyLogsStyles.dart';

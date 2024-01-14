@@ -57,11 +57,13 @@ class StarLogsPageState extends State<StarLogsPage> {
 
       if (!usedPoints.contains(position)) {
         usedPoints.add(position);
+        var updatedLog = updatedLogs[logs.length];
         logs.add(StarLog(
-          updatedLogs[logs.length],
+          updatedLog,
           position.x / gridCols,
           (adjustedY / gridRows) *
               (usableScreenHeight / MediaQuery.of(context).size.height),
+          ValueKey(updatedLog.logID),
         ));
       }
     }
@@ -109,23 +111,34 @@ class StarLogsPageState extends State<StarLogsPage> {
         ),
         child: Stack(
           children: logs
-              .map((log) => Positioned(
-                    left: MediaQuery.of(context).size.width * log.positionX,
-                    top: MediaQuery.of(context).size.height * log.positionY,
-                    child: GestureDetector(
-                      onTap: () =>
-                          _showLogMessageDialogue(context, log.logEntry),
-                      child: Image.asset(
-                        Assets.imagesIconStar,
-                        width: MediaQuery.of(context).size.width / gridCols,
-                        height: MediaQuery.of(context).size.width / gridCols,
-                      ),
+              .map(
+                (log) => Positioned(
+                  left: MediaQuery.of(context).size.width * log.positionX,
+                  top: MediaQuery.of(context).size.height * log.positionY,
+                  child: GestureDetector(
+                    onTap: () => _showLogMessageDialogue(context, log.logEntry),
+                    child: Draggable(
+                      data: log,
+                      childWhenDragging: getRotatedStar(0.4),
+                      feedback: getRotatedStar(5),
+                      child: getRotatedStar(1),
+                      onDragEnd: (dragDetails) =>
+                          _updateStarPosition(log, dragDetails),
                     ),
-                  ))
+                  ),
+                ),
+              )
               .toList(),
         ),
       ),
     );
+  }
+
+  void _updateStarPosition(StarLog log, DraggableDetails details) {
+    setState(() {
+      log.positionX = details.offset.dx / MediaQuery.of(context).size.width;
+      log.positionY = details.offset.dy / MediaQuery.of(context).size.height;
+    });
   }
 
   Future<void> _showLogMessageDialogue(
@@ -153,14 +166,30 @@ class StarLogsPageState extends State<StarLogsPage> {
   Future<void> updateStarLogOnboardingStatus() async {
     await OnboardingPreferences.setStarLogOnboardingComplete();
   }
+
+  Widget getRotatedStar(double scale) {
+    double rotationAngle = Random().nextDouble() * 2 * pi;
+    return Transform.rotate(
+      angle: rotationAngle,
+      child: Transform.scale(
+        scale: scale,
+        child: Image.asset(
+          Assets.imagesIconStar,
+          width: MediaQuery.of(context).size.width / gridCols,
+          height: MediaQuery.of(context).size.width / gridCols,
+        ),
+      ),
+    );
+  }
 }
 
 class StarLog {
-  final LogEntry logEntry;
-  final double positionX;
-  final double positionY;
+  LogEntry logEntry;
+  double positionX;
+  double positionY;
+  Key key;
 
-  StarLog(this.logEntry, this.positionX, this.positionY);
+  StarLog(this.logEntry, this.positionX, this.positionY, this.key);
 }
 
 class Point {
