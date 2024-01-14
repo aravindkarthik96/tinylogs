@@ -110,13 +110,24 @@ class StarLogsPageState extends State<StarLogsPage> {
           ),
         ),
         child: Stack(
-          children: logs
-              .map(
-                (log) => Positioned(
-                  left: MediaQuery.of(context).size.width * log.positionX,
-                  top: MediaQuery.of(context).size.height * log.positionY,
-                  child: GestureDetector(
-                    onTap: () => _showLogMessageDialogue(context, log.logEntry),
+          children: logs.map(
+            (log) {
+              const double touchAreaSize = 200.0;
+              final double offset = (touchAreaSize -
+                      MediaQuery.of(context).size.width / gridCols) /
+                  2;
+
+              return Positioned(
+                left:
+                    MediaQuery.of(context).size.width * log.positionX - offset,
+                top:
+                    MediaQuery.of(context).size.height * log.positionY - offset,
+                child: GestureDetector(
+                  onTap: () => _showLogMessageDialogue(context, log.logEntry),
+                  child: Container(
+                    width: touchAreaSize,
+                    height: touchAreaSize,
+                    alignment: Alignment.center,
                     child: Draggable(
                       data: log,
                       childWhenDragging: getRotatedStar(0.4),
@@ -127,8 +138,9 @@ class StarLogsPageState extends State<StarLogsPage> {
                     ),
                   ),
                 ),
-              )
-              .toList(),
+              );
+            },
+          ).toList(),
         ),
       ),
     );
