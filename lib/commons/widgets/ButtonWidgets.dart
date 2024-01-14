@@ -14,7 +14,7 @@ class ButtonWidgets {
             MaterialStateProperty.all(const EdgeInsets.fromLTRB(8, 0, 8, 0)),
         shape: MaterialStateProperty.all(RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
-          side: const BorderSide(color: Color(0xFF662619), width: 1),
+          side: const BorderSide(color: TinyLogsColors.orangeDark, width: 1),
         )),
       ),
       child: TextWidgets.getButtonText(title),
@@ -32,8 +32,8 @@ class ButtonWidgets {
     );
   }
 
-  static IconButton getMediumIconButton(
-      String icon, void Function() onPressed,{Color? tintColor}) {
+  static IconButton getMediumIconButton(String icon, void Function() onPressed,
+      {Color? tintColor}) {
     return IconButton(
       onPressed: onPressed,
       icon: Image.asset(
@@ -94,6 +94,33 @@ class ButtonWidgets {
     );
   }
 
+  static Widget getLargeSecondaryButton(
+      String buttonText, void Function() onPress) {
+    return ElevatedButton(
+      onPressed: onPress,
+      style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.white,
+        backgroundColor: TinyLogsColors.orangePageBackground,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        minimumSize: const Size(double.infinity, 56),
+        textStyle: const TextStyle(
+          fontSize: 17,
+          fontWeight: FontWeight.bold,
+          letterSpacing: -0.408,
+        ),
+      ),
+      child: Text(
+        buttonText,
+        style: const TextStyle(
+            color: TinyLogsColors.orangeRegular,
+            fontSize: 17,
+            fontFamily: "SF Pro Display"),
+      ),
+    );
+  }
+
   static Widget getLargeNakedButton(
       String buttonText, void Function() onPressed) {
     return TextButton(
@@ -104,7 +131,7 @@ class ButtonWidgets {
             MaterialStateProperty.all(const EdgeInsets.fromLTRB(8, 0, 8, 0)),
         shape: MaterialStateProperty.all(RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
-          side: const BorderSide(color: Color(0xFF662619), width: 1),
+          side: const BorderSide(color: TinyLogsColors.orangeDark, width: 1),
         )),
         minimumSize: MaterialStateProperty.all(
           const Size(double.infinity, 56),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tinylogs/commons/resources/TinyLogsColors.dart';
 import 'package:tinylogs/commons/resources/TinyLogsStyles.dart';
 
 class TextWidgets {
@@ -170,6 +171,38 @@ class TextWidgets {
             text: "\n$darkText",
             style: TinyLogsStyles.weight700,
           ),
+        ],
+      ),
+    );
+  }
+
+  static RichText getSharePromptText(String start, String middle, String end) {
+    return RichText(
+      textAlign: TextAlign.left,
+      text: TextSpan(
+        style: TinyLogsStyles.shareSignatureStyle,
+        children: <TextSpan>[
+          TextSpan(
+            text: start,
+            style: const TextStyle(
+              fontWeight: FontWeight.w400,
+              color: TinyLogsColors.orangeDark,
+            ),
+          ),
+          TextSpan(
+            text: middle,
+            style: const TextStyle(
+              fontWeight: FontWeight.w700,
+              color: TinyLogsColors.orangeRegular,
+            ),
+          ),
+          TextSpan(
+            text: end,
+            style: const TextStyle(
+              fontWeight: FontWeight.w400,
+              color: TinyLogsColors.orangeDark,
+            ),
+          )
         ],
       ),
     );

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:tinylogs/commons/resources/TinyLogsColors.dart';
 import 'package:tinylogs/commons/resources/TinyLogsStrings.dart';
 import 'package:tinylogs/commons/widgets/ButtonWidgets.dart';
+import 'package:tinylogs/commons/widgets/Containers.dart';
 import 'package:tinylogs/commons/widgets/Spacers.dart';
-import 'package:tinylogs/commons/widgets/TextWidgets.dart';
 import 'package:tinylogs/data/onboarding/OnboardingPreferences.dart';
 import 'dart:math';
 
 import '../commons/resources/TinyLogsStyles.dart';
+import '../commons/share/ShareLogHelper.dart';
 import '../data/logs_data/DatabaseHelper.dart';
 import '../data/logs_data/LogEntry.dart';
 import '../generated/assets.dart';
@@ -28,9 +29,9 @@ class StarLogsPageState extends State<StarLogsPage> {
 
   @override
   void initState() {
-    super.initState();
     fetchLogs();
     updateStarLogOnboardingStatus();
+    super.initState();
   }
 
   Future<void> fetchLogs() async {
@@ -112,7 +113,8 @@ class StarLogsPageState extends State<StarLogsPage> {
                     left: MediaQuery.of(context).size.width * log.positionX,
                     top: MediaQuery.of(context).size.height * log.positionY,
                     child: GestureDetector(
-                      onTap: () => _showLogMessage(context, log.logEntry),
+                      onTap: () =>
+                          _showLogMessageDialogue(context, log.logEntry),
                       child: Image.asset(
                         Assets.imagesIconStar,
                         width: MediaQuery.of(context).size.width / gridCols,
@@ -126,53 +128,30 @@ class StarLogsPageState extends State<StarLogsPage> {
     );
   }
 
-  void _showLogMessage(BuildContext context, LogEntry logEntry) {
-    showDialog(
+  Future<void> _showLogMessageDialogue(
+    BuildContext context,
+    LogEntry logEntry,
+  ) async {
+    await showDialog(
       context: context,
-      builder: (BuildContext context) {
-        double width = MediaQuery.of(context).size.width;
-        return AlertDialog(
-          content: ConstrainedBox(
-            constraints: BoxConstraints(
-              minWidth: width,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                    child: TextWidgets.getMiniTitleText(
-                      DateFormat("dd MMM yyyy").format(logEntry.creationDate),
-                    )),
-                const SizedBox(
-                  height: 4,
-                ),
-                const Divider(
-                  thickness: 1,
-                  color: TinyLogsColors.buttonDisabled,
-                  height: 1,
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 24, 16, 24),
-                  child: TextWidgets.getLogText(logEntry.content),
-                )
-              ],
-            ),
-          ),
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-          ),
-          contentPadding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
-          surfaceTintColor: TinyLogsColors.white,
+      builder: (
+        BuildContext context,
+      ) {
+        var screenshotController = ScreenshotController();
+        return Containers.showLogMessageDialogue(
+          context,
+          logEntry,
+          screenshotController,
+          () async {
+            ShareLogHelper.captureAndShare(screenshotController);
+          },
         );
       },
     );
   }
 
-  void updateStarLogOnboardingStatus() {
-    OnboardingPreferences.setStarLogOnboardingComplete();
+  Future<void> updateStarLogOnboardingStatus() async {
+    await OnboardingPreferences.setStarLogOnboardingComplete();
   }
 }
 

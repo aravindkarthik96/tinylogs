@@ -3,7 +3,7 @@ description: "A new Flutter project."
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.1+0
+version: 1.0.2+102
 
 environment:
   sdk: '>=3.2.3 <4.0.0'
@@ -17,10 +17,11 @@ dependencies:
   sqflite_common_ffi: 2.3.2
   shared_preferences: ^2.0.6
   flutter_local_notifications: 16.3.0
-  share: ^2.0.4
   flutter_timezone: 1.0.8
   flutter_native_splash: 2.3.9
   permission_handler: 11.1.0
+  share_plus: 7.2.1
+  screenshot: 2.1.0
 
 flutter_native_splash:
   color: "#ffffff"

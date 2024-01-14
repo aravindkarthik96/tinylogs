@@ -55,6 +55,14 @@ class TinyLogsStyles {
     color: TinyLogsColors.orangeDark,
   );
 
+  static TextStyle shareSignatureStyle = const TextStyle(
+    fontFamily: "SF Pro Display",
+    fontSize: 13,
+    fontWeight: FontWeight.w400,
+    height: 1.4,
+    color: TinyLogsColors.orangeDark,
+  );
+
   static TextStyle sentenceRegularStyle = const TextStyle(
     fontFamily: "SF Pro Display",
     fontSize: 17,

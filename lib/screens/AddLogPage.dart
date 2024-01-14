@@ -1,10 +1,16 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
-import 'package:share/share.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:tinylogs/commons/resources/TinyLogsColors.dart';
 import 'package:tinylogs/commons/resources/TinyLogsStrings.dart';
 import 'package:tinylogs/generated/assets.dart';
 import 'package:tinylogs/screens/home/HomePage.dart' show HomePage;
+import '../commons/share/ShareLogHelper.dart';
+import '../commons/widgets/Containers.dart';
 import '../data/logs_data/DatabaseHelper.dart';
 import '../data/logs_data/LogEntry.dart';
 import '../data/onboarding/OnboardingPreferences.dart';
@@ -135,7 +141,7 @@ class _AddLogPageState extends State<AddLogPage> {
             autofocus: true,
             onChanged: _handleTextChanged,
             controller: _textController,
-            decoration: InputDecoration.collapsed(
+            decoration: const InputDecoration.collapsed(
               hintText: AddLogsPageStrings.addLogsHintText,
               hintStyle: TextStyle(
                 color: TinyLogsColors.textFieldHintColor,
@@ -144,7 +150,7 @@ class _AddLogPageState extends State<AddLogPage> {
                 letterSpacing: -0.41,
               ),
             ),
-            style: TextStyle(
+            style: const TextStyle(
               color: TinyLogsColors.textFieldTextColor,
               fontSize: 17.0,
               height: 1.4,
@@ -158,10 +164,10 @@ class _AddLogPageState extends State<AddLogPage> {
           const SizedBox(width: 28),
           IconButton(
             onPressed: () {
-              String contentToShare =
-                  "$logText\n${AddLogsPageStrings.shareContentAppSignature}";
-              Share.share(contentToShare,
-                  subject: AddLogsPageStrings.shareContentSubject);
+              shareLogAsImage(LogEntry(
+                  creationDate: selectedDate,
+                  content: logText,
+                  lastUpdated: DateTime.now()));
             },
             icon: Image.asset(
               Assets.imagesIconShare,
@@ -191,6 +197,13 @@ class _AddLogPageState extends State<AddLogPage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+  }
+
+  void shareLogAsText() {
+    String contentToShare =
+        "$logText\n${AddLogsPageStrings.shareContentAppSignature}";
+    Share.share(contentToShare,
+        subject: AddLogsPageStrings.shareContentSubject);
   }
 
   void navigateToNextPage() {
@@ -225,5 +238,23 @@ class _AddLogPageState extends State<AddLogPage> {
     if (logIDTemp != null) {
       await DatabaseHelper.instance.deleteLog(widget.logEntry!.logID!);
     }
+  }
+
+  Future<void> shareLogAsImage(LogEntry logEntry) async {
+    ScreenshotController screenshotController = ScreenshotController();
+
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Containers.showLogMessageDialogue(
+          context,
+          logEntry,
+          screenshotController,
+          () async {
+            ShareLogHelper.captureAndShare(screenshotController);
+          },
+        );
+      },
+    );
   }
 }
