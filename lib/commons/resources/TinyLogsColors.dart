@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 class TinyLogsColors {
   static const Color orangePageBackground = Color(0xFFFFF0E5);
   static const Color orangeDark = Color(0xFF662619);
@@ -13,4 +15,5 @@ class TinyLogsColors {
   static const Color skyGradientStart = Color(0xFF7A77FF);
   static const Color skyGradientEnd = Color(0xFF4F33A0);
   static const Color white = Color(0xFFFFFFFF);
+  static const Color transparent = Colors.transparent;
 }

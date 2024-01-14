@@ -9,7 +9,7 @@ class ButtonWidgets {
     return TextButton(
       onPressed: onPressed,
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(Colors.transparent),
+        backgroundColor: MaterialStateProperty.all(TinyLogsColors.transparent),
         padding:
             MaterialStateProperty.all(const EdgeInsets.fromLTRB(8, 0, 8, 0)),
         shape: MaterialStateProperty.all(RoundedRectangleBorder(
@@ -78,7 +78,7 @@ class ButtonWidgets {
     return ElevatedButton(
       onPressed: onPress,
       style: ElevatedButton.styleFrom(
-        foregroundColor: Colors.white,
+        foregroundColor: TinyLogsColors.white,
         backgroundColor: TinyLogsColors.orangeRegular,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
@@ -99,7 +99,7 @@ class ButtonWidgets {
     return ElevatedButton(
       onPressed: onPress,
       style: ElevatedButton.styleFrom(
-        foregroundColor: Colors.white,
+        foregroundColor: TinyLogsColors.white,
         backgroundColor: TinyLogsColors.orangePageBackground,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
@@ -126,7 +126,7 @@ class ButtonWidgets {
     return TextButton(
       onPressed: onPressed,
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(Colors.transparent),
+        backgroundColor: MaterialStateProperty.all(TinyLogsColors.transparent),
         padding:
             MaterialStateProperty.all(const EdgeInsets.fromLTRB(8, 0, 8, 0)),
         shape: MaterialStateProperty.all(RoundedRectangleBorder(

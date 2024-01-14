@@ -17,7 +17,7 @@ class Containers {
         child: Container(
           padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: TinyLogsColors.white,
             borderRadius: BorderRadius.circular(8),
             boxShadow: Shadows.getCardShadow(),
           ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tinylogs/commons/notifications/NotificationPopup.dart';
-import 'package:tinylogs/commons/notifications/NotificationsHelper.dart';
 import 'package:tinylogs/commons/resources/TinyLogsStyles.dart';
 import 'package:tinylogs/commons/widgets/ButtonWidgets.dart';
 import 'package:tinylogs/data/notifications/NotificationsPreferences.dart';
@@ -135,7 +134,7 @@ class _SettingsPageState extends State<SettingsPage> {
       title: Text(text),
       value: state,
       onChanged: onTap,
-      tileColor: Colors.white,
+      tileColor: TinyLogsColors.white,
       activeColor: TinyLogsColors.orangeRegular,
     );
   }
@@ -146,7 +145,7 @@ class _SettingsPageState extends State<SettingsPage> {
       title: Text(text),
       trailing: trailingWidget,
       onTap: onTap,
-      tileColor: Colors.white,
+      tileColor: TinyLogsColors.white,
     );
   }
 }

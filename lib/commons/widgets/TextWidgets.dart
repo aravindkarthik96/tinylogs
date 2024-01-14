@@ -121,7 +121,7 @@ class TextWidgets {
             text: dayOfWeek,
             style: TextStyle(
               fontFamily: "SF Pro Text",
-              color: visibility ? const Color(0xFF6E6E6E) : Colors.transparent,
+              color: visibility ? const Color(0xFF6E6E6E) : TinyLogsColors.transparent,
               fontWeight: FontWeight.w500,
               fontSize: 10.0,
               height: 1.2,
