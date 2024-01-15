@@ -187,8 +187,8 @@ class StarLogsPageState extends State<StarLogsPage> {
         scale: scale,
         child: Image.asset(
           Assets.imagesIconStar,
-          width: MediaQuery.of(context).size.width / gridCols,
-          height: MediaQuery.of(context).size.width / gridCols,
+          width: 28,
+          height: 28,
         ),
       ),
     );
