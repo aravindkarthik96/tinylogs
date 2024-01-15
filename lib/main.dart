@@ -1,6 +1,9 @@
 import 'dart:io';
+import 'dart:ui';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -22,8 +25,14 @@ Future<void> main() async {
   _configureLocalTimeZone();
   NotificationsHelper();
   bool onboardingStatus = await OnboardingPreferences.isOnboardingComplete();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
   runApp(TinyLogsApp(onboardingStatus));
 }
 
@@ -41,7 +50,6 @@ class TinyLogsApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseCrashlytics.instance.crash();
     return MaterialApp(
       title: 'TinyLogs',
       theme: ThemeData(

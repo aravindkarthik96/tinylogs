@@ -76,7 +76,8 @@ class _TodayPageState extends State<TodayPage> {
                 TodayPageStrings.notificationDescription,
                 TodayPageStrings.notificationButtonText,
                 () async {
-                  await NotificationsPreferences.setNotificationDialogueDismissed();
+                  await NotificationsPreferences
+                      .setNotificationDialogueDismissed();
                   setState(() {
                     _loadNotificationStatus();
                   });
