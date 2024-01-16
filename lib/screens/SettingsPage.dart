@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +8,11 @@ import 'package:tinylogs/data/crash_reporting/CrashReportingPreferences.dart';
 import 'package:tinylogs/data/notifications/NotificationsPreferences.dart';
 
 import '../commons/resources/TinyLogsColors.dart';
+import '../commons/widgets/Spacers.dart';
 import '../commons/widgets/TextWidgets.dart';
 import '../firebase_options.dart';
 import '../generated/assets.dart';
+import 'package:package_info/package_info.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -25,9 +25,11 @@ class _SettingsPageState extends State<SettingsPage> {
   bool remindersEnabled = false;
   bool crashReportsEnabled = true;
   DateTime? remindersTime;
+  String _appVersion = '';
 
   @override
   initState() {
+    _updateAppVersion();
     _refreshRemindersState();
     _refreshCrashReportingState();
     super.initState();
@@ -85,9 +87,11 @@ class _SettingsPageState extends State<SettingsPage> {
             "Automatically share crash reports",
             crashReportsEnabled,
             (buttonState) async {
-              CrashReportingPreferences.setCrashReportingEnabledState(buttonState);
-              if(crashReportsEnabled) {
-                FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+              CrashReportingPreferences.setCrashReportingEnabledState(
+                  buttonState);
+              if (crashReportsEnabled) {
+                FirebaseCrashlytics.instance
+                    .setCrashlyticsCollectionEnabled(false);
               } else {
                 await Firebase.initializeApp(
                   options: DefaultFirebaseOptions.currentPlatform,
@@ -120,6 +124,12 @@ class _SettingsPageState extends State<SettingsPage> {
             () {},
             trailingWidget: const Icon(Icons.mail),
           ),
+          Spacers.thirtyTwoPx,
+          getSettingsItem(
+            "App version",
+            () {},
+            trailingWidget: TextWidgets.getSentenceRegularText(_appVersion),
+          )
         ],
       ),
     );
@@ -180,5 +190,12 @@ class _SettingsPageState extends State<SettingsPage> {
       onTap: onTap,
       tileColor: TinyLogsColors.white,
     );
+  }
+
+  Future<void> _updateAppVersion() async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    setState(() {
+      _appVersion = packageInfo.version;
+    });
   }
 }
