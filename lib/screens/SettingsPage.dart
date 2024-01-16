@@ -1,13 +1,17 @@
 import 'dart:math';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:tinylogs/commons/notifications/NotificationPopup.dart';
 import 'package:tinylogs/commons/resources/TinyLogsStyles.dart';
 import 'package:tinylogs/commons/widgets/ButtonWidgets.dart';
+import 'package:tinylogs/data/crash_reporting/CrashReportingPreferences.dart';
 import 'package:tinylogs/data/notifications/NotificationsPreferences.dart';
 
 import '../commons/resources/TinyLogsColors.dart';
 import '../commons/widgets/TextWidgets.dart';
+import '../firebase_options.dart';
 import '../generated/assets.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -19,11 +23,13 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   bool remindersEnabled = false;
+  bool crashReportsEnabled = true;
   DateTime? remindersTime;
 
   @override
   initState() {
     _refreshRemindersState();
+    _refreshCrashReportingState();
     super.initState();
   }
 
@@ -34,6 +40,14 @@ class _SettingsPageState extends State<SettingsPage> {
     setState(() {
       remindersEnabled = newState;
       remindersTime = newReminderTime;
+    });
+  }
+
+  Future<void> _refreshCrashReportingState() async {
+    bool newState =
+        await CrashReportingPreferences.getCrashReportingEnabledState();
+    setState(() {
+      crashReportsEnabled = newState;
     });
   }
 
@@ -67,6 +81,23 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           getReminderTime(),
           getSettingsSectionTitle('YOUR DATA'),
+          getSettingsSwitchItem(
+            "Automatically share crash reports",
+            crashReportsEnabled,
+            (buttonState) async {
+              CrashReportingPreferences.setCrashReportingEnabledState(buttonState);
+              if(crashReportsEnabled) {
+                FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+              } else {
+                await Firebase.initializeApp(
+                  options: DefaultFirebaseOptions.currentPlatform,
+                );
+              }
+              setState(() {
+                _refreshCrashReportingState();
+              });
+            },
+          ),
           getSettingsItem('Backup and restore', () {},
               trailingWidget:
                   TextWidgets.getSentenceRegularText("Coming soon")),

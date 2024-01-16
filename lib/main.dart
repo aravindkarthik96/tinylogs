@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:tinylogs/data/crash_reporting/CrashReportingPreferences.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
@@ -25,15 +26,22 @@ Future<void> main() async {
   _configureLocalTimeZone();
   NotificationsHelper();
   bool onboardingStatus = await OnboardingPreferences.isOnboardingComplete();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+  await checkAndEnableCrashReporting();
   PlatformDispatcher.instance.onError = (error, stack) {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
   };
   runApp(TinyLogsApp(onboardingStatus));
+}
+
+Future<void> checkAndEnableCrashReporting() async {
+  if (!await CrashReportingPreferences.getCrashReportingEnabledState()) {
+    return;
+  }
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 }
 
 Future<void> _configureLocalTimeZone() async {
