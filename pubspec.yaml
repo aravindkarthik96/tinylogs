@@ -25,6 +25,7 @@ dependencies:
   firebase_core: ^2.24.2
   firebase_crashlytics: ^3.4.9
   package_info: ^2.0.2
+  url_launcher: ^6.0.12
 
 flutter_native_splash:
   color: "#ffffff"
@@ -68,6 +69,7 @@ flutter:
     - assets/images/icon_star.png
     - assets/images/icon_mini_cross.png
     - assets/images/icon_chevron_right.png
+    - assets/images/icon_buy_me_coffee.png
 
 fonts:
   - family: SF Pro Text

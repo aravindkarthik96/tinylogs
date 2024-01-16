@@ -6,6 +6,7 @@ import 'package:tinylogs/commons/resources/TinyLogsStyles.dart';
 import 'package:tinylogs/commons/widgets/ButtonWidgets.dart';
 import 'package:tinylogs/data/crash_reporting/CrashReportingPreferences.dart';
 import 'package:tinylogs/data/notifications/NotificationsPreferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../commons/resources/TinyLogsColors.dart';
 import '../commons/widgets/Spacers.dart';
@@ -38,7 +39,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Future<void> _refreshRemindersState() async {
     bool newState = await NotificationsPreferences.getNotificationConfigured();
     DateTime? newReminderTime =
-        await NotificationsPreferences.getDailyNotificationTime();
+    await NotificationsPreferences.getDailyNotificationTime();
     setState(() {
       remindersEnabled = newState;
       remindersTime = newReminderTime;
@@ -47,7 +48,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Future<void> _refreshCrashReportingState() async {
     bool newState =
-        await CrashReportingPreferences.getCrashReportingEnabledState();
+    await CrashReportingPreferences.getCrashReportingEnabledState();
     setState(() {
       crashReportsEnabled = newState;
     });
@@ -70,7 +71,7 @@ class _SettingsPageState extends State<SettingsPage> {
           getSettingsSwitchItem(
             "Reminders enabled",
             remindersEnabled,
-            (buttonState) async {
+                (buttonState) async {
               if (!remindersEnabled) {
                 await showNotificationPopup(context);
               } else {
@@ -86,7 +87,7 @@ class _SettingsPageState extends State<SettingsPage> {
           getSettingsSwitchItem(
             "Automatically share crash reports",
             crashReportsEnabled,
-            (buttonState) async {
+                (buttonState) async {
               CrashReportingPreferences.setCrashReportingEnabledState(
                   buttonState);
               if (crashReportsEnabled) {
@@ -104,30 +105,29 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           getSettingsItem('Backup and restore', () {},
               trailingWidget:
-                  TextWidgets.getSentenceRegularText("Coming soon")),
+              TextWidgets.getSentenceRegularText("Coming soon")),
           getSettingsItem('Privacy Disclaimer', () {},
               trailingWidget:
-                  TextWidgets.getSentenceRegularText("Coming soon")),
+              TextWidgets.getSentenceRegularText("Coming soon")),
           getSettingsSectionTitle('SUPPORT US'),
           getSettingsItem(
             'Buy us a coffee',
-            () {},
-            trailingWidget: const Icon(Icons.coffee),
-          ),
-          getSettingsItem(
-            'Follow us on Instagram',
-            () {},
-            trailingWidget: const Icon(Icons.camera_alt),
+                () {
+              _openBuyMeCoffee();
+            },
+            trailingWidget: Image.asset(Assets.imagesIconBuyMeCoffee, width: 24, height: 24,),
           ),
           getSettingsItem(
             'Give us feedback',
-            () {},
-            trailingWidget: const Icon(Icons.mail),
+                () {
+              _sendEmail();
+            },
+            trailingWidget: Image.asset(Assets.imagesIconChevronRight, width: 24, height: 24,),
           ),
           Spacers.thirtyTwoPx,
           getSettingsItem(
             "App version",
-            () {},
+                () {},
             trailingWidget: TextWidgets.getSentenceRegularText(_appVersion),
           )
         ],
@@ -135,13 +135,34 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
+  void _sendEmail() async {
+    final Uri emailLaunchUri = Uri(
+      scheme: 'mailto',
+      path: 'parijatshekher@gmail.com',
+      query: encodeQueryParameters(<String, String>{
+        'subject': 'Hey! Sharing my feedback on the Tinylogs app'
+      }),
+    );
+
+    if (await canLaunchUrl(emailLaunchUri)) {
+      await launchUrl(emailLaunchUri);
+    }
+  }
+
+  String? encodeQueryParameters(Map<String, String> params) {
+    return params.entries
+        .map((e) =>
+    '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+        .join('&');
+  }
+
   Widget getReminderTime() {
     return remindersEnabled && remindersTime != null
         ? getSettingsItem('Reminder time', () async {
-            await showNotificationPopup(context);
-          },
-            trailingWidget: TextWidgets.getSentenceRegularText(
-                "${remindersTime!.hour}:${remindersTime!.minute}"))
+      await showNotificationPopup(context);
+    },
+        trailingWidget: TextWidgets.getSentenceRegularText(
+            "${remindersTime!.hour}:${remindersTime!.minute}"))
         : const SizedBox.shrink();
   }
 
@@ -168,11 +189,9 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  SwitchListTile getSettingsSwitchItem(
-    String text,
-    bool state,
-    void Function(bool switchState) onTap,
-  ) {
+  SwitchListTile getSettingsSwitchItem(String text,
+      bool state,
+      void Function(bool switchState) onTap,) {
     return SwitchListTile(
       title: Text(text),
       value: state,
@@ -197,5 +216,12 @@ class _SettingsPageState extends State<SettingsPage> {
     setState(() {
       _appVersion = packageInfo.version;
     });
+  }
+
+  Future<void> _openBuyMeCoffee() async {
+    const url = 'https://www.buymeacoffee.com/parijatshec';
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    }
   }
 }
