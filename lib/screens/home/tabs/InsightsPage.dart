@@ -43,7 +43,7 @@ class _InsightsPageState extends State<InsightsPage> {
         logCount = updatedLogs.length;
         wordCount = TextUtils.getTotalWordCount(updatedLogs);
         timeSinceFirstLog =
-            DateTime.now().difference(updatedLogs.first.creationDate).inDays;
+            DateTime.now().difference(updatedLogs.last.creationDate).inDays;
         longestStreak = getLongestStreak(uniqueLogDates);
         currentStreak = getCurrentStreak(uniqueLogDates);
       },
