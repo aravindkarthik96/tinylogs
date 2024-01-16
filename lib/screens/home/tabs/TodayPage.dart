@@ -1,4 +1,3 @@
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tinylogs/commons/resources/TinyLogsColors.dart';
@@ -160,7 +159,6 @@ class _TodayPageState extends State<TodayPage> {
           monthEnabled: false,
           dateEnabled: false,
           onTap: (logEntry) async {
-            FirebaseCrashlytics.instance.crash();
             await Navigator.push(
               context,
               MaterialPageRoute(
