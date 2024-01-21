@@ -61,12 +61,12 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: getAppBar("Settings"),
       body: ListView(
         children: <Widget>[
-          getSettingsItem('Change color', () {},
-              trailingWidget: const Icon(
-                Icons.circle,
-                color: TinyLogsColors.orangeLight,
-                size: 32,
-              )),
+          // getSettingsItem('Change color', () {},
+          //     trailingWidget: const Icon(
+          //       Icons.circle,
+          //       color: TinyLogsColors.orangeLight,
+          //       size: 32,
+          //     )),
           getSettingsSectionTitle("DAILY REMINDERS"),
           getSettingsSwitchItem(
             "Reminders enabled",
