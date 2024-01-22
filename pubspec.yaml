@@ -70,6 +70,7 @@ flutter:
     - assets/images/icon_mini_cross.png
     - assets/images/icon_chevron_right.png
     - assets/images/icon_buy_me_coffee.png
+    - assets/images/icon_instagram.png
 
 fonts:
   - family: SF Pro Text

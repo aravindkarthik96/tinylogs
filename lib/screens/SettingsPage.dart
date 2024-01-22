@@ -39,7 +39,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Future<void> _refreshRemindersState() async {
     bool newState = await NotificationsPreferences.getNotificationConfigured();
     DateTime? newReminderTime =
-    await NotificationsPreferences.getDailyNotificationTime();
+        await NotificationsPreferences.getDailyNotificationTime();
     setState(() {
       remindersEnabled = newState;
       remindersTime = newReminderTime;
@@ -48,7 +48,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Future<void> _refreshCrashReportingState() async {
     bool newState =
-    await CrashReportingPreferences.getCrashReportingEnabledState();
+        await CrashReportingPreferences.getCrashReportingEnabledState();
     setState(() {
       crashReportsEnabled = newState;
     });
@@ -71,7 +71,7 @@ class _SettingsPageState extends State<SettingsPage> {
           getSettingsSwitchItem(
             "Reminders enabled",
             remindersEnabled,
-                (buttonState) async {
+            (buttonState) async {
               if (!remindersEnabled) {
                 await showNotificationPopup(context);
               } else {
@@ -87,7 +87,7 @@ class _SettingsPageState extends State<SettingsPage> {
           getSettingsSwitchItem(
             "Automatically share crash reports",
             crashReportsEnabled,
-                (buttonState) async {
+            (buttonState) async {
               CrashReportingPreferences.setCrashReportingEnabledState(
                   buttonState);
               if (crashReportsEnabled) {
@@ -105,10 +105,10 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           getSettingsItem('Backup and restore', () {},
               trailingWidget:
-              TextWidgets.getSentenceRegularText("Coming soon")),
+                  TextWidgets.getSentenceRegularText("Coming soon")),
           getSettingsItem('Privacy Disclaimer', () {},
               trailingWidget:
-              TextWidgets.getSentenceRegularText("Coming soon")),
+                  TextWidgets.getSentenceRegularText("Coming soon")),
           getSettingsSectionTitle('SUPPORT US'),
           // getSettingsItem(
           //   'Buy us a coffee',
@@ -118,16 +118,31 @@ class _SettingsPageState extends State<SettingsPage> {
           //   trailingWidget: Image.asset(Assets.imagesIconBuyMeCoffee, width: 24, height: 24,),
           // ),
           getSettingsItem(
+            'Follow us on Instagram',
+            () {
+              _openInstagramPage();
+            },
+            trailingWidget: Image.asset(
+              Assets.imagesIconInstagram,
+              width: 24,
+              height: 24,
+            ),
+          ),
+          getSettingsItem(
             'Give us feedback',
-                () {
+            () {
               _sendEmail();
             },
-            trailingWidget: Image.asset(Assets.imagesIconChevronRight, width: 24, height: 24,),
+            trailingWidget: Image.asset(
+              Assets.imagesIconChevronRight,
+              width: 24,
+              height: 24,
+            ),
           ),
           Spacers.thirtyTwoPx,
           getSettingsItem(
             "App version",
-                () {},
+            () {},
             trailingWidget: TextWidgets.getSentenceRegularText(_appVersion),
           )
         ],
@@ -152,17 +167,17 @@ class _SettingsPageState extends State<SettingsPage> {
   String? encodeQueryParameters(Map<String, String> params) {
     return params.entries
         .map((e) =>
-    '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+            '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
         .join('&');
   }
 
   Widget getReminderTime() {
     return remindersEnabled && remindersTime != null
         ? getSettingsItem('Reminder time', () async {
-      await showNotificationPopup(context);
-    },
-        trailingWidget: TextWidgets.getSentenceRegularText(
-            "${remindersTime!.hour}:${remindersTime!.minute}"))
+            await showNotificationPopup(context);
+          },
+            trailingWidget: TextWidgets.getSentenceRegularText(
+                "${remindersTime!.hour}:${remindersTime!.minute}"))
         : const SizedBox.shrink();
   }
 
@@ -189,9 +204,11 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  SwitchListTile getSettingsSwitchItem(String text,
-      bool state,
-      void Function(bool switchState) onTap,) {
+  SwitchListTile getSettingsSwitchItem(
+    String text,
+    bool state,
+    void Function(bool switchState) onTap,
+  ) {
     return SwitchListTile(
       title: Text(text),
       value: state,
@@ -220,6 +237,13 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Future<void> _openBuyMeCoffee() async {
     const url = 'https://www.buymeacoffee.com/parijatshec';
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    }
+  }
+
+  Future<void> _openInstagramPage() async {
+    const url = 'https://www.instagram.com/tinylogsapp/';
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url));
     }
