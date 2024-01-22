@@ -110,13 +110,13 @@ class _SettingsPageState extends State<SettingsPage> {
               trailingWidget:
               TextWidgets.getSentenceRegularText("Coming soon")),
           getSettingsSectionTitle('SUPPORT US'),
-          getSettingsItem(
-            'Buy us a coffee',
-                () {
-              _openBuyMeCoffee();
-            },
-            trailingWidget: Image.asset(Assets.imagesIconBuyMeCoffee, width: 24, height: 24,),
-          ),
+          // getSettingsItem(
+          //   'Buy us a coffee',
+          //       () {
+          //     _openBuyMeCoffee();
+          //   },
+          //   trailingWidget: Image.asset(Assets.imagesIconBuyMeCoffee, width: 24, height: 24,),
+          // ),
           getSettingsItem(
             'Give us feedback',
                 () {
