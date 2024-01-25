@@ -13,7 +13,6 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:tinylogs/commons/notifications/NotificationsHelper.dart';
 import 'package:tinylogs/screens/OnboardingPage.dart';
 import 'package:tinylogs/screens/home/HomePage.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'data/onboarding/OnboardingPreferences.dart';
 
 bool onboardingCompleted = false;

@@ -18,49 +18,56 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image.asset(
-              Assets.imagesLogo,
-              width: 180,
-              height: 44,
-            ),
-            Spacers.hundredEightPx,
-            Image.asset(
-              Assets.imagesOnboardingIllustration,
-              width: 271,
-              height: 245,
-            ),
-            Spacers.fiftyTwoPx,
-            Image.asset(
-              Assets.imagesMessageHeaderIcon,
-              width: 28,
-              height: 18,
-            ),
-            Spacers.eightPx,
-            TextWidgets.getMultiLinePurpleText(
-                OnboardingPageString.onboardingMessageLine1,
-                OnboardingPageString.onboardingMessageLine2),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(
-                28,
-                84,
-                28,
-                0,
+      body: Column(
+        children: [
+          Expanded(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Image.asset(
+                    Assets.imagesLogo,
+                    width: 180,
+                    height: 44,
+                  ),
+                  Spacers.hundredEightPx,
+                  Image.asset(
+                    Assets.imagesOnboardingIllustration,
+                    width: 271,
+                    height: 245,
+                  ),
+                  Spacers.fiftyTwoPx,
+                  Image.asset(
+                    Assets.imagesMessageHeaderIcon,
+                    width: 28,
+                    height: 18,
+                  ),
+                  Spacers.eightPx,
+                  TextWidgets.getMultiLinePurpleText(
+                      OnboardingPageString.onboardingMessageLine1,
+                      OnboardingPageString.onboardingMessageLine2),
+                ],
               ),
-              child: ButtonWidgets.getPrimaryButton(
-                  OnboardingPageString.onboardingCTAText, () {
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(
+              28,
+              0,
+              28,
+              48,
+            ),
+            child: ButtonWidgets.getPrimaryButton(
+              OnboardingPageString.onboardingCTAText,
+              () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => const AddLogPage()),
+                  MaterialPageRoute(builder: (context) => const AddLogPage()),
                 );
-              }),
-            )
-          ],
-        ),
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
