@@ -177,7 +177,7 @@ class _SettingsPageState extends State<SettingsPage> {
         ? getSettingsItem(
             'Reminder time',
             () async {
-              await showNotificationPopup(context);
+              await showNotificationPopup(context, defaultTime: remindersTime);
               _refreshRemindersState();
             },
             trailingWidget: TextWidgets.getSentenceRegularText(

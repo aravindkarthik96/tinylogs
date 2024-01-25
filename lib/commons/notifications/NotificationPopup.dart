@@ -7,8 +7,8 @@ import 'package:tinylogs/commons/widgets/TextWidgets.dart';
 import '../resources/TinyLogsStrings.dart';
 import '../widgets/ButtonWidgets.dart';
 
-Future<void> showNotificationPopup(BuildContext context) async {
-  DateTime selectedTime = DateTime.now();
+Future<void> showNotificationPopup(BuildContext context, {DateTime? defaultTime}) async {
+  DateTime selectedTime = defaultTime ?? DateTime.now();
   await showModalBottomSheet(
     context: context,
     backgroundColor: Colors.white,
@@ -34,6 +34,7 @@ Future<void> showNotificationPopup(BuildContext context) async {
                     height: 200,
                     child: CupertinoDatePicker(
                       mode: CupertinoDatePickerMode.time,
+                      initialDateTime: defaultTime,
                       use24hFormat: false,
                       onDateTimeChanged: (DateTime newTime) {
                         selectedTime = newTime;
