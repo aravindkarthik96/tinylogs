@@ -140,6 +140,7 @@ class _AddLogPageState extends State<AddLogPage> {
               padding: const EdgeInsets.fromLTRB(20, 16, 16, 16),
               child: TextField(
                 keyboardType: TextInputType.multiline,
+                textCapitalization: TextCapitalization.sentences,
                 maxLines: null,
                 autofocus: true,
                 onChanged: _handleTextChanged,
