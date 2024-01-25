@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:tinylogs/commons/resources/TinyLogsColors.dart';
 import 'package:tinylogs/commons/resources/TinyLogsStrings.dart';
 import 'package:tinylogs/generated/assets.dart';
@@ -131,79 +130,74 @@ class _AddLogPageState extends State<AddLogPage> {
           )
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(4, 0, 4, 0),
-          child: TextField(
-            keyboardType: TextInputType.multiline,
-            maxLines: null,
-            autofocus: true,
-            onChanged: _handleTextChanged,
-            controller: _textController,
-            decoration: const InputDecoration.collapsed(
-              hintText: AddLogsPageStrings.addLogsHintText,
-              hintStyle: TextStyle(
-                color: TinyLogsColors.textFieldHintColor,
-                fontSize: 17.0,
-                height: 1.4,
-                letterSpacing: -0.41,
+      body: Column(
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(28, 16, 28, 16),
+              child: TextField(
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+                autofocus: true,
+                onChanged: _handleTextChanged,
+                controller: _textController,
+                decoration: const InputDecoration.collapsed(
+                  hintText: AddLogsPageStrings.addLogsHintText,
+                  hintStyle: TextStyle(
+                    color: TinyLogsColors.textFieldHintColor,
+                    fontSize: 17.0,
+                    height: 1.4,
+                    letterSpacing: -0.41,
+                  ),
+                ),
+                style: const TextStyle(
+                  color: TinyLogsColors.textFieldTextColor,
+                  fontSize: 17.0,
+                  height: 1.4,
+                  letterSpacing: -0.41,
+                ),
               ),
             ),
-            style: const TextStyle(
-              color: TinyLogsColors.textFieldTextColor,
-              fontSize: 17.0,
-              height: 1.4,
-              letterSpacing: -0.41,
-            ),
           ),
-        ),
-      ),
-      floatingActionButton: Row(
-        children: [
-          const SizedBox(width: 28),
-          IconButton(
-            onPressed: () {
-              shareLogAsImage(LogEntry(
-                  creationDate: selectedDate,
-                  content: logText,
-                  lastUpdated: DateTime.now()));
-            },
-            icon: Image.asset(
-              Assets.imagesIconShare,
-              width: 28,
-              height: 28,
-              color: submitButtonEnabled
-                  ? TinyLogsColors.buttonEnabled
-                  : TinyLogsColors.buttonDisabled,
-            ),
-          ),
-          IconButton(
-              onPressed: () {
-                deleteLogEntry();
-                Navigator.of(context).pop();
-              },
-              icon: Image.asset(
-                Assets.imagesIconDelete,
-                width: 28,
-                height: 28,
-                color: submitButtonEnabled
-                    ? TinyLogsColors.buttonEnabled
-                    : TinyLogsColors.buttonDisabled,
-              )),
-          const Spacer(),
-          const SizedBox(width: 28),
+          Row(
+            children: [
+              const SizedBox(width: 28),
+              IconButton(
+                onPressed: submitButtonEnabled ? () {
+                  shareLogAsImage(LogEntry(
+                      creationDate: selectedDate,
+                      content: logText,
+                      lastUpdated: DateTime.now()));
+                } : null,
+                icon: Image.asset(
+                  Assets.imagesIconShare,
+                  width: 28,
+                  height: 28,
+                  color: submitButtonEnabled
+                      ? TinyLogsColors.buttonEnabled
+                      : TinyLogsColors.buttonDisabled,
+                ),
+              ),
+              IconButton(
+                  onPressed: () {
+                    deleteLogEntry();
+                    Navigator.of(context).pop();
+                  },
+                  icon: Image.asset(
+                    Assets.imagesIconDelete,
+                    width: 28,
+                    height: 28,
+                    color: submitButtonEnabled
+                        ? TinyLogsColors.buttonEnabled
+                        : TinyLogsColors.buttonDisabled,
+                  )),
+              const Spacer(),
+              const SizedBox(width: 28),
+            ],
+          )
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
-  }
-
-  void shareLogAsText() {
-    String contentToShare =
-        "$logText\n${AddLogsPageStrings.shareContentAppSignature}";
-    Share.share(contentToShare,
-        subject: AddLogsPageStrings.shareContentSubject);
   }
 
   void navigateToNextPage() {
