@@ -55,6 +55,7 @@ class _InsightsPageState extends State<InsightsPage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        toolbarHeight: 72,
         title: Padding(
           padding: const EdgeInsets.only(left: 16.0),
           child: TextWidgets.getPageTitleText(

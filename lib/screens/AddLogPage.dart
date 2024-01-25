@@ -74,6 +74,7 @@ class _AddLogPageState extends State<AddLogPage> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
+        toolbarHeight: 72,
         leading: IconButton(
           icon: Image.asset(
             Assets.imagesArrowLeft,

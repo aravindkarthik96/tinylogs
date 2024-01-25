@@ -196,6 +196,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   AppBar getAppBar(String text) {
     return AppBar(
+      toolbarHeight: 72,
       leading: ButtonWidgets.getSmallIconButton(Assets.imagesArrowLeft, () {
         Navigator.of(context).pop();
       }),

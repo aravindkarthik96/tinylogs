@@ -119,6 +119,7 @@ class _TodayPageState extends State<TodayPage> {
       snap: true,
       floating: true,
       centerTitle: false,
+      toolbarHeight: 72,
       title: Padding(
         padding: const EdgeInsets.only(left: 16.0),
         child: Column(
