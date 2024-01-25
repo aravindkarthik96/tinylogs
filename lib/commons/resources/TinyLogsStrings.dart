@@ -50,6 +50,7 @@ class AddLogsPageStrings {
   static const String addLogsHintText = 'I am thankful for';
   static const String shareContentAppSignature = "-via tinylogs";
   static const String shareContentSubject = "Checkout tinylogs today!";
+  static const String minimumCharacterErrorToast = "You need to use minimum 16 letters. Keep the notes descriptive.";
 }
 
 class StarLogPageStrings {

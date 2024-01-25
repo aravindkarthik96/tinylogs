@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:tinylogs/commons/resources/TinyLogsColors.dart';
@@ -34,7 +35,7 @@ class _AddLogPageState extends State<AddLogPage> {
     _textController =
         TextEditingController(text: widget.logEntry?.content ?? '');
     logText = _textController.text;
-    submitButtonEnabled = _textController.text.length >= 10;
+    submitButtonEnabled = _textController.text.length >= 16;
 
     if (widget.logEntry != null) {
       selectedDate = widget.logEntry!.creationDate;
@@ -84,47 +85,50 @@ class _AddLogPageState extends State<AddLogPage> {
             Navigator.of(context).pop();
           },
         ),
-        title: InkWell(
-          onTap: () => _selectDate(context),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(DateFormat('dd MMM yyyy').format(selectedDate),
-                  style: const TextStyle(
-                    fontSize: 17.0,
-                    color: TinyLogsColors.orangeDark,
-                    height: 1.41,
-                  )),
-              Image.asset(
-                Assets.imagesArrowDropDown,
-                width: 16,
-                height: 16,
-              ),
-            ],
+        title: Center(
+          child: InkWell(
+            onTap: () => _selectDate(context),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(DateFormat('dd MMM yyyy').format(selectedDate),
+                    style: const TextStyle(
+                      fontSize: 17.0,
+                      color: TinyLogsColors.orangeDark,
+                      height: 1.41,
+                    )),
+                Image.asset(
+                  Assets.imagesArrowDropDown,
+                  width: 16,
+                  height: 16,
+                ),
+              ],
+            ),
           ),
         ),
         actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(right: 28),
-            child: TextButton(
-              onPressed: submitButtonEnabled
-                  ? () async {
-                      await storeLog();
-                      await markOnboardingComplete();
-                      navigateToNextPage();
-                    }
-                  : null,
-              child: Text(
-                AddLogsPageStrings.addLogButtonText,
-                textAlign: TextAlign.right,
-                style: TextStyle(
-                  fontSize: 17.0,
-                  letterSpacing: -0.02,
-                  color: submitButtonEnabled
-                      ? TinyLogsColors.buttonEnabled
-                      : TinyLogsColors.buttonDisabled,
-                  height: 1.4,
-                ),
+          TextButton(
+            onPressed: submitButtonEnabled
+                ? () async {
+                    await storeLog();
+                    await markOnboardingComplete();
+                    navigateToNextPage();
+                  }
+                : () {
+              showToast(
+                AddLogsPageStrings.minimumCharacterErrorToast
+              );
+            },
+            child: Text(
+              AddLogsPageStrings.addLogButtonText,
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                fontSize: 17.0,
+                letterSpacing: -0.02,
+                color: submitButtonEnabled
+                    ? TinyLogsColors.buttonEnabled
+                    : TinyLogsColors.buttonDisabled,
+                height: 1.4,
               ),
             ),
           )
@@ -134,7 +138,7 @@ class _AddLogPageState extends State<AddLogPage> {
         children: [
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(28, 16, 28, 16),
+              padding: const EdgeInsets.fromLTRB(20, 16, 16, 16),
               child: TextField(
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
@@ -161,7 +165,7 @@ class _AddLogPageState extends State<AddLogPage> {
           ),
           Row(
             children: [
-              const SizedBox(width: 28),
+              const SizedBox(width: 8),
               IconButton(
                 onPressed: submitButtonEnabled ? () {
                   shareLogAsImage(LogEntry(
@@ -249,6 +253,18 @@ class _AddLogPageState extends State<AddLogPage> {
           },
         );
       },
+    );
+  }
+
+  void showToast(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: TinyLogsColors.orangePageBackground,
+      textColor: TinyLogsColors.orangeDark,
+      fontSize: 16.0,
     );
   }
 }
