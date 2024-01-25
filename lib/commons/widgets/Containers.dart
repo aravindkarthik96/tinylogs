@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:screenshot/screenshot.dart';
@@ -70,31 +72,38 @@ class Containers {
     );
   }
 
-  static Widget getLogSeparator(String title, String prompt) {
+  static Widget getLogSeparator(String title, String prompt, int position) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-      child: Container(
-        width: double.infinity,
-        height: 120,
-        alignment: Alignment.centerLeft,
-        decoration: const BoxDecoration(
-          color: TinyLogsColors.orangePageBackground,
-          image: DecorationImage(
-              image: AssetImage(Assets.imagesBackgroundLogsMonthSeparator),
-              fit: BoxFit.fitHeight,
-              alignment: Alignment.topRight),
-        ),
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(28, 0, 16, 0),
-              child: TextWidgets.getSeparatorTitleText(title),
+      padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+      child: Column(
+        children: [
+          SizedBox(
+            height: position == 0 ? 0 : 20,
+          ),
+          Container(
+            width: double.infinity,
+            height: 120,
+            alignment: Alignment.centerLeft,
+            decoration: const BoxDecoration(
+              color: TinyLogsColors.orangePageBackground,
+              image: DecorationImage(
+                  image: AssetImage(Assets.imagesBackgroundLogsMonthSeparator),
+                  fit: BoxFit.fitHeight,
+                  alignment: Alignment.topRight),
             ),
-            Expanded(
-              child: TextWidgets.getSeparatorDescriptionText(prompt),
-            )
-          ],
-        ),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(28, 0, 16, 0),
+                  child: TextWidgets.getSeparatorTitleText(title),
+                ),
+                Expanded(
+                  child: TextWidgets.getSeparatorDescriptionText(prompt),
+                )
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -176,11 +185,11 @@ class Containers {
                         Expanded(
                           child: Container(
                             decoration: const BoxDecoration(
-                              color: TinyLogsColors.orangePageBackground,
+                                color: TinyLogsColors.orangePageBackground,
                                 borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(12),
-                              bottomRight: Radius.circular(12),
-                            )),
+                                  bottomLeft: Radius.circular(12),
+                                  bottomRight: Radius.circular(12),
+                                )),
                             child: Padding(
                               padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
                               child: TextWidgets.getSharePromptText(

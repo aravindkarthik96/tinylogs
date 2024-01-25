@@ -175,6 +175,7 @@ class _TodayPageState extends State<TodayPage> {
           showMonth: showMonth,
           monthEnabled: false,
           dateEnabled: false,
+          position: index,
           onTap: (logEntry) async {
             await Navigator.push(
               context,

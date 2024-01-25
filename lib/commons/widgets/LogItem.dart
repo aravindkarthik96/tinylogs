@@ -10,6 +10,7 @@ class LogItem extends StatelessWidget {
   final bool showMonth;
   final bool monthEnabled;
   final bool dateEnabled;
+  final int position;
 
   final Function(LogEntry logEntry) onTap;
 
@@ -27,6 +28,7 @@ class LogItem extends StatelessWidget {
     this.dateEnabled = false,
     this.padding = const EdgeInsets.all(0),
     this.monthPrompt = "",
+    required this.position,
   });
 
   @override
@@ -36,7 +38,7 @@ class LogItem extends StatelessWidget {
         monthEnabled && showMonth
             ? Containers.getLogSeparator(
                 DateFormat("MMMM").format(log.creationDate).toString(),
-                monthPrompt)
+                monthPrompt, position)
             : const SizedBox.shrink(),
         getMessageItem(context, log, onTap, dateEnabled),
       ],

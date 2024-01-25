@@ -110,6 +110,7 @@ class _LogsPageState extends State<LogsPage> {
                 showDate: logsViewModel.showDate,
                 showMonth: logsViewModel.showMonth,
                 monthPrompt: logsViewModel.monthPrompt,
+                position: index,
                 monthEnabled: true,
                 dateEnabled: true,
                 onTap: (logEntry) async {
