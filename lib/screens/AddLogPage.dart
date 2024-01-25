@@ -85,25 +85,23 @@ class _AddLogPageState extends State<AddLogPage> {
             Navigator.of(context).pop();
           },
         ),
-        title: Center(
-          child: InkWell(
-            onTap: () => _selectDate(context),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(DateFormat('dd MMM yyyy').format(selectedDate),
-                    style: const TextStyle(
-                      fontSize: 17.0,
-                      color: TinyLogsColors.orangeDark,
-                      height: 1.41,
-                    )),
-                Image.asset(
-                  Assets.imagesArrowDropDown,
-                  width: 16,
-                  height: 16,
-                ),
-              ],
-            ),
+        title: InkWell(
+          onTap: () => _selectDate(context),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(DateFormat('dd MMM yyyy').format(selectedDate),
+                  style: const TextStyle(
+                    fontSize: 17.0,
+                    color: TinyLogsColors.orangeDark,
+                    height: 1.41,
+                  )),
+              Image.asset(
+                Assets.imagesArrowDropDown,
+                width: 16,
+                height: 16,
+              ),
+            ],
           ),
         ),
         actions: <Widget>[
@@ -133,6 +131,7 @@ class _AddLogPageState extends State<AddLogPage> {
             ),
           )
         ],
+        centerTitle: true,
       ),
       body: Column(
         children: [

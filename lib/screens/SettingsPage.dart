@@ -200,12 +200,14 @@ class _SettingsPageState extends State<SettingsPage> {
       leading: ButtonWidgets.getSmallIconButton(Assets.imagesArrowLeft, () {
         Navigator.of(context).pop();
       }),
+      centerTitle: true,
       title: Text(text,
+          textAlign: TextAlign.center,
           style: const TextStyle(
+            fontFamily: "SF Pro Text",
             fontSize: 17.0,
             color: TinyLogsColors.orangeDark,
             fontWeight: FontWeight.w700,
-            height: 1.4,
           )),
       backgroundColor: TinyLogsColors.orangePageBackground,
     );
