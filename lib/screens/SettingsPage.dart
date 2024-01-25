@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:tinylogs/commons/notifications/NotificationPopup.dart';
 import 'package:tinylogs/commons/resources/TinyLogsStyles.dart';
 import 'package:tinylogs/commons/widgets/ButtonWidgets.dart';
@@ -173,12 +174,16 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Widget getReminderTime() {
     return remindersEnabled && remindersTime != null
-        ? getSettingsItem('Reminder time', () async {
-            await showNotificationPopup(context);
-            _refreshRemindersState();
-          },
+        ? getSettingsItem(
+            'Reminder time',
+            () async {
+              await showNotificationPopup(context);
+              _refreshRemindersState();
+            },
             trailingWidget: TextWidgets.getSentenceRegularText(
-                "${remindersTime!.hour}:${remindersTime!.minute}"))
+              DateFormat('hh:mm a').format(remindersTime!),
+            ),
+          )
         : const SizedBox.shrink();
   }
 

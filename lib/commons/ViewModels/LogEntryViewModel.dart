@@ -6,9 +6,10 @@ class LogEntryViewModel {
   bool showMonth;
   String monthPrompt;
 
-  LogEntryViewModel(
-      {required this.logEntry,
-      required this.showDate,
-      required this.showMonth,
-      required this.monthPrompt});
+  LogEntryViewModel({
+    required this.logEntry,
+    required this.showDate,
+    required this.showMonth,
+    required this.monthPrompt,
+  });
 }
