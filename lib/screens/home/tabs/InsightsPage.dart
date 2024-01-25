@@ -61,22 +61,6 @@ class _InsightsPageState extends State<InsightsPage> {
             InsightsPageStrings.insightsPageTitle,
           ),
         ),
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(right: 28),
-            child: ButtonWidgets.getMediumIconButton(
-              Assets.imagesIconSettings,
-              () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const SettingsPage(),
-                  ),
-                );
-              },
-            ),
-          )
-        ],
         backgroundColor: Colors.white,
         centerTitle: false,
       ),

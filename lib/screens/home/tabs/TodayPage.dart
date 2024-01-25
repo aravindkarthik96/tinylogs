@@ -13,6 +13,7 @@ import '../../../commons/widgets/LogItem.dart';
 import '../../../commons/widgets/Spacers.dart';
 import '../../../data/logs_data/LogEntry.dart';
 import '../../../data/notifications/NotificationsPreferences.dart';
+import '../../SettingsPage.dart';
 
 class TodayPage extends StatefulWidget {
   const TodayPage({super.key});
@@ -131,6 +132,22 @@ class _TodayPageState extends State<TodayPage> {
           ],
         ),
       ),
+      actions: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(right: 28),
+          child: ButtonWidgets.getMediumIconButton(
+            Assets.imagesIconSettings,
+            () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SettingsPage(),
+                ),
+              );
+            },
+          ),
+        )
+      ],
       backgroundColor: TinyLogsColors.orangePageBackground,
     );
   }
