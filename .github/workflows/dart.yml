@@ -13,10 +13,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Cache Clean
+      run: flutter clean
+
     - name: Setup Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.3.0' # Specify the Flutter version that includes the Dart SDK version you need
+        flutter-version: '3.3.0'
 
     - name: Install dependencies
       run: flutter pub get
