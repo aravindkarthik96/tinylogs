@@ -127,7 +127,7 @@ class _TodayPageState extends State<TodayPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextWidgets.getMiniTitleText(
-              DateFormat('EEE, DD MMM').format(DateTime.now()),
+              DateFormat('EEE, dd MMM').format(DateTime.now()),
             ),
             TextWidgets.getPageTitleText(TodayPageStrings.pageTitle)
           ],
