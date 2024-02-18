@@ -1,5 +1,9 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'LogEntry.dart';
@@ -66,7 +70,7 @@ class DatabaseHelper {
   Future<int> getMonthlyCount(int month, int year) async {
     Database db = await database;
     String monthStr = month.toString().padLeft(2, '0');
-    String yearStr = year.toString(); // For four-digit year
+    String yearStr = year.toString();
 
     var result = await db.rawQuery(
       "SELECT COUNT(*) as count FROM $table WHERE strftime('%m', creationDate) == '$monthStr' AND strftime('%Y', creationDate) == '$yearStr'",
@@ -74,7 +78,7 @@ class DatabaseHelper {
 
     int count = 0;
     if (result.isNotEmpty) {
-      count = Sqflite.firstIntValue(result) ?? 0; // Extract the first integer value or 0 if null
+      count = Sqflite.firstIntValue(result) ?? 0;
     }
     return count;
   }
@@ -88,7 +92,7 @@ class DatabaseHelper {
 
     int count = 0;
     if (result.isNotEmpty) {
-      count = Sqflite.firstIntValue(result) ?? 0; // Extract the first integer value or 0 if null
+      count = Sqflite.firstIntValue(result) ?? 0;
     }
     return count;
   }
@@ -96,10 +100,8 @@ class DatabaseHelper {
   Future<List<LogEntry>> queryTodayLog() async {
     Database db = await database;
 
-    // Get the current date and format it to 'yyyy-MM-dd' which is the format SQLite understands
     String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
 
-    // Use the formatted date in the where clause to match dates with the same year, month, and day
     List<Map> maps = await db.query(
         table,
         where: "date(creationDate) = ?",
@@ -107,7 +109,6 @@ class DatabaseHelper {
         orderBy: "creationDate DESC"
     );
 
-    // Convert the List<Map> to a List<LogEntry>
     return List.generate(maps.length, (i) {
       return LogEntry.fromMap(maps[i] as Map<String, dynamic>);
     });
@@ -116,16 +117,25 @@ class DatabaseHelper {
   Future<List<DateTime>> fetchUniqueLogDates() async {
     Database db = await database;
 
-    // SQL query to select distinct creation dates, ordered by recency
     List<Map> result = await db.rawQuery(
         "SELECT DISTINCT date(creationDate) as uniqueDate FROM $table ORDER BY date(creationDate) DESC"
     );
 
-    // Convert the result to a List of DateTime objects
     return result.map((item) {
       String dateString = item['uniqueDate'].toString();
       return DateTime.parse(dateString);
     }).toList();
+  }
+
+  Future<String> exportDataToJson() async {
+    Database db = await database;
+    List<Map> maps = await db.query(table, orderBy: "creationDate DESC");
+    List<Map<String, dynamic>> logEntries = maps.map((map) => LogEntry.fromMap(map as Map<String, dynamic>).toMap()).toList();
+    String json = jsonEncode(logEntries);
+    final directory = await getApplicationDocumentsDirectory();
+    final file = File('${directory.path}/log_entries_backup.json');
+    await file.writeAsString(json);
+    return file.path;
   }
 
 }

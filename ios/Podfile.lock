@@ -1,4 +1,10 @@
 PODS:
+  - AppAuth (1.6.2):
+    - AppAuth/Core (= 1.6.2)
+    - AppAuth/ExternalUserAgent (= 1.6.2)
+  - AppAuth/Core (1.6.2)
+  - AppAuth/ExternalUserAgent (1.6.2):
+    - AppAuth/Core
   - Firebase/CoreOnly (10.18.0):
     - FirebaseCore (= 10.18.0)
   - Firebase/Crashlytics (10.18.0):
@@ -53,10 +59,18 @@ PODS:
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
+  - google_sign_in_ios (0.0.1):
+    - Flutter
+    - FlutterMacOS
+    - GoogleSignIn (~> 7.0)
   - GoogleDataTransport (9.3.0):
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleSignIn (7.0.0):
+    - AppAuth (~> 1.5)
+    - GTMAppAuth (< 3.0, >= 1.3)
+    - GTMSessionFetcher/Core (< 4.0, >= 1.1)
   - GoogleUtilities/Environment (7.12.0):
     - PromisesObjC (< 3.0, >= 1.2)
   - GoogleUtilities/Logger (7.12.0):
@@ -64,6 +78,12 @@ PODS:
   - "GoogleUtilities/NSData+zlib (7.12.0)"
   - GoogleUtilities/UserDefaults (7.12.0):
     - GoogleUtilities/Logger
+  - GTMAppAuth (2.0.0):
+    - AppAuth/Core (~> 1.6)
+    - GTMSessionFetcher/Core (< 4.0, >= 1.5)
+  - GTMSessionFetcher/Core (3.3.1)
+  - icloud_storage (0.0.1):
+    - Flutter
   - nanopb (2.30909.1):
     - nanopb/decode (= 2.30909.1)
     - nanopb/encode (= 2.30909.1)
@@ -99,6 +119,8 @@ DEPENDENCIES:
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - flutter_timezone (from `.symlinks/plugins/flutter_timezone/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/darwin`)
+  - icloud_storage (from `.symlinks/plugins/icloud_storage/ios`)
   - package_info (from `.symlinks/plugins/package_info/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
@@ -109,6 +131,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - AppAuth
     - Firebase
     - FirebaseCore
     - FirebaseCoreExtension
@@ -118,7 +141,10 @@ SPEC REPOS:
     - FirebaseSessions
     - FMDB
     - GoogleDataTransport
+    - GoogleSignIn
     - GoogleUtilities
+    - GTMAppAuth
+    - GTMSessionFetcher
     - nanopb
     - PromisesObjC
     - PromisesSwift
@@ -139,6 +165,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_timezone/ios"
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
+  google_sign_in_ios:
+    :path: ".symlinks/plugins/google_sign_in_ios/darwin"
+  icloud_storage:
+    :path: ".symlinks/plugins/icloud_storage/ios"
   package_info:
     :path: ".symlinks/plugins/package_info/ios"
   path_provider_foundation:
@@ -155,6 +185,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
+  AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
   Firebase: 414ad272f8d02dfbf12662a9d43f4bba9bec2a06
   firebase_core: 0af4a2b24f62071f9bf283691c0ee41556dcb3f5
   firebase_crashlytics: 4b91b8ad60ee7c168fe88979f84c9573a729de7a
@@ -170,8 +201,13 @@ SPEC CHECKSUMS:
   flutter_timezone: ffb07bdad3c6276af8dada0f11978d8a1f8a20bb
   fluttertoast: 31b00dabfa7fb7bacd9e7dbee580d7a2ff4bf265
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  google_sign_in_ios: 1bfaf6607b44cd1b24c4d4bc39719870440f9ce1
   GoogleDataTransport: 57c22343ab29bc686febbf7cbb13bad167c2d8fe
+  GoogleSignIn: b232380cf495a429b8095d3178a8d5855b42e842
   GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
+  GTMAppAuth: 99fb010047ba3973b7026e45393f51f27ab965ae
+  GTMSessionFetcher: 8a1b34ad97ebe6f909fb8b9b77fba99943007556
+  icloud_storage: d9ac7a33ced81df08ba7ea1bf3099cc0ee58f60a
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
   path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
@@ -186,4 +222,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 70d9d25280d0dd177a5f637cdb0f0b0b12c6a189
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.15.2

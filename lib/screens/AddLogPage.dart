@@ -10,6 +10,7 @@ import 'package:tinylogs/generated/assets.dart';
 import 'package:tinylogs/screens/home/HomePage.dart' show HomePage;
 import '../commons/share/ShareLogHelper.dart';
 import '../commons/widgets/Containers.dart';
+import '../data/cloud_backup/BackupManager.dart';
 import '../data/logs_data/DatabaseHelper.dart';
 import '../data/logs_data/LogEntry.dart';
 import '../data/onboarding/OnboardingPreferences.dart';
@@ -225,6 +226,7 @@ class _AddLogPageState extends State<AddLogPage> {
           content: logText,
           lastUpdated: DateTime.now()));
     }
+    await BackupManager().backupDataToCloud();
   }
 
   Future<void> markOnboardingComplete() async {
