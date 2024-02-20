@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:tinylogs/commons/notifications/NotificationPopup.dart';
 import 'package:tinylogs/commons/resources/TinyLogsStyles.dart';
 import 'package:tinylogs/commons/widgets/ButtonWidgets.dart';
@@ -14,7 +15,6 @@ import '../commons/widgets/Spacers.dart';
 import '../commons/widgets/TextWidgets.dart';
 import '../firebase_options.dart';
 import '../generated/assets.dart';
-import 'package:package_info/package_info.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
